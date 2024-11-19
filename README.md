@@ -1,6 +1,6 @@
 <!-- "Hero" Header -->
 <div align="center">
-  <img src="https://github.com/array-carpenter/nfl-draft-data/blob/main/images/welcome.png" style="max-width: 100%;" alt="Welcome to NFL Draft Comparison Repo" />
+  <img src="https://github.com/array-carpenter/nfl-draft-data/blob/main/images/wordart%20(1).png" style="max-width: 100%;" alt="WordArt" />
   <br />
   <br />
   
