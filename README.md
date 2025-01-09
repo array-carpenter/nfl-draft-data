@@ -1,6 +1,6 @@
 <!-- "Hero" Header -->
 <div align="center">
-  <img src="https://github.com/array-carpenter/nfl-draft-data/blob/main/images/wordart%20(1).png" style="max-width: 100%;" alt="WordArt" />
+  <img src="https://github.com/array-carpenter/nfl-draft-data/blob/master/images/wordart%20(1).png" style="max-width: 100%;" alt="WordArt" />
   <br />
   <br />
   
@@ -10,7 +10,7 @@ Welcome to this repo where I use cosine similarity to compare current NFL Draft 
   </p>
   <br />
   
-  <img src="https://github.com/array-carpenter/nfl-draft-data/blob/main/images/mikepenix.png" />
+  <img src="https://github.com/array-carpenter/nfl-draft-data/blob/master/images/mikepenix.png" />
   <br />
   <br />
 </div>
