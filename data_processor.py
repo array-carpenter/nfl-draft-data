@@ -19,7 +19,7 @@ class DataProcessor:
         Process the data for a given input player:
           - Filter to players with the same position as input_player.
           - Aggregate stats across seasons.
-          - Correct percentage metrics.
+          - Correct percentage and derived metrics.
           - Compute percentile ranks.
           - Calculate similarity using Euclidean distance.
         """
@@ -37,12 +37,21 @@ class DataProcessor:
         # Sum player stats across seasons (for non-percentage metrics)
         df_sum = df.groupby("player").sum().reset_index()
 
-        # Correct percentage-based metrics: using average for 'passing_pct' if present
+        # Correct percentage and derived metrics
         if "passing_pct" in df.columns:
             passing_pct_avg = df.groupby("player")["passing_pct"].mean().reset_index()
             df_sum = df_sum.merge(passing_pct_avg, on="player", how="left")
             df_sum["passing_pct"] = df_sum["passing_pct_y"] * 100  # Convert to percentage
             df_sum.drop(columns=["passing_pct_y"], inplace=True)
+
+        # Correct Yards per Carry (rushing_ypc = rushing_yds / rushing_car)
+        if "rushing_ypc" in df.columns and "rushing_yds" in df.columns and "rushing_car" in df.columns:
+            rushing_ypc_avg = df.groupby("player").apply(
+                lambda x: x["rushing_yds"].sum() / x["rushing_car"].sum() if x["rushing_car"].sum() > 0 else 0
+            ).reset_index(name="rushing_ypc")
+            
+            df_sum.drop(columns=["rushing_ypc"], errors="ignore", inplace=True)  # Remove incorrect summed column
+            df_sum = df_sum.merge(rushing_ypc_avg, on="player", how="left")
 
         # Ensure valid metrics are numeric
         df_sum[valid_metrics] = df_sum[valid_metrics].apply(pd.to_numeric, errors="coerce").fillna(0)
