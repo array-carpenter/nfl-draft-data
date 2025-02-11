@@ -175,7 +175,8 @@ COLUMN_RENAME_MAP = {
     "rushing_ypc": "Yards per Carry",
     "receiving_yds": "Receiving Yards",
     "receiving_td": "Receiving TDs",
-    "fumbles_fum": "Fumbles"
+    "fumbles_fum": "Fumbles",
+    "receiving_rec" : "Receptions"
 }
 
 # Other configuration variables (e.g., paths to datasets, logo images)
