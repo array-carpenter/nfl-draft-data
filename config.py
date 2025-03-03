@@ -84,6 +84,7 @@ TEAM_COLORS = {
     "Nevada": "#003366",
     "New Mexico": "#D50032",
     "New Mexico State": "#862633",
+    "North Dakota State":"#0A5640",
     "Northern Illinois": "#C8102E",
     "North Texas": "#00853E",
     "Northwestern": "#4E2A84",
@@ -146,8 +147,12 @@ TEAM_COLORS = {
     "Tulsa": "#007AC1",
     "Idaho": "#B3995D",
 }
-
+# year,team,conference,athlete_id,player,passing_completions,passing_att,passing_pct,passing_yds,passing_td,passing_int,passing_ypa,rushing_car,rushing_yds,rushing_td,rushing_ypc,rushing_long,receiving_rec,receiving_yds,receiving_td,receiving_ypr,receiving_long,
+# fumbles_fum,fumbles_rec,fumbles_lost,defensive_solo,defensive_tot,defensive_tfl,defensive_sacks,defensive_qb_hur,interceptions_int,interceptions_yds,
+# interceptions_avg,interceptions_td,defensive_pd,defensive_td,kicking_fgm,kicking_fga,kicking_pct,kicking_xpa,kicking_xpm,kicking_pts,kicking_long,kick_returns_no,kick_returns_yds,
+# kick_returns_avg,kick_returns_td,kick_returns_long,punting_no,punting_yds,punting_ypp,punting_long,punting_in_20,punting_tb,punt_returns_no,punt_returns_yds,punt_returns_avg,punt_returns_td,punt_returns_long
 # Position baseline metrics. Add metrics for additional positions as needed.
+# Define “S” for Safeties instead of separate FS and SS:
 POSITION_BASELINES = {
     "QB": [
         "passing_att", "passing_pct", "passing_yds", "passing_td",
@@ -158,10 +163,36 @@ POSITION_BASELINES = {
         "rushing_car", "rushing_yds", "rushing_td", "rushing_ypc",
         "receiving_rec", "receiving_yds", "receiving_td", "fumbles_fum"
     ],
-    # Add entries for WR, TE, etc. as needed.
+    "WR": [
+        "receiving_rec", "receiving_yds", "receiving_td", 
+        "receiving_ypr","fumbles_fum","receiving_ypc"
+    ],
+        "TE": [
+        "receiving_rec", "receiving_yds", "receiving_td", 
+        "receiving_ypr","fumbles_fum"
+    ],
+    "CB": [
+        "defensive_solo","defensive_tot","defensive_tfl","interceptions_int",
+        "interceptions_yds","interceptions_avg","interceptions_td", 
+        "defensive_pd", "defensive_td"
+    ],
+    "S": [
+        "defensive_solo","defensive_tot","defensive_tfl","interceptions_int",
+        "interceptions_yds","interceptions_avg","interceptions_td", 
+        "defensive_pd", "defensive_td"
+    ],
+    "DE": [
+        "defensive_solo","defensive_tot","defensive_tfl","defensive_sacks","defensive_qb_hur","Height (in)"
+    ],
+    "DT": [
+        "defensive_solo","defensive_tot","defensive_tfl","defensive_sacks","defensive_qb_hur"],
+    "OLB": [
+        "defensive_solo","defensive_tot","defensive_tfl","defensive_sacks","defensive_qb_hur","interceptions_int",
+        "interceptions_yds","interceptions_avg","interceptions_td", 
+        "defensive_pd", "defensive_td"
+    ]
 }
 
-# Column rename mapping for display purposes
 COLUMN_RENAME_MAP = {
     "passing_att": "Attempts",
     "passing_pct": "Completion %",
@@ -176,10 +207,22 @@ COLUMN_RENAME_MAP = {
     "receiving_yds": "Receiving Yards",
     "receiving_td": "Receiving TDs",
     "fumbles_fum": "Fumbles",
-    "receiving_rec" : "Receptions"
+    "receiving_rec" : "Receptions",
+    "defensive_solo": "Solo Tackles",
+    "defensive_tot": "Total Tackles",
+    "defensive_tfl": "Tackles for Loss",
+    "interceptions_int": "Interceptions",
+    "interceptions_yds": "Interception Yards",
+    "interceptions_avg": "Average Int Yards",
+    "interceptions_td": "Pick Sixes",
+    "defensive_pd": "Pass Deflections",
+    "defensive_td": "Total Defensive TDs",
+    "defensive_sacks":"Sacks",
+    "defensive_qb_hur":"QB Hurries",
+    "receiving_ypc":"Yards Per Catch",
+    "receiving_ypr":"Yards Per Reception"
 }
 
-# Other configuration variables (e.g., paths to datasets, logo images)
 FILTERED_STATS_PATH = "filtered_player_stats_full.csv"
 COMBINE_STATS_PATH = "combine_data_unique_athlete_id_step4.csv"
 LOGO_PATH = "1.png"

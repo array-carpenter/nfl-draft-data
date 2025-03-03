@@ -1,4 +1,3 @@
-# plotting.py
 import io
 import urllib.request
 import numpy as np
@@ -7,6 +6,7 @@ import matplotlib.image as mpimg
 from matplotlib.table import Table
 from PIL import Image
 import pandas as pd
+import os
 
 from config import ROBOTO, TEAM_COLORS, COLUMN_RENAME_MAP, LOGO_PATH
 
@@ -22,9 +22,6 @@ class DraftComparisonPlotter:
         self.input_player = input_player
 
     def _get_headshot_url(self, player: str) -> str:
-        """
-        Returns the headshot URL for the given player using their athlete_id.
-        """
         df_player = self.stats_df[self.stats_df["player"] == player]
         if df_player.empty:
             raise ValueError(f"No data found for player: {player}")
@@ -34,14 +31,10 @@ class DraftComparisonPlotter:
         return f"https://a.espncdn.com/combiner/i?img=/i/headshots/college-football/players/full/{athlete_id}.png?w=350&h=254"
 
     def _get_latest_teams(self):
-        """
-        Returns a dictionary mapping players to their most recent team.
-        Assumes that the 'year' column exists in the data.
-        """
         latest_teams = self.stats_df.loc[self.stats_df.groupby("player")["year"].idxmax(), ["player", "team"]]
         return latest_teams.set_index("player")["team"].to_dict()
 
-    def create_plot(self):
+    def create_plot(self, save=False):
         # Get the dynamic headshot URL and load the image
         headshot_url = self._get_headshot_url(self.input_player)
         with urllib.request.urlopen(headshot_url) as url:
@@ -113,7 +106,16 @@ class DraftComparisonPlotter:
         # Build the comparison table below the radar charts
         self._add_comparison_table(fig, valid_metrics, comparison_players, latest_teams_dict)
 
-        plt.show()
+        # Save or show the plot
+        if save:
+            folder = "2025_post_combine"
+            os.makedirs(folder, exist_ok=True)
+            filename = os.path.join(folder, f"{self.input_player.replace(' ', '_')}_post_combine.png")
+            plt.savefig(filename, bbox_inches="tight")
+            plt.close(fig)
+            print(f"Plot saved to {filename}")
+        else:
+            plt.show()
 
     def _add_comparison_table(self, fig, valid_metrics, comparison_players, latest_teams_dict):
         """
@@ -125,7 +127,6 @@ class DraftComparisonPlotter:
         cell_width = 1.0 / (len(comparison_players) + 1)
         cell_height = 1 / (len(valid_metrics) + 3)  # +3 rows for header and team row
         
-        # Prepare data: pivot the processed data (rows are metrics)
         comparison_data = self.proc.processed_df.set_index("player").loc[comparison_players, valid_metrics]
         comparison_data_t = comparison_data.transpose()
         comparison_data_t.rename(index=COLUMN_RENAME_MAP, inplace=True)
@@ -153,10 +154,15 @@ class DraftComparisonPlotter:
             cell.get_text().set_fontsize(table_fontsize)
             cell.visible_edges = "horizontal"
             for col_idx, val in enumerate(row_vals):
-                if row_name == "Yards per Attempt":
+                # Check if this metric should retain decimals
+                if row_name in self.proc.non_round_metrics:
+                    formatted_val = f"{val:.1f}"
+                elif row_name == "Yards per Attempt":
                     formatted_val = f"{val:.2f}"
                 elif row_name == "Completion %":
                     formatted_val = f"{val:.1f}%"
+                elif row_name == "Defensive Sacks":
+                    formatted_val = f"{val:.1f}"
                 else:
                     formatted_val = f"{int(val)}"
                 cell = table.add_cell(row_idx + 2, col_idx + 1, cell_width, cell_height,

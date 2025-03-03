@@ -1,85 +1,153 @@
-# data_processor.py
 import numpy as np
 import pandas as pd
 from scipy.stats import rankdata
-from config import POSITION_BASELINES
+from config import POSITION_BASELINES, COMBINE_STATS_PATH
+from sklearn.neighbors import NearestNeighbors
 
 class DataProcessor:
     def __init__(self, stats_df: pd.DataFrame):
         """
-        Initialize with the merged stats dataframe.
+        Initialize with the filtered stats dataframe.
+        Note: This processor will merge the combine data dynamically.
         """
         self.stats_df = stats_df.copy()
         self.processed_df = None
         self.percentile_df = None
         self.comparison_players = None
+        self.radar_data = None
+        self.valid_metrics = None
+        self.player_position = None
+        # Specify combine metrics that should retain their decimal precision in display.
+        self.non_round_metrics = ["Height (in)", "Hand Size (in)", "Arm Length (in)"]
 
     def process(self, input_player: str):
         """
         Process the data for a given input player:
-          - Filter to players with the same position as input_player.
-          - Aggregate stats across seasons.
-          - Correct percentage and derived metrics.
-          - Compute percentile ranks.
-          - Calculate similarity using Euclidean distance.
+          - Merge combine stats from the combine CSV.
+          - Filter to players with the same position (FS & SS combined as "S").
+          - Dynamically add combine stat metrics if the selected player's value is not NA.
+          - Aggregate stats across seasons using "sum" for cumulative stats and "first" for combine stats.
+            Note: interceptions_avg is aggregated using the mean.
+          - Correct derived metrics.
+          - Compute percentile ranks (scaled to 0–100) for similarity search and radar charts.
+          - Use KNN on these percentiles to find similar players.
+          - Prepare radar data for the comparison plot.
         """
-        # Get the player's position
-        player_position = self.stats_df.loc[self.stats_df["player"] == input_player, "position"].values[0]
-        
-        # Get the baseline metrics for the player's position
-        valid_metrics = [m for m in POSITION_BASELINES.get(player_position, []) if m in self.stats_df.columns]
+        # --- 1. Merge combine data ---
+        combine_columns = [
+            "POS_GP","Height (in)", "Weight (lbs)", "Hand Size (in)", "Arm Length (in)",
+            "Wonderlic", "40 Yard", "Bench Press", "Vert Leap (in)",
+            "Broad Jump (in)", "Shuttle", "3Cone", "60Yd Shuttle"
+        ]
+        try:
+            combine_df = pd.read_csv(COMBINE_STATS_PATH, usecols=["athlete_id"] + combine_columns)
+        except Exception as e:
+            print("Error reading combine data:", e)
+            combine_df = pd.DataFrame()
+
+        if not combine_df.empty:
+            # Merge on athlete_id
+            df = pd.merge(self.stats_df, combine_df, on="athlete_id", how="left")
+        else:
+            df = self.stats_df.copy()
+
+        # Validate player
+        if input_player not in df["player"].unique():
+            raise ValueError(f"Input player {input_player} not found in data.")
+            
+    # POS_GP has broader positional nets (Ex: OL where POS field has OT, OG, C)
+        player_position = df.loc[df["player"] == input_player, "POS_GP"].values[0]
+        if player_position in ["FS", "SS"]:
+            position_key = "S"
+            df = df[df["POS_GP"].isin(["FS", "SS"])]
+        else:
+            position_key = player_position
+            df = df[df["POS_GP"] == player_position]
+
+        baseline_metrics = POSITION_BASELINES.get(position_key, [])
+        valid_metrics = [m for m in baseline_metrics if m in df.columns]
+
+        for stat in combine_columns:
+            if stat in df.columns:
+                player_val = df.loc[df["player"] == input_player, stat]
+            if not player_val.empty and pd.notnull(player_val.iloc[0]) and stat not in valid_metrics:
+                valid_metrics.append(stat)
+
+        if "POS_GP" in valid_metrics:
+            valid_metrics.remove("POS_GP")
+
+
+        print("Valid metrics being used:", valid_metrics)
         if not valid_metrics:
-            raise ValueError(f"No valid metrics found for position: {player_position}")
+            raise ValueError(f"No valid metrics found for position: {position_key}")
 
-        # Filter players by position
-        df = self.stats_df[self.stats_df["position"] == player_position]
+        # Sum stats for each season
+        for stat in combine_columns:
+            if stat in df.columns:
+                df[stat] = pd.to_numeric(df[stat], errors="coerce")
+        numeric_cols = df.select_dtypes(include="number").columns.tolist()
+        agg_funcs = {col: "sum" for col in numeric_cols if col not in combine_columns}
+        # Average field
+        if "interceptions_avg" in agg_funcs:
+            agg_funcs["interceptions_avg"] = "mean"
+        for stat in combine_columns:
+            if stat in df.columns:
+                agg_funcs[stat] = "first"
+        df_sum = df.groupby("player").agg(agg_funcs).reset_index()
 
-        # Sum player stats across seasons (for non-percentage metrics)
-        df_sum = df.groupby("player").sum().reset_index()
-
-        # Correct percentage and derived metrics
         if "passing_pct" in df.columns:
             passing_pct_avg = df.groupby("player")["passing_pct"].mean().reset_index()
-            df_sum = df_sum.merge(passing_pct_avg, on="player", how="left")
-            df_sum["passing_pct"] = df_sum["passing_pct_y"] * 100  # Convert to percentage
-            df_sum.drop(columns=["passing_pct_y"], inplace=True)
-
-        # Correct Yards per Carry (rushing_ypc = rushing_yds / rushing_car)
-        if "rushing_ypc" in df.columns and "rushing_yds" in df.columns and "rushing_car" in df.columns:
+            df_sum = df_sum.merge(passing_pct_avg, on="player", how="left", suffixes=("", "_mean"))
+            df_sum["passing_pct"] = df_sum["passing_pct_mean"] * 100
+            df_sum.drop(columns=["passing_pct_mean"], inplace=True)
+        
+        if "receiving_rec" in df_sum.columns and "receiving_yds" in df_sum.columns:
+            df_sum["receiving_ypr"] = df_sum.apply(
+                lambda row: row["receiving_yds"] / row["receiving_rec"] if row["receiving_rec"] > 0 else 0,
+                axis=1
+            )
+        
+        if all(col in df.columns for col in ["rushing_yds", "rushing_car", "rushing_ypc"]):
             rushing_ypc_avg = df.groupby("player").apply(
                 lambda x: x["rushing_yds"].sum() / x["rushing_car"].sum() if x["rushing_car"].sum() > 0 else 0
             ).reset_index(name="rushing_ypc")
-            
-            df_sum.drop(columns=["rushing_ypc"], errors="ignore", inplace=True)  # Remove incorrect summed column
+            df_sum.drop(columns=["rushing_ypc"], errors="ignore", inplace=True)
             df_sum = df_sum.merge(rushing_ypc_avg, on="player", how="left")
-
-        # Ensure valid metrics are numeric
+        
+    
         df_sum[valid_metrics] = df_sum[valid_metrics].apply(pd.to_numeric, errors="coerce").fillna(0)
 
         self.processed_df = df_sum
         self.valid_metrics = valid_metrics
+        print("Processed DataFrame columns:", self.processed_df.columns)
 
-        # Compute percentile ranks
+        # Percentiles
+        reverse_metrics = {"passing_int"} 
         self.percentile_df = df_sum.copy()
         for metric in valid_metrics:
-            self.percentile_df[metric] = rankdata(df_sum[metric], method="average") / len(df_sum)
+            percentile_values = rankdata(df_sum[metric], method="average") / len(df_sum) * 100
+            if metric in reverse_metrics:
+                self.percentile_df[metric] = 100 - percentile_values
+            else:
+                self.percentile_df[metric] = percentile_values
 
-        # Extract the player's data in percentile form
-        player_percentiles = self.percentile_df[self.percentile_df["player"] == input_player][valid_metrics].iloc[0]
-
-        # Compute similarity (Euclidean distance) to other players
-        self.percentile_df["similarity"] = self.percentile_df[valid_metrics].apply(
-            lambda row: np.linalg.norm(row - player_percentiles), axis=1
+        # KNN algo for neighboring players
+        knn = NearestNeighbors(n_neighbors=4, metric='euclidean')
+        knn.fit(self.percentile_df[valid_metrics].values)
+        input_index = self.percentile_df[self.percentile_df["player"] == input_player].index[0]
+        distances, indices = knn.kneighbors(
+            self.percentile_df.loc[input_index, valid_metrics].values.reshape(1, -1)
         )
+        neighbor_indices = list(indices[0])
+        if input_index in neighbor_indices:
+            neighbor_indices.remove(input_index)
+        top3_players = self.percentile_df.loc[neighbor_indices, "player"].tolist()
+        self.comparison_players = [input_player] + top3_players
 
-        # Get the top 3 closest players (excluding the input player)
-        top3 = self.percentile_df[self.percentile_df["player"] != input_player].nsmallest(3, "similarity")
-        self.comparison_players = [input_player] + top3["player"].tolist()
-
-        # Store percentile values for plotting
+        # Radar
         self.radar_data = [
             self.percentile_df[self.percentile_df["player"] == p][valid_metrics].iloc[0].values
             for p in self.comparison_players
         ]
-        # Store player's position (for use in plot title, etc.)
-        self.player_position = player_position
+
+        self.player_position = position_key
