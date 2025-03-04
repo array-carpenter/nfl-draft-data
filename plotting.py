@@ -35,67 +35,64 @@ class DraftComparisonPlotter:
         return latest_teams.set_index("player")["team"].to_dict()
 
     def create_plot(self, save=False):
-        # Get the dynamic headshot URL and load the image
         headshot_url = self._get_headshot_url(self.input_player)
         with urllib.request.urlopen(headshot_url) as url:
             player_image = Image.open(io.BytesIO(url.read()))
-        
-        # Create the figure
+
         fig = plt.figure(figsize=(18, 12))
         fig.patch.set_facecolor("white")
-        
-        # Display headshot
+
         player_img_ax = fig.add_axes([0.01, 0.76, 0.15, 0.15], frameon=False)
         player_img_ax.imshow(player_image)
         player_img_ax.set_xticks([])
         player_img_ax.set_yticks([])
 
-        # Title and footer
         title_text = f"{self.input_player} ({self.proc.player_position}) NFL Draft Comparison"
         fig.text(0.18, 0.82, title_text, fontsize=40, fontweight="bold",
-                 ha="left", fontproperties=ROBOTO)
+                    ha="left", fontproperties=ROBOTO)
         fig.text(0.18, 0.78,
-                 "Ray Carpenter | @array-carpenter | TheSpade.substack.com | Player Stats Data: CFBFastR | Combine Data: NFLCombineResults.com",
-                 fontsize=12, fontweight="bold", ha="left", color="gray", fontproperties=ROBOTO)
+                    "Ray Carpenter | @array-carpenter | TheSpade.substack.com | Player Stats Data: CFBFastR | Combine Data: NFLCombineResults.com",
+                    fontsize=12, fontweight="bold", ha="left", color="gray", fontproperties=ROBOTO)
 
-        # Divider line
         divider_ax = fig.add_axes([0, 0.75, 1, 0.005])
         divider_ax.set_facecolor("black")
         divider_ax.set_xticks([])
         divider_ax.set_yticks([])
 
-        # Display logo
         logo_ax = fig.add_axes([0.03, 0.55, 0.15, 0.15], frameon=False)
         logo_img = mpimg.imread(LOGO_PATH)
         logo_ax.imshow(logo_img)
         logo_ax.set_xticks([])
         logo_ax.set_yticks([])
 
-        # Prepare radar chart settings
         valid_metrics = self.proc.valid_metrics
         data_for_radar = self.proc.radar_data
+        comparison_players = self.proc.comparison_players
+
+        print(f"\nPercentile Rankings for {self.input_player}:\n")
+        input_player_idx = comparison_players.index(self.input_player)
+        for metric, percentile in zip(valid_metrics, data_for_radar[input_player_idx]):
+            display_name = COLUMN_RENAME_MAP.get(metric, metric)
+            print(f"{display_name}: {percentile:.1f}")
+
         num_vars = len(valid_metrics)
         angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False)
         angles_closed = np.concatenate([angles, [angles[0]]])
-        comparison_players = self.proc.comparison_players
         latest_teams_dict = self._get_latest_teams()
         player_colors = [TEAM_COLORS.get(latest_teams_dict.get(player, ""), "gray") for player in comparison_players]
-        
+
         radar_height = 0.15
         radar_width = 0.15
-        radar_y = 0.55  
+        radar_y = 0.55
         num_players = len(comparison_players)
         col_centers = np.linspace(0.3, 0.9, num_players)
-        
-        # Plot radar charts for each player
+
         for i, player_name in enumerate(comparison_players):
             ax_pos = [col_centers[i] - radar_width / 2, radar_y, radar_width, radar_height]
             rax = fig.add_axes(ax_pos, polar=True)
-            # Plot the input player's data as reference
             pvec_input = np.concatenate([data_for_radar[0], [data_for_radar[0][0]]])
             rax.plot(angles_closed, pvec_input, color=player_colors[0], linewidth=2, label=self.input_player)
             rax.fill(angles_closed, pvec_input, color=player_colors[0], alpha=0.2)
-            # Plot the comparison player's data if not the input
             if i > 0:
                 pvec = np.concatenate([data_for_radar[i], [data_for_radar[i][0]]])
                 rax.plot(angles_closed, pvec, color=player_colors[i], linewidth=2, label=player_name)
@@ -103,10 +100,8 @@ class DraftComparisonPlotter:
             rax.set_yticklabels([])
             rax.set_xticks([])
 
-        # Build the comparison table below the radar charts
         self._add_comparison_table(fig, valid_metrics, comparison_players, latest_teams_dict)
 
-        # Save or show the plot
         if save:
             folder = "2025_post_combine"
             os.makedirs(folder, exist_ok=True)
@@ -116,6 +111,7 @@ class DraftComparisonPlotter:
             print(f"Plot saved to {filename}")
         else:
             plt.show()
+
 
     def _add_comparison_table(self, fig, valid_metrics, comparison_players, latest_teams_dict):
         """
@@ -154,9 +150,9 @@ class DraftComparisonPlotter:
             cell.get_text().set_fontsize(table_fontsize)
             cell.visible_edges = "horizontal"
             for col_idx, val in enumerate(row_vals):
-                # Check if this metric should retain decimals
-                if row_name in self.proc.non_round_metrics:
-                    formatted_val = f"{val:.1f}"
+    # Check if this metric should retain decimals
+                if row_name in {"40-Yard Dash", "3-Cone Drill", "Height (in)", "Hand Size (in)", "Arm Length (in)","Shuttle"}:
+                    formatted_val = f"{val:.2f}"
                 elif row_name == "Yards per Attempt":
                     formatted_val = f"{val:.2f}"
                 elif row_name == "Completion %":
@@ -165,6 +161,7 @@ class DraftComparisonPlotter:
                     formatted_val = f"{val:.1f}"
                 else:
                     formatted_val = f"{int(val)}"
+
                 cell = table.add_cell(row_idx + 2, col_idx + 1, cell_width, cell_height,
                                       text=formatted_val, loc="center", fontproperties=ROBOTO)
                 cell.get_text().set_fontsize(table_fontsize)
