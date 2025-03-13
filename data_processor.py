@@ -17,8 +17,7 @@ class DataProcessor:
         self.radar_data = None
         self.valid_metrics = None
         self.player_position = None
-        # Specify combine metrics that should retain their decimal precision in display.
-        self.non_round_metrics = ["Height (in)", "Hand Size (in)", "Arm Length (in)","40 Yard","3Cone","Shuttle"]
+        self.non_round_metrics = ["Height (in)", "Hand Size (in)", "Arm Length (in)", "40 Yard","3Cone","Shuttle"]
 
     def process(self, input_player: str):
         combine_columns = [
@@ -68,12 +67,18 @@ class DataProcessor:
             if stat in df.columns:
                 df[stat] = pd.to_numeric(df[stat], errors="coerce")
         numeric_cols = df.select_dtypes(include="number").columns.tolist()
+
         agg_funcs = {col: "sum" for col in numeric_cols if col not in combine_columns}
+
         if "interceptions_avg" in agg_funcs:
             agg_funcs["interceptions_avg"] = "mean"
+        if "passing_ypa" in agg_funcs:
+            agg_funcs["passing_ypa"] = "mean"
+
         for stat in combine_columns:
             if stat in df.columns:
                 agg_funcs[stat] = "first"
+
         df_sum = df.groupby("player").agg(agg_funcs).reset_index()
 
         if "passing_pct" in df.columns:
@@ -101,7 +106,6 @@ class DataProcessor:
         self.processed_df = df_sum
         self.valid_metrics = valid_metrics
        
-
         reverse_metrics = {"passing_int", "40 Yard", "3Cone", "Shuttle","Fumbles"}
         self.percentile_df = df_sum.copy()
         for metric in valid_metrics:
