@@ -214,10 +214,12 @@ class DraftComparisonPlotter:
             for col_idx, val in enumerate(row_vals):
                 if row_name in {
                     "40-Yard Dash", "3-Cone Drill", "Height (in)",
-                    "Hand Size (in)", "Arm Length (in)", "Shuttle"
+                    "Hand Size (in)", "Arm Length (in)", "Shuttle","Yards per Carry"
                 }:
                     formatted_val = f"{val:.2f}"
                 elif row_name == "Yards per Attempt":
+                    formatted_val = f"{val:.2f}"
+                elif row_name == "Yards per Carry":
                     formatted_val = f"{val:.2f}"
                 elif row_name == "Completion %":
                     formatted_val = f"{val:.1f}%"

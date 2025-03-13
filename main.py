@@ -7,7 +7,7 @@ def main():
     # Load and merge data
     stats_df = load_data(FILTERED_STATS_PATH, COMBINE_STATS_PATH)
     
-    input_player = "Seth Henigan"
+    input_player = "Omarion Hampton"
     
     # Process the data for the input player
     processor = DataProcessor(stats_df)
