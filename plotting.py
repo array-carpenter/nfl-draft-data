@@ -28,19 +28,25 @@ class DraftComparisonPlotter:
         if "athlete_id" not in df_player.columns:
             raise ValueError("The column 'athlete_id' is not present in the data. Please check your combine file.")
         athlete_id = df_player["athlete_id"].iloc[0]
-        return f"https://a.espncdn.com/combiner/i?img=/i/headshots/college-football/players/full/{athlete_id}.png?w=350&h=254"
+        return (
+            f"https://a.espncdn.com/combiner/i?img=/i/headshots/college-football/players/full/{athlete_id}.png?"
+            "w=350&h=254"
+        )
 
     def _get_latest_teams(self):
-        latest_teams = self.stats_df.loc[self.stats_df.groupby("player")["year"].idxmax(), ["player", "team"]]
+        latest_teams = self.stats_df.loc[
+            self.stats_df.groupby("player")["year"].idxmax(), ["player", "team"]
+        ]
         return latest_teams.set_index("player")["team"].to_dict()
 
     def create_plot(self, save=False):
+        # Increase figure size dramatically
+        fig = plt.figure(figsize=(28, 18))
+        fig.patch.set_facecolor("white")
+
         headshot_url = self._get_headshot_url(self.input_player)
         with urllib.request.urlopen(headshot_url) as url:
             player_image = Image.open(io.BytesIO(url.read()))
-
-        fig = plt.figure(figsize=(18, 12))
-        fig.patch.set_facecolor("white")
 
         player_img_ax = fig.add_axes([0.01, 0.76, 0.15, 0.15], frameon=False)
         player_img_ax.imshow(player_image)
@@ -48,11 +54,17 @@ class DraftComparisonPlotter:
         player_img_ax.set_yticks([])
 
         title_text = f"{self.input_player} ({self.proc.player_position}) NFL Draft Comparison"
-        fig.text(0.18, 0.82, title_text, fontsize=40, fontweight="bold",
-                    ha="left", fontproperties=ROBOTO)
-        fig.text(0.18, 0.78,
-                    "Ray Carpenter | @array-carpenter | TheSpade.substack.com | Player Stats Data: CFBFastR | Combine Data: NFLCombineResults.com",
-                    fontsize=12, fontweight="bold", ha="left", color="gray", fontproperties=ROBOTO)
+        fig.text(
+            0.18, 0.82, title_text,
+            fontsize=40, fontweight="bold",
+            ha="left", fontproperties=ROBOTO
+        )
+        fig.text(
+            0.18, 0.78,
+            "Ray Carpenter | TheSpade.substack.com | "
+            "Player Stats Data: CFBFastR | Combine Data Since 2008 (Pro Day Adjusted): NFLCombineResults.com",
+            fontsize=18, fontweight="bold", ha="left", color="gray", fontproperties=ROBOTO
+        )
 
         divider_ax = fig.add_axes([0, 0.75, 1, 0.005])
         divider_ax.set_facecolor("black")
@@ -78,8 +90,12 @@ class DraftComparisonPlotter:
         num_vars = len(valid_metrics)
         angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False)
         angles_closed = np.concatenate([angles, [angles[0]]])
+
         latest_teams_dict = self._get_latest_teams()
-        player_colors = [TEAM_COLORS.get(latest_teams_dict.get(player, ""), "gray") for player in comparison_players]
+        player_colors = [
+            TEAM_COLORS.get(latest_teams_dict.get(player, ""), "gray")
+            for player in comparison_players
+        ]
 
         radar_height = 0.15
         radar_width = 0.15
@@ -87,16 +103,32 @@ class DraftComparisonPlotter:
         num_players = len(comparison_players)
         col_centers = np.linspace(0.3, 0.9, num_players)
 
+        # Plot the radar charts
         for i, player_name in enumerate(comparison_players):
-            ax_pos = [col_centers[i] - radar_width / 2, radar_y, radar_width, radar_height]
+            ax_pos = [
+                col_centers[i] - radar_width / 2,
+                radar_y,
+                radar_width,
+                radar_height
+            ]
             rax = fig.add_axes(ax_pos, polar=True)
+
+            # Input player's radar
             pvec_input = np.concatenate([data_for_radar[0], [data_for_radar[0][0]]])
-            rax.plot(angles_closed, pvec_input, color=player_colors[0], linewidth=2, label=self.input_player)
+            rax.plot(
+                angles_closed, pvec_input,
+                color=player_colors[0], linewidth=2, label=self.input_player
+            )
             rax.fill(angles_closed, pvec_input, color=player_colors[0], alpha=0.2)
+
             if i > 0:
                 pvec = np.concatenate([data_for_radar[i], [data_for_radar[i][0]]])
-                rax.plot(angles_closed, pvec, color=player_colors[i], linewidth=2, label=player_name)
+                rax.plot(
+                    angles_closed, pvec,
+                    color=player_colors[i], linewidth=2, label=player_name
+                )
                 rax.fill(angles_closed, pvec, color=player_colors[i], alpha=0.2)
+
             rax.set_yticklabels([])
             rax.set_xticks([])
 
@@ -105,53 +137,85 @@ class DraftComparisonPlotter:
         if save:
             folder = "2025_post_combine"
             os.makedirs(folder, exist_ok=True)
-            filename = os.path.join(folder, f"{self.input_player.replace(' ', '_')}_post_combine.png")
+            filename = os.path.join(
+                folder,
+                f"{self.input_player.replace(' ', '_')}_post_combine.png"
+            )
             plt.savefig(filename, bbox_inches="tight")
             plt.close(fig)
             print(f"Plot saved to {filename}")
         else:
             plt.show()
 
-
     def _add_comparison_table(self, fig, valid_metrics, comparison_players, latest_teams_dict):
         """
         Adds a table to the figure showing comparison metrics.
         """
-        table_ax = fig.add_axes([0, 0.1, 1, 0.35])
+
+        table_ax = fig.add_axes([0, 0.05, 1, 0.5]) 
         table_ax.set_axis_off()
+
         table = Table(table_ax, bbox=[0, 0, 1, 1])
-        cell_width = 1.0 / (len(comparison_players) + 1)
-        cell_height = 1 / (len(valid_metrics) + 3)  # +3 rows for header and team row
-        
-        comparison_data = self.proc.processed_df.set_index("player").loc[comparison_players, valid_metrics]
-        comparison_data_t = comparison_data.transpose()
-        comparison_data_t.rename(index=COLUMN_RENAME_MAP, inplace=True)
+
         table_fontsize = 22
 
-        # Add column headers (player names)
-        for col_idx, column in enumerate(comparison_data_t.columns):
-            cell = table.add_cell(0, col_idx + 1, cell_width, cell_height,
-                                  text=column, loc="center", facecolor="#cccccc")
-            cell.get_text().set_fontsize(table_fontsize)
-            cell.visible_edges = ''
+        comparison_data = self.proc.processed_df.set_index("player").loc[
+            comparison_players, valid_metrics
+        ]
+        comparison_data_t = comparison_data.transpose()
+        comparison_data_t.rename(index=COLUMN_RENAME_MAP, inplace=True)
 
-        # Add team row underneath the headers
+
+        num_rows = len(valid_metrics) + 2
+
+        cell_width = 1.0 / (len(comparison_data_t.columns) + 1)
+        cell_height = 1.0 / (num_rows)  
+
+        for col_idx, column in enumerate(comparison_data_t.columns):
+            cell = table.add_cell(
+                row=0, col=col_idx + 1,
+                width=cell_width, height=cell_height,
+                text=column,
+                loc="center",
+                facecolor="#cccccc"
+            )
+            cell.get_text().set_fontsize(table_fontsize)
+            cell.visible_edges = ""
+
         for col_idx, player in enumerate(comparison_data_t.columns):
             team = latest_teams_dict.get(player, "N/A")
-            cell = table.add_cell(1, col_idx + 1, cell_width, cell_height,
-                                  text=team, loc="center", facecolor="#f0f0f0", fontproperties=ROBOTO)
+            cell = table.add_cell(
+                row=1, col=col_idx + 1,
+                width=cell_width, height=cell_height,
+                text=team,
+                loc="center",
+                facecolor="#f0f0f0",
+                fontproperties=ROBOTO
+            )
             cell.get_text().set_fontsize(table_fontsize)
-            cell.visible_edges = ''
+            cell.visible_edges = ""
 
-        # Add row labels and data cells
         for row_idx, (row_name, row_vals) in enumerate(comparison_data_t.iterrows()):
-            cell = table.add_cell(row_idx + 2, 0, cell_width, cell_height,
-                                  text=row_name, loc="center", facecolor="#cccccc", fontproperties=ROBOTO)
+            row_num = row_idx + 2  
+
+            cell = table.add_cell(
+                row=row_num,
+                col=0,
+                width=cell_width,
+                height=cell_height,
+                text=row_name,
+                loc="center",
+                facecolor="#cccccc",
+                fontproperties=ROBOTO
+            )
             cell.get_text().set_fontsize(table_fontsize)
             cell.visible_edges = "horizontal"
+
             for col_idx, val in enumerate(row_vals):
-    # Check if this metric should retain decimals
-                if row_name in {"40-Yard Dash", "3-Cone Drill", "Height (in)", "Hand Size (in)", "Arm Length (in)","Shuttle"}:
+                if row_name in {
+                    "40-Yard Dash", "3-Cone Drill", "Height (in)",
+                    "Hand Size (in)", "Arm Length (in)", "Shuttle"
+                }:
                     formatted_val = f"{val:.2f}"
                 elif row_name == "Yards per Attempt":
                     formatted_val = f"{val:.2f}"
@@ -162,8 +226,18 @@ class DraftComparisonPlotter:
                 else:
                     formatted_val = f"{int(val)}"
 
-                cell = table.add_cell(row_idx + 2, col_idx + 1, cell_width, cell_height,
-                                      text=formatted_val, loc="center", fontproperties=ROBOTO)
+                cell = table.add_cell(
+                    row=row_num,
+                    col=col_idx + 1,
+                    width=cell_width,
+                    height=cell_height,
+                    text=formatted_val,
+                    loc="center",
+                    fontproperties=ROBOTO
+                )
                 cell.get_text().set_fontsize(table_fontsize)
-                cell.visible_edges = 'horizontal'
+                cell.visible_edges = "horizontal"
+
         table_ax.add_table(table)
+
+        table.scale(1.0, 1.3)

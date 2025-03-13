@@ -178,7 +178,7 @@ TEAM_COLORS = {
 
 POSITION_BASELINES = {
     "QB": [
-        "passing_att", "passing_pct", "passing_yds", "passing_td",
+        "passing_att", "passing_completions","passing_pct", "passing_yds", "passing_td",
         "passing_ypa", "passing_int", "rushing_car", "rushing_yds",
         "rushing_td", "fumbles_fum"
     ],
@@ -199,6 +199,11 @@ POSITION_BASELINES = {
         "interceptions_yds","interceptions_avg","interceptions_td", 
         "defensive_pd", "defensive_td"
     ],
+    "DB": [
+        "defensive_solo","defensive_tot","defensive_tfl","interceptions_int",
+        "interceptions_yds","interceptions_avg","interceptions_td", 
+        "defensive_pd", "defensive_td"
+    ],
     "S": [
         "defensive_solo","defensive_tot","defensive_tfl","interceptions_int",
         "interceptions_yds","interceptions_avg","interceptions_td", 
@@ -209,6 +214,8 @@ POSITION_BASELINES = {
     ],
     "DT": [
         "defensive_solo","defensive_tot","defensive_tfl","defensive_sacks","defensive_qb_hur"],
+    "DL": [
+        "defensive_solo","defensive_tot","defensive_tfl","defensive_sacks","defensive_qb_hur"],
     "OLB": [
         "defensive_solo","defensive_tot","defensive_tfl","defensive_sacks","defensive_qb_hur","interceptions_int",
         "interceptions_yds","interceptions_avg","interceptions_td", 
@@ -218,6 +225,7 @@ POSITION_BASELINES = {
 
 COLUMN_RENAME_MAP = {
     "passing_att": "Attempts",
+    "passing_completions":"Completions",
     "passing_pct": "Completion %",
     "passing_yds": "Passing Yards",
     "passing_td": "Passing TDs",
