@@ -39,6 +39,7 @@ TEAM_COLORS = {
     "Columbia":"#003865",
     "Cornell":"#B31B1B",
     "Dartmouth":"#046A38",
+    "Delaware":"#00539f",
     "Duke": "#00539B",
     "East Carolina": "#592A8A",
     "Eastern Michigan": "#006633",

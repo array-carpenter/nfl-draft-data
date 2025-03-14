@@ -36,6 +36,9 @@ class DataProcessor:
         else:
             df = self.stats_df.copy()
 
+        # FIX: Remove duplicates to prevent inflated stats
+        df = df.drop_duplicates(subset=["player", "year", "team", "athlete_id"])
+
         if input_player not in df["player"].unique():
             raise ValueError(f"Input player {input_player} not found in data.")
 
@@ -58,10 +61,6 @@ class DataProcessor:
 
         if "POS_GP" in valid_metrics:
             valid_metrics.remove("POS_GP")
-
-        print("Valid metrics being used:", valid_metrics)
-        if not valid_metrics:
-            raise ValueError(f"No valid metrics found for position: {position_key}")
 
         for stat in combine_columns:
             if stat in df.columns:
@@ -106,7 +105,7 @@ class DataProcessor:
         self.processed_df = df_sum
         self.valid_metrics = valid_metrics
        
-        reverse_metrics = {"passing_int", "40 Yard", "3Cone", "Shuttle","Fumbles"}
+        reverse_metrics = {"passing_int", "40 Yard", "3Cone", "Shuttle", "Fumbles"}
         self.percentile_df = df_sum.copy()
         for metric in valid_metrics:
             percentile_values = rankdata(df_sum[metric], method="average") / len(df_sum) * 100

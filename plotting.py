@@ -219,7 +219,7 @@ class DraftComparisonPlotter:
                     formatted_val = f"{val:.2f}"
                 elif row_name == "Yards per Attempt":
                     formatted_val = f"{val:.2f}"
-                elif row_name == "Yards per Carry":
+                elif row_name == "Yards per Attempt":
                     formatted_val = f"{val:.2f}"
                 elif row_name == "Completion %":
                     formatted_val = f"{val:.1f}%"
