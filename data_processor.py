@@ -95,12 +95,10 @@ class DataProcessor:
 
         if all(col in df.columns for col in ["rushing_yds", "rushing_car", "rushing_ypc"]):
             rushing_ypc_avg = df.groupby("player").apply(
-                lambda x: round(x["rushing_yds"].sum() / x["rushing_car"].sum(), 2) if x["rushing_car"].sum() > 0 else 0.00
+                lambda x: x["rushing_yds"].sum() / x["rushing_car"].sum() if x["rushing_car"].sum() > 0 else 0
             ).reset_index(name="rushing_ypc")
             df_sum.drop(columns=["rushing_ypc"], errors="ignore", inplace=True)
-            df_sum["rushing_ypc"] = df_sum["rushing_ypc"].round(2)
             df_sum = df_sum.merge(rushing_ypc_avg, on="player", how="left")
-
 
         df_sum[valid_metrics] = df_sum[valid_metrics].apply(pd.to_numeric, errors="coerce").fillna(0)
         df_sum = df_sum.drop(columns=["POS_GP"], errors="ignore")
