@@ -36,7 +36,6 @@ class DataProcessor:
         else:
             df = self.stats_df.copy()
 
-        # FIX: Remove duplicates to prevent inflated stats
         df = df.drop_duplicates(subset=["player", "year", "team", "athlete_id"])
 
         if input_player not in df["player"].unique():
