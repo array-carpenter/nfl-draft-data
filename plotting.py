@@ -6,7 +6,11 @@ import matplotlib.image as mpimg
 from matplotlib.table import Table
 from PIL import Image
 import pandas as pd
+from scipy.stats import gaussian_kde
+from sklearn.neighbors import KernelDensity
 import os
+import matplotlib.gridspec as gridspec
+import seaborn as sns
 
 from config import ROBOTO, TEAM_COLORS, COLUMN_RENAME_MAP, LOGO_PATH
 
@@ -243,3 +247,77 @@ class DraftComparisonPlotter:
         table_ax.add_table(table)
 
         table.scale(1.0, 1.3)
+class SinglePlayerPlotter:
+    def __init__(self, processed_data, original_stats_df, input_player: str):
+        self.proc = processed_data
+        self.input_player = input_player
+        self.stats_df = original_stats_df
+
+    def _get_player_team(self):
+        player_df = self.stats_df[self.stats_df['player'] == self.input_player]
+        if player_df.empty:
+            raise ValueError(f"No team data found for player {self.input_player}")
+        latest_year = player_df['year'].max()
+        return player_df[player_df['year'] == latest_year]['team'].iloc[0]
+
+    def create_plot(self, save=False):
+        fig, axes = plt.subplots(len(self.proc.valid_metrics), 1, figsize=(12, len(self.proc.valid_metrics) * 1.2), sharex=True)
+        fig.patch.set_facecolor('white')
+
+        player_team = self._get_player_team()
+        team_color = TEAM_COLORS.get(player_team, "#444444")
+
+        percentiles_df = self.proc.percentile_df
+        processed_df = self.proc.processed_df
+        valid_metrics = self.proc.valid_metrics
+
+        for i, metric in enumerate(valid_metrics[::-1]):
+            ax = axes[i]
+            values = percentiles_df[metric].dropna().values
+            player_percentile = percentiles_df.loc[percentiles_df['player'] == self.input_player, metric].values[0]
+            player_raw_value = processed_df.loc[processed_df['player'] == self.input_player, metric].values[0]
+
+            kde = gaussian_kde(values,bw_method = 0.1)
+            x_vals = np.linspace(0, 100, 200)
+            kde_vals = kde(x_vals)
+
+            ax.fill_between(x_vals, kde_vals, color='lightgrey', alpha=0.6)
+            ax.fill_between(x_vals, kde_vals, where=(x_vals <= player_percentile), color=team_color, alpha=0.9)
+
+            ax.text(-5, 0, COLUMN_RENAME_MAP.get(metric, metric), fontsize=12, fontproperties=ROBOTO, fontweight="bold", ha="right", va='center')
+
+            ax.text(.9, 0.5, f"{player_raw_value:.2f}", fontsize=11, ha="left", 
+                    va='center', fontproperties=ROBOTO, color='black', transform=ax.transAxes)
+            ax.text(.9, 0.35, f"{player_percentile:.0f}%tile", fontsize=11, ha="left", 
+                    va='center', fontproperties=ROBOTO, color=team_color, transform=ax.transAxes)
+
+            ax.set_xlim(0, 120)
+            ax.set_yticks([])
+            ax.set_ylabel('')
+
+            for spine in ax.spines.values():
+                spine.set_visible(False)
+
+            if i < len(valid_metrics) - 1:
+                ax.set_xticks([])
+
+       # axes[-1].set_xlabel("Percentile Rank", fontsize=14, fontproperties=ROBOTO, fontweight='bold')
+
+        plt.suptitle(
+            f"{self.input_player} NFL Draft Percentile Profile",
+            fontsize=22,
+            fontweight='bold',
+            fontproperties=ROBOTO,
+            color=team_color,
+            y=0.95
+        )
+
+        plt.tight_layout(rect=[0, 0, 1, 0.96])
+
+        if save:
+            filename = f"{self.input_player.replace(' ', '_')}_percentile_ridges.png"
+            plt.savefig(filename, bbox_inches='tight')
+            plt.close()
+            print(f"Plot saved to {filename}")
+        else:
+            plt.show()
