@@ -22,8 +22,8 @@ class DataProcessor:
     def process(self, input_player: str):
         combine_columns = [
             "Height (in)", "Weight (lbs)", "Hand Size (in)", "Arm Length (in)",
-            "Wonderlic", "40 Yard", "Bench Press", "Vert Leap (in)",
-            "Broad Jump (in)", "Shuttle", "3Cone", "60Yd Shuttle", "POS_GP"
+            "40 Yard", "Bench Press", "Vert Leap (in)",
+            "Broad Jump (in)", "Shuttle", "3Cone", "POS_GP"
         ]
         try:
             combine_df = pd.read_csv(COMBINE_STATS_PATH, usecols=["athlete_id"] + combine_columns)
