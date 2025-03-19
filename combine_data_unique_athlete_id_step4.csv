@@ -7745,24 +7745,30 @@ top ,player,College,POS_GP,POS,athlete_id,Height (in),Weight (lbs),Arm Length (i
 2025,Isas Waxter,villanova,DB,CB,4574105,73,209,31.75,9.5,4.56,1.53,35,124,,,
 2025,Mello Dotson,kansas,DB,CB,4431356,73,192,31.5,8.5,4.59,1.53,34.5,123,,,
 2025,Jabbar Muhammad,oregon,DB,CB,4432440,69,182,28.675,9,,,29.5,,7.01,4.19,13
-2025,Malaki Starks,Georgia,DB,S,4685530,,,,,,,,,,,
-2025,Nick Emmanwori,south carolina,DB,S,4869523
-2025,Xavier Watts,notre dame,DB,S,4431005
-2025,Billy Bowman Jr.,oklahoma,DB,S,4431194,70,192,28.5,8.975,,,,,,,
-2025,Kevin Winston Jr.,penn state,DB,S,4685617,
-2025,Lathan Ransom,ohio state,DB,S,4429110
-2025,Andrew Mukuba,texas,DB,S,4602197
-2025,RJ Mickens,clemson,DB,S,4429018
-2025,Jonas Sanker,virginia ,DB,S,4683813,72,206,32.25,9.75,,,,,,,
-2025,Maxen Hook,toledo,DB,S,4431145,72.5,202,31.5,9.125,,,,,,,
-2025,Sebastian Castro,iowa,DB,S,4426882,71,203,30.75,10.5,,,,,,,
-2025,Kitan Crawford,nevada,DB,S,4430821
-2025,Dante Trader Jr.,maryland,DB,S,4431664,71,196,31.25,8.875,,,,,,,
-2025,Malachi Moore,alabama,DB,S,4692024
-2025,Craig Woodson,california,DB,S,4428930
-2025,Jaylen Reed,penn state,DB,S,4432758
-2025,Marques Sigle,kansas state,DB,S,4693337
-2025,Hunter Wohler,wisconsin,DB,S,4432789,74,213,30.675,9.25,,,,,,,
-2025,Rayuan Lane III,navy,DB,S,4880675,71,200,30.25,9.75,,,,,,,
-2025,Malik Verdon,iowa state,DB,S,4684636
-2025,Alijah Clark,syracuse,DB,S,4595352
+2025,Malaki Starks,Georgia,DB,S,4685530,73,197,31.675,9.5,4.5,1.51,33,,7.26,4.45,
+2025,Nick Emmanwori,south carolina,DB,S,4869523,76,220,32.5,9,4.38,1.49,43,138,,,20
+2025,Xavier Watts,notre dame,DB,S,4431005,72,204,31.25,8.675,,,,,,,
+2025,Billy Bowman Jr.,oklahoma,DB,S,4431194,70,192,28.5,8.675,4.42,1.52,35.5,123,,,17
+2025,Kevin Winston Jr.,penn state,DB,S,4685617,73.5,215,32.5,9.5,,,,,,,
+2025,Lathan Ransom,ohio state,DB,S,4429110,72,206,30.5,8.5,,,,,,,
+2025,Andrew Mukuba,texas,DB,S,4602197,71,186,30,9,4.45,1.53,,,,,
+2025,RJ Mickens,clemson,DB,S,4429018,72,199,32.25,8.875,4.49,1.55,41.5,121,,,
+2025,Jonas Sanker,virginia ,DB,S,4683813,72,206,32.25,9.75,4.48,1.51,36.5,128,,,12
+2025,Maxen Hook,toledo,DB,S,4431145,72.5,202,31.5,9.125,4.55,1.55,34.5,124,,,
+2025,Sebastian Castro,iowa,DB,S,4426882,71,203,30.75,10.5,4.59,1.59,30.5,117,,4.34,
+2025,Kitan Crawford,nevada,DB,S,4430821,71,202,31,9.5,4.41,1.52,41.5,128,6.81,4.03,18
+2025,Dante Trader Jr.,maryland,DB,S,4431664,71,196,31.25,8.875,,,31,117,7.09,4.32,12
+2025,Malachi Moore,alabama,DB,S,4692024,71,196,29.675,9,,,,,,,
+2025,Craig Woodson,california,DB,S,4428930,72,200,30.5,8.75,4.45,1.53,36,127,,,13
+2025,Jaylen Reed,penn state,DB,S,4432758,72,211,30.375,9,4.49,1.51,33.5,,,,19
+2025,Marques Sigle,kansas state,DB,S,4693337,71,199,30.75,9.25,4.37,1.5,38,130,,,
+2025,Hunter Wohler,wisconsin,DB,S,4432789,74,213,30.675,9.25,4.57,1.54,37,120,6.72,4.25,
+2025,Rayuan Lane III,navy,DB,S,4880675,71,200,30.25,9.75,4.57,1.56,37,128,7.1,4.28,
+2025,Malik Verdon,iowa state,DB,S,4684636,76,218,32.5,9.5,,,,,7.06,4.34,
+2025,Alijah Clark,syracuse,DB,S,4595352,73,188,30.875,9.5,4.5,1.53,33,122,,,
+2025,James Burnip,alabama,P,P,4880048,78,235,31.875,8.675,,,,,,,
+2025,Tyler Loop,arizona,K,K,4697745,71,191,28.375,8.675,,,,,,,
+2025,Andres Borregales,miami,K,K,4569923,71,199,28.875,8.25,,,,,,,
+2025,Ben Sauls,pittsburgh,K,K,4566158,70,182,29,9.675,,,,,,,
+2025,Jeremy Crawshaw,florida,P,P,4589212,76,198,33,9.125,,,,,,,
+2025,Ryan Fitzgerald,florida state,K,K,4568263,71,193,30,8.125,,,,,,,
