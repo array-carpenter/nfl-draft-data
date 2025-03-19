@@ -7456,20 +7456,6 @@ top ,player,College,POS_GP,POS,athlete_id,Height (in),Weight (lbs),Arm Length (i
 2025,Bhayshul Tuten,virginia tech,RB,RB,4882093,69,206,29.5,9,4.32,,40.5,130,,4.41,
 2025,Marcus Yarns,delaware,RB,RB,4694302,71,193,31.125,9.125,4.45,,37.5,122,,,
 2025,Jacob Bayer,,,,4879478,,,,,,,,,,,
-2025,Darius Alexander,toledo,DL,DT,4426542,76,305,34,10,,,,,,,
-2025,Yayha Black,iowa,DL,DT,4430947,78,336,35,10.25,,,,,,,
-2025,Jamaree Caldwell,oregon,DL,DT,5089178,74,332,32,9.375,,,,,,,
-2025,Joshua Farmer,florida state,DL,DT,4611993,75,305,35,10.25,,,,,,,
-2025,Cam Jackson,florida,DL,DT,4687513,78,328,34.125,9.5,,,,,,,
-2025,Walter Nolen,mississippi,DL,DT,4685503,76,296,32.5,9.5,,,,,,,
-2025,Omarr Norman-Lott,tennessee,DL,DT,4591008,74,291,33.75,10.75,,,,,,,
-2025,Aeneas Peebles,virginia tech,DL,DT,4565311,72.5,282,31.375,9.675,,,,,,,
-2025,T.J. Sanders,south carolina,DL,DT,4684527,76,297,33.125,10.25,,,,,,,
-2025,Tim Smith,alabama,DL,DT,4692033,76,302,33,10.375,,,,,,,
-2025,Junior Tafuna,utah state,DL,DT,4695607,75.5,308,32.5,10.5,,,,,,,
-2025,Deone Walker,kentucky,DL,DT,4831989,79,331,34.25,10.675,,,,,,,
-2025,Tyrion Ingram-Dawkins,georgia,DL,DT,4629149,77,276,33.5,9.75,,,,,,,
-2025,Ty Robinson,nebraska,DL,DT,4569586,77,288,32.25,10,,,,,,,
 2025,Eugene Asante,auburn,LB,LB,4427532,72.5,223,30.25,8.25,,,,,,,
 2025,Jeffrey Bassa,oregon,LB,LB,4602389,73,232,31.375,9.25,,,,,,,
 2025,Shemar James,florida,LB,LB,4685400,73,222,31.5,8.5,,,,,,,
@@ -7507,7 +7493,6 @@ top ,player,College,POS_GP,POS,athlete_id,Height (in),Weight (lbs),Arm Length (i
 2025,Melvin Smith Jr.,,,,,,,,,,,,,,,
 2025,Dante Trader Jr.,maryland,DB,S,4431664,71,196,31.25,8.875,,,,,,,
 2025,Hunter Wohler,wisconsin,DB,S,4432789,74,213,30.675,9.25,,,,,,,
-2025,Mason Graham,michigan,DL,DT,4873232,75.5,296,32,9.125,,,,,,,24
 2025,Matthew Golden,texas,WR,WR,4701936,71,191,30.675,9.5,4.29,,,,,,
 2025,Tetairoa McMillan,arizona,WR,WR,4685472,76,219,31.5,10,,,,,,,
 2025,Quinn Ewers,texas,QB,QB,4889929,74,214,30.75,9.375,,,,,,,
@@ -7690,3 +7675,44 @@ top ,player,College,POS_GP,POS,athlete_id,Height (in),Weight (lbs),Arm Length (i
 2025,Kaimon Rucker,north carolina,DL,DE,4433904,73,254,32.675,10,,,,,,,27
 2025,Tyler Batty,byu,DL,DE,4608794,78,271,33.125,9.375,4.78,1.69,34,120,7.21,4.54,27
 2025,Sean Martin,west virginia,DL,DE,4430359,77.5,293,35,10.675,4.88,1.7,28.5,112,7.38,,28
+2025,Darius Alexander,toledo,DL,DT,4426542,76,305,34,10,4.95,1.72,31.5,111,7.6,4.79,28
+2025,Jamaree Caldwell,oregon,DL,DT,5089178,74,332,32,9.375,,,,,,,
+2025,Joshua Farmer,florida state,DL,DT,4611993,75,305,35,10.25,5.11,1.77,29,112,,,26
+2025,Cam Jackson,florida,DL,DT,4687513,78,328,34.125,9.5,5.17,1.81,24.5,93,,,
+2025,Walter Nolen,mississippi,DL,DT,4685503,76,296,32.5,9.5,,,,,,,
+2025,Aeneas Peebles,virginia tech,DL,DT,4565311,72.5,282,31.375,9.675,4.94,1.74,32.5,109,,4.7,
+2025,T.J. Sanders,south carolina,DL,DT,4684527,76,297,33.125,10.25,,,31.5,112,7.7,4.67,
+2025,Tim Smith,alabama,DL,DT,4692033,76,302,33,10.375,,,,,,,
+2025,Junior Tafuna,utah state,DL,DT,4695607,75.5,308,32.5,10.5,,,,,,,
+2025,Deone Walker,kentucky,DL,DT,4831989,79,331,34.25,10.675,,,25,108,,,
+2025,Tyrion Ingram-Dawkins,georgia,DL,DT,4629149,77,276,33.5,9.75,4.86,1.69,36,124,7.28,4.34,
+2025,Ty Robinson,nebraska,DL,DT,4569586,77,288,32.25,10,4.83,1.71,33.5,119,7.58,4.5,28
+2025,Mason Graham,michigan,DL,DT,4873232,75.5,296,32,9.125,,,,,,,24
+2025,Derrick Harmon,oregon,DL,DT,4682980,76.5,313,34.375,10.375,4.95,1.74,,,,,
+2025,Kenneth Grant,michigan,DL,DT,4894654,76,331,33.5,10.125,,,,,,,22
+2025,Tyleik Williams,ohio state,DL,DT,4431615,75,334,32,10.25,,,,,,,
+2025,Shemar Turner,texas a&m,DL,DT,4432804,75,290,33.675,10.25,,,,,,,
+2025,Alfred Collins,texas,DL,DT,4430835,78,332,34.675,10,,,26,96,,,
+2025,JJ Pegues,mississippi,DL,DT,4430896,74.5,309,32.5,9.375,5.15,1.82,27.5,,,,
+2025,Ty Hamilton,ohio state,DL,DT,4431118,75,299,32.25,10.125,,,,,,,
+2025,Jamaree Caldwell,oregon,DL,DT,5089178,74,332,32,9.375,5.16,1.86,27,,,,
+2025,Warren Brinson,georgia,DL,DT,4429136,77,315,33.5,10.375,5.09,1.76,31,115,,,
+2025,Rylie Mills,notre dame,DL,DT,4430838,77,291,32.675,9.875,,,,,,,
+2025,Jared Harrison-Hunte,smu,DL,DT,4427401,75,290,33,9.125,4.86,1.69,32,111,,,
+2025,Vernon Broughton,texas,DL,DT,4429040,77,311,35,9.25,,,,,,,
+2025,Elijah Simmons,tennessee,DL,DT,4430478,73,334,32.75,10.25,5.37,1.88,32,106,,,
+2025,Nazir Stackhouse,georgia,DL,DT,4429142,76,327,32.5,10.25,5.15,1.8,27.5,105,,,
+2025,CJ West,indiana,DL,DT,4686308,73,316,31.5,9.75,4.95,1.73,33,,,,
+2025,Cam Horsley,boston college,DL,DT,4431147,75,312,33,9.5,,,31.5,108,,,
+2025,Tonka Hemingway,south carolina,DL,DT,4429109,75,284,33,9,,,32,112,7.36,4.48,
+2025,Omarr Norman-Lott,tennessee,DL,DT,4591008,74,291,33.75,10.75,,,31.5,113,,,
+2025,Yahya Black,iowa,DL,DT,4430947,78,336,35,10.25,5.39,1.88,25.5,101,7.63,4.72,
+2025,Jordan Phillips,maryland,DL,DT,4837188,74,312,31.5,9.75,,,31,108,8.19,4.65,29
+2025,DeAndre Jules,south carolina,DL,DT,4427650,76,316,34.125,8.75,,,,,,,
+2025,Eric Gregory,arkansas,DL,DT,4567171,75,319,33,9.675,5.14,1.76,27,108,7.68,4.97,28
+2025,Jay Toia,ucla,DL,DT,4431603,74,342,32.5,10,,,,,,,
+2025,Howard Cross III,notre dame,DL,DT,4426992,73,285,32.25,10.5,,,29,104,,,
+2025,Jahvaree Ritzie,north carolina,DL,DT,4431584,76,294,33.25,10.125,,,35.5,114,,,26
+2025,Payton Page,clemson,DL,DT,4431582,75,290,31.375,10,,,33,116,,,
+2025,Tommy Akingbesote,maryland,DL,DT,4683450,76,306,33.5,10,5.09,1.77,28,103,,,
+2025,Zeek Biggers,georgia tech,DL,DT,4683276,77.5,321,34.875,10.125,5.14,1.74,34.5,111,,,
