@@ -157,6 +157,7 @@ TEAM_COLORS = {
     "UTEP": "#041E42",
     "UTSA": "#0C2340",
     "Vanderbilt": "#866D4B",
+    "Villanova":"#00205B",
     "Virginia Tech": "#630031",
     "Virginia": "#232D4B",
     "Wake Forest": "#9E7E38",
