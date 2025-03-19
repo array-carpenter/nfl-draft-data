@@ -98,8 +98,11 @@ class DataProcessor:
             df_sum.drop(columns=["rushing_ypc"], errors="ignore", inplace=True)
             df_sum = df_sum.merge(rushing_ypc_avg, on="player", how="left")
 
-        df_sum[valid_metrics] = df_sum[valid_metrics].apply(pd.to_numeric, errors="coerce").fillna(0)
-        df_sum = df_sum.drop(columns=["POS_GP"], errors="ignore")
+                
+            df_sum[valid_metrics] = df_sum[valid_metrics].apply(pd.to_numeric, errors="coerce")
+
+            df_sum[valid_metrics] = df_sum[valid_metrics].fillna(df_sum[valid_metrics].mean())
+
 
         self.processed_df = df_sum
         self.valid_metrics = valid_metrics
