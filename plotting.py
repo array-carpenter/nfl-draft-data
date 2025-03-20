@@ -66,7 +66,7 @@ class DraftComparisonPlotter:
         fig.text(
             0.18, 0.78,
             "Ray Carpenter | TheSpade.substack.com | "
-            "Player Stats Data: CFBFastR | Combine Data Since 2008 (Pro Day Adjusted): NFLCombineResults.com",
+            "Player Stats Data: CFBFastR | Combine Data Since 2007 (Pro Day Adjusted): NFLCombineResults.com",
             fontsize=18, fontweight="bold", ha="left", color="gray", fontproperties=ROBOTO
         )
 
