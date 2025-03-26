@@ -7429,7 +7429,7 @@ Year,player,College,POS_GP,POS,athlete_id,Height (in),Weight (lbs),Arm Length (i
 2025,Cam Ward,Miami,QB,QB,4688380,74,219,30.675,9,,,,,,,
 2025,Cameron Skattebo,Arizona State,RB,RB,4696981,69.5,219,29.875,9.375,,,39.5,123,,,
 2025,Omarion Hampton,North Carolina,RB,RB,4685382,72,221,30.5,9.375,4.46,,38,130,,4.4,18
-2025,Travis Hunter,Colorado,DB,CB,4685415,72,188,31.375,9.125,,,,,,,
+2025,Travis Hunter,Colorado,WR,WR,4685415,72,188,31.375,9.125,,,,,,,
 2025,Jalon Walker,Georgia,DL,DE,4685597,73,243,32,10.25,,,,,,,
 2025,Shedeur Sanders,Colorado,QB,QB,4432762,73.5,212,31.5,9.375,,,,,,,
 2025,Ashton Jeanty,Boise State,RB,RB,4890973,68.5,211,29.25,9.25,,,,,,,
@@ -7494,7 +7494,7 @@ Year,player,College,POS_GP,POS,athlete_id,Height (in),Weight (lbs),Arm Length (i
 2025,Elijhah Badger,florida,WR,WR,4429184,73,200,31.125,9.5,4.43,,35.5,,,,
 2025,Isaac TeSlaa,arkansas,WR,WR,5123663,76,214,31.125,10,4.43,,39.5,129,6.85,4.05,17
 2025,Jaylin Lane,virginia tech,WR,WR,4602667,70,191,31.75,9.875,,,,,,,
-2025,Xavier Restrepo,miami,WR,WR,4431353,70,209,29.375,9.125,,,,,,,17
+2025,Xavier Restrepo,miami,WR,WR,4431353,70,209,29.375,9.125,4.81,,,,,,17
 2025,Bru McCoy,tennessee,WR,WR,4426337,74.5,209,32.125,10,,,,,,,
 2025,KeAndre Lambert-Smith,auburn,WR,WR,4430870,73,190,32.675,9.125,4.37,,34.5,124,,,
 2025,Tai Felton,maryland,WR,WR,4565185,73,183,30,9,4.37,,39.5,130,,,
@@ -7547,7 +7547,7 @@ Year,player,College,POS_GP,POS,athlete_id,Height (in),Weight (lbs),Arm Length (i
 2025,Brant Kuithe,utah,TE,TE,4361014,74,236,31.675,10.5,,,,,,,
 2025,Bryson Nesbit,north carolina,TE,TE,4602969,77,238,31.75,9.75,4.88,,32.5,112,,,
 2025,Armand Membou,Missouri,OL,OT,4789907,76,332,33.5,9.75,4.91,,34,115,,,31
-2025,Will Campbell,LSU,OL,OT,46852984,78,319,32.625,9.5,4.98,,32,114,,,
+2025,Will Campbell,LSU,OL,OT,4685298,78,319,33,9.5,4.98,,32,114,,,
 2025,Kelvin Banks Jr.,texas,OL,OT,4685260,77,315,33.5,10.325,5.16,,32,104,7.81,4.66,
 2025,Tyler Booker,alabama,OL,OG,4685263,77,321,34.5,11,5.38,,27,82,7.96,4.84,21
 2025,Grey Zabel,North Dakota State,OL,OT,4693346,78,312,32,9.5,,,36.5,111,,,26
@@ -7600,7 +7600,7 @@ Year,player,College,POS_GP,POS,athlete_id,Height (in),Weight (lbs),Arm Length (i
 2025,John Williams,cincinnati,OL,OG,383510,76,322,33.875,11,5.17,,,,7.93,4.72,29
 2025,Abdul Carter,Penn State,DL,DE,4725996,75,250,,,,,,,,,
 2025,Mykel Williams,Georgia,DL,DE,4685623,77.1,260,34.375,10.24,,,,,,,
-2025,Mike Green,marshall,DL,DE,4683188,75,251,32,8.5,,,,,,,28
+2025,Mike Green,marshall,DL,DE,4683188,75,251,32,8.5,,,,,6.85,4.25,28
 2025,Barryn Sorrell,texas,DL,DE,4683643,75,256,32.25,9.25,,,,,,,
 2025,Josaiah Stewart,michigan,DL,DE,4682983,73,249,31.875,9.5,,,,,,,
 2025,Shemar Stewart,Texas A&M,DL,DE,4685562,77,267,34.125,9.625,4.59,1.58,40,131,,,
