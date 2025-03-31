@@ -6,10 +6,6 @@ from sklearn.neighbors import NearestNeighbors
 
 class DataProcessor:
     def __init__(self, stats_df: pd.DataFrame):
-        """
-        Initialize with the filtered stats dataframe.
-        Note: This processor will merge the combine data dynamically.
-        """
         self.stats_df = stats_df.copy()
         self.processed_df = None
         self.percentile_df = None
@@ -19,7 +15,7 @@ class DataProcessor:
         self.player_position = None
         self.non_round_metrics = ["Height (in)", "Hand Size (in)", "Arm Length (in)", "40 Yard","3Cone","Shuttle"]
 
-    def process(self, input_player: str):
+    def process(self, input_player: str, player_year=2025):
         combine_columns = [
             "Height (in)", "Weight (lbs)", "Hand Size (in)", "Arm Length (in)",
             "40 Yard", "Bench Press", "Vert Leap (in)",
@@ -40,6 +36,20 @@ class DataProcessor:
 
         if input_player not in df["player"].unique():
             raise ValueError(f"Input player {input_player} not found in data.")
+
+        # Try to pick the specified year for this player
+        df_player_year = df[(df["player"] == input_player) & (df["year"] == player_year)]
+        if df_player_year.empty:
+            # If empty, fallback to the most recent year with stats
+            fallback_year = df.loc[df["player"] == input_player, "year"].max()
+            print(f"No data found for {input_player} in year={player_year}. Using fallback year={fallback_year} instead.")
+            df_player_year = df[(df["player"] == input_player) & (df["year"] == fallback_year)]
+        if df_player_year.empty:
+            raise ValueError(f"No stats found at all for player={input_player}.")
+
+        target_id = df_player_year["athlete_id"].iloc[0]
+
+        df = df[~((df["player"] == input_player) & (df["athlete_id"] != target_id))]
 
         player_position = df.loc[df["player"] == input_player, "POS_GP"].values[0]
         if player_position in ["FS", "SS"]:
@@ -67,12 +77,10 @@ class DataProcessor:
         numeric_cols = df.select_dtypes(include="number").columns.tolist()
 
         agg_funcs = {col: "sum" for col in numeric_cols if col not in combine_columns}
-
         if "interceptions_avg" in agg_funcs:
             agg_funcs["interceptions_avg"] = "mean"
         if "passing_ypa" in agg_funcs:
             agg_funcs["passing_ypa"] = "mean"
-
         for stat in combine_columns:
             if stat in df.columns:
                 agg_funcs[stat] = "first"
@@ -98,15 +106,12 @@ class DataProcessor:
             df_sum.drop(columns=["rushing_ypc"], errors="ignore", inplace=True)
             df_sum = df_sum.merge(rushing_ypc_avg, on="player", how="left")
 
-                
             df_sum[valid_metrics] = df_sum[valid_metrics].apply(pd.to_numeric, errors="coerce")
-
             df_sum[valid_metrics] = df_sum[valid_metrics].fillna(df_sum[valid_metrics].mean())
-
 
         self.processed_df = df_sum
         self.valid_metrics = valid_metrics
-       
+
         reverse_metrics = {"passing_int", "40 Yard", "3Cone", "Shuttle", "Fumbles"}
         self.percentile_df = df_sum.copy()
         for metric in valid_metrics:
@@ -118,7 +123,12 @@ class DataProcessor:
 
         knn = NearestNeighbors(n_neighbors=4, metric='euclidean')
         knn.fit(self.percentile_df[valid_metrics].values)
-        input_index = self.percentile_df[self.percentile_df["player"] == input_player].index[0]
+
+        input_index = self.percentile_df[self.percentile_df["player"] == input_player].index
+        if len(input_index) == 0:
+            raise ValueError("No aggregated row found for the input player.")
+        input_index = input_index[0]
+
         distances, indices = knn.kneighbors(
             self.percentile_df.loc[input_index, valid_metrics].values.reshape(1, -1)
         )
@@ -126,11 +136,10 @@ class DataProcessor:
         if input_index in neighbor_indices:
             neighbor_indices.remove(input_index)
         top3_players = self.percentile_df.loc[neighbor_indices, "player"].tolist()
-        self.comparison_players = [input_player] + top3_players
 
+        self.comparison_players = [input_player] + top3_players
         self.radar_data = [
             self.percentile_df[self.percentile_df["player"] == p][valid_metrics].iloc[0].values
             for p in self.comparison_players
         ]
-
         self.player_position = position_key

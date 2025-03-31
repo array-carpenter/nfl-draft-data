@@ -6,7 +6,7 @@ from config import FILTERED_STATS_PATH, COMBINE_STATS_PATH
 def main(viz_type="comparison"):
     stats_df = load_data(FILTERED_STATS_PATH, COMBINE_STATS_PATH)
     
-    input_player = "Will Campbell"
+    input_player = "Jayden Higgins"
     
     processor = DataProcessor(stats_df)
     processor.process(input_player)
@@ -23,7 +23,7 @@ def main(viz_type="comparison"):
         raise ValueError(f"Unsupported viz_type: {viz_type}")
 
 if __name__ == "__main__":
-    main(viz_type="single_player") 
+    main(viz_type="comparison") 
 
 # TypeError: DataFrame.reset_index() got an unexpected keyword argument 'name' 
-# This means that the player's athlete_id is wrong in the combine csv. Please check ESPN for the athlete_id, Happening specifically with OTs. 
+## This means that the player's athlete_id is wrong in the combine csv. Please check ESPN for the athlete_id, Happening specifically with OTs. 

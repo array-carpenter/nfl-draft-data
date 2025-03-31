@@ -7453,7 +7453,7 @@ Year,player,College,POS_GP,POS,athlete_id,Height (in),Weight (lbs),Arm Length (i
 2025,Marcus Yarns,delaware,RB,RB,4694302,71,193,31.125,9.125,4.45,,37.5,122,,,
 2025,Jacob Bayer,,,,4879478,,,,,,,,,,,
 2025,Matthew Golden,texas,WR,WR,4701936,71,191,30.675,9.5,4.29,,,,,,
-2025,Tetairoa McMillan,arizona,WR,WR,4685472,76,219,31.5,10,,,,,,,
+2025,Tetairoa McMillan,arizona,WR,WR,4685472,76,219,31.5,10,4.48,,,,,,
 2025,Quinn Ewers,texas,QB,QB,4889929,74,214,30.75,9.375,,,,,,,
 2025,Kyle McCord,syracuse,QB,QB,4433971,75,218,31,9.5,,,,,,,
 2025,Will Howard,ohio state,QB,QB,4429955,76,236,32,9,,,31.5,112,7.13,4.33,
@@ -7479,9 +7479,9 @@ Year,player,College,POS_GP,POS,athlete_id,Height (in),Weight (lbs),Arm Length (i
 2025,Phil Mafah,clemson,RB,RB,4431562,73,234,31.375,9.5,,,,,,,
 2025,Ulysses Bentley IV,mississippi,RB,RB,4426689,70,201,29,8.675,4.62,,32.5,117,,,
 2025,Luther Burden III,missouri,WR,WR,4685278,72,206,31.25,8.5,4.41,,,,,,
-2025,Emeka Egbuka,ohio state,WR,WR,4567750,73,202,31.5,9.675,,,,,,,
+2025,Emeka Egbuka,ohio state,WR,WR,4567750,73,202,31.5,9.675,4.48,,,,,,
 2025,Jalen Royals,utah state,WR,WR,5082630,72,205,30.125,9.5,4.42,,,,,,13
-2025,Isaiah Bond,texas,WR,WR,4808839,71,180,30.5,8.5,4.39,,,,,,
+2025,Isaiah Bond,texas,WR,WR,4808839,71,180,30.5,8.5,4.34,,34,,,,
 2025,Tre Harris,mississippi,WR,WR,4686612,74,205,31.875,9.675,4.54,,38.5,125,,,
 2025,Jaylin Noel,iowa state,WR,WR,4586312,70,194,29.5,8.75,4.39,,41.5,134,6.82,4.17,23
 2025,Dominic Lovett,georgia,WR,WR,4596439,70,185,31.375,9.25,4.4,,33.5,120,,4.27,
@@ -7500,20 +7500,20 @@ Year,player,College,POS_GP,POS,athlete_id,Height (in),Weight (lbs),Arm Length (i
 2025,Tai Felton,maryland,WR,WR,4565185,73,183,30,9,4.37,,39.5,130,,,
 2025,Andrew Armstrong,arkansas,WR,WR,5093923,76,202,32.125,9.675,4.51,,37.5,124,6.97,4.18,11
 2025,Traeshon Holden,oregon,WR,WR,4429172,74,205,31.675,9.875,4.57,,32,123,,,
-2025,Theo Wease Jr.,missouri,WR,WR,4426535,75,200,31.125,9.675,4.56,,31,117,,,
+2025,Theo Wease Jr.,missouri,WR,WR,4426535,75,204,32.75,9.25,4.56,,31,117,7.15,4.3,
 2025,Daniel Jackson,minnesota,WR,WR,4430875,71,193,30.75,9,,,,4.07,,6.78,
 2025,Isaiah Neyor,nebraska,WR,WR,4428116,76,218,34.375,9.5,4.4,,38,133,,,
-2025,Jimmy Horn Jr.,colorado,WR,WR,4708486,68,174,30.375,8.75,4.46,,38,128,,4.41,
-2025,LaJohntay Wester,colorado,WR,WR,4690143,70,163,29.75,8.675,4.46,,32,121,,,
+2025,Jimmy Horn Jr.,colorado,WR,WR,4708486,68,174,30.375,8.75,4.46,,38,128,7.32,4.30,
+2025,LaJohntay Wester,colorado,WR,WR,4690143,70,163,29.75,8.675,4.46,,32,121,,
 2025,Ja'Corey Brooks,louisville,WR,WR,4431506,74,184,31.75,9,,,,,,,
 2025,Jordan Watkins,mississippi,WR,WR,4431466,71,196,29.375,9.125,4.37,,36.5,119,,,
 2025,Kobe Hudson,ucf,WR,WR,4429056,73,193,30.675,9,4.57,,35,122,,,
-2025,Konata Mumpfield,pittsburgh,WR,WR,4710855,71,186,29.375,8.5,4.59,,36,124,,,
+2025,Konata Mumpfield,pittsburgh,WR,WR,4710855,71,186,29.375,8.5,4.59,,36,124,6.69,4.19,
 2025,Ricky White III,unlv,WR,WR,4431479,73,184,31.75,9.25,4.61,,36,123,,,
 2025,Arian Smith,georgia,WR,WR,4429105,72,179,31.25,9,4.36,,38,127,6.82,4.19,
 2025,Josh Kelly,texas tech,WR,WR,4575558,73,186,30.875,10.5,4.7,,121,,7.02,,33
 2025,Kaden Prather,maryland,WR,WR,4431509,75.5,204,31.875,9.25,4.46,,30,114,,,
-2025,Beaux Collins,notre dame,WR,WR,4431210,75,201,31.675,9.5,,,,,,,
+2025,Beaux Collins,notre dame,WR,WR,4431210,75,201,31.675,9.5,4.52,,38,130,7.13,4.19,
 2025,Jacolby George,miami,WR,WR,4567784,71,172,31.375,9.5,,,32.5,120,6.77,,
 2025,Antwane Wells Jr.,mississippi,WR,WR,4696062,73,201,31.5,8.675,4.58,,34,124,,,
 2025,Sam Brown Jr.,miami,WR,WR,4587977,74,200,31.675,9.375,4.44,,41.5,,,,
@@ -7521,7 +7521,7 @@ Year,player,College,POS_GP,POS,athlete_id,Height (in),Weight (lbs),Arm Length (i
 2025,Jack Bech,tcu,WR,WR,4603186,73,214,31.5,9,,,34.5,125,6.84,4.21,19
 2025,Pat Bryant,illinois,WR,WR,4600981,74,204,31.125,9.5,4.61,,37.5,124,,,
 2025,Chimere Dike,florida,WR,WR,4431268,73,196,32.125,9.125,,,,,,,
-2025,Da'Quan Felton,virginia tech,WR,WR,4575348,77,213,32.25,9,,,,,,,
+2025,Da'Quan Felton,virginia tech,WR,WR,4575348,77,213,32.25,9,,,35,,,,
 2025,Jayden Higgins,iowa state,WR,WR,4877706,76,214,33.125,9.125,4.47,,39,128,,,
 2025,Tez Johnson,oregon,WR,WR,4608810,70,154,29.375,9,,,,,,,
 2025,Jamaal Pritchett,,WR,WR,4892576,,,,,,,,,,,
@@ -8118,3 +8118,9 @@ Year,player,College,POS_GP,POS,athlete_id,Height (in),Weight (lbs),Arm Length (i
 2007,Marshal Yanda,Florida State,OL,OT,10530,75.88,307,,,5.15,,27,101,7.36,4.58,23
 2007,Selvin Young,Texas,RB,RB,135105,71,207,,,4.58,,,,,,
 2007,Jared Zabransky,Boise State,QB,QB,134778,74.13,219,32.38,9,4.59,,35.5,111,,4.08,
+2025,Will Sheppard,Colorado,WR,WR,4608679,75,205,,,4.59,,38.5,126,,4.31,
+2025,Desmond Watson,Florida,DL,DT,4431607,77,464,,,5.93,,23,,,,36
+2025,Julian Fleming,Penn State,WR,WR,4430800,74,206,,,4.68,,34.5,,,4.27,
+2025,Jackson Meeks,Syracuse,WR,WR,4602788,,,,,,,34.5,120,6.79,,
+2025,Kyren Lacy,LSU,WR,WR,4431219,74,215,33.75,10,4.60,,33.5,,,4.43,
+2025,Efton Chism III,Eastern Washington,WR,WR,4695193,70,193,,,4.71,,34.5,118,6.77,4.06,16
