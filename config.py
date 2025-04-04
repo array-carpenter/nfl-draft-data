@@ -1,11 +1,7 @@
-# config.py
 import matplotlib.font_manager as fm
 
-# Font paths (adjust these paths to match your environment)
 FONT_PATH = 'C:/Users/RaymondCarpenter/Documents/GitHub/nfl-draft-data/Roboto_Mono/RobotoMono-VariableFont_wght.ttf'
 ITALIC_FONT_PATH = 'C:/Users/RaymondCarpenter/Documents/GitHub/nfl-draft-data/Roboto_Mono/RobotoMono-Italic-VariableFont_wght.ttf'
-
-# Font properties
 ROBOTO = fm.FontProperties(fname=FONT_PATH)
 ITALIC_ROBOTO = fm.FontProperties(fname=ITALIC_FONT_PATH)
 
@@ -172,15 +168,14 @@ TEAM_COLORS = {
     "Wisconsin": "#C5050C",
     "Yale":"#00356B",
 }
-# year,team,conference,athlete_id,player,passing_completions,passing_att,passing_pct,passing_yds,passing_td,passing_int,passing_ypa,rushing_car,rushing_yds,rushing_td,rushing_ypc,rushing_long,receiving_rec,receiving_yds,receiving_td,receiving_ypr,receiving_long,
-# fumbles_fum,fumbles_rec,fumbles_lost,defensive_solo,defensive_tot,defensive_tfl,defensive_sacks,defensive_qb_hur,interceptions_int,interceptions_yds,
-# interceptions_avg,interceptions_td,defensive_pd,defensive_td,kicking_fgm,kicking_fga,kicking_pct,kicking_xpa,kicking_xpm,kicking_pts,kicking_long,kick_returns_no,kick_returns_yds,
-# kick_returns_avg,kick_returns_td,kick_returns_long,punting_no,punting_yds,punting_ypp,punting_long,punting_in_20,punting_tb,punt_returns_no,punt_returns_yds,punt_returns_avg,punt_returns_td,punt_returns_long
-# Position baseline metrics. Add metrics for additional positions as needed.
+
+EXCLUDE_FROM_KNN = {
+    "TE": ["Bench Press", "3Cone","Shuttle","fumbles_fum","Fumbles"]
+}
 
 POSITION_BASELINES = {
     "QB": [
-        "passing_att", "passing_completions","passing_pct", "passing_yds", "passing_td",
+        "passing_att", "passing_completions", "passing_pct", "passing_yds", "passing_td",
         "passing_ypa", "passing_int", "rushing_car", "rushing_yds",
         "rushing_td", "fumbles_fum"
     ],
@@ -189,45 +184,47 @@ POSITION_BASELINES = {
         "receiving_rec", "receiving_yds", "receiving_td", "fumbles_fum"
     ],
     "WR": [
-        "receiving_rec", "receiving_yds", "receiving_td", 
-        "receiving_ypr","fumbles_fum","receiving_ypc"
+        "receiving_rec", "receiving_yds", "receiving_td",
+        "receiving_ypr", "fumbles_fum", "receiving_ypc"
     ],
-        "TE": [
-        "receiving_rec", "receiving_yds", "receiving_td", 
-        "receiving_ypr","fumbles_fum"
+    "TE": [
+        "receiving_rec", "receiving_yds", "receiving_td",
+        "receiving_ypr", "fumbles_fum"
     ],
     "CB": [
-        "defensive_solo","defensive_tot","defensive_tfl","interceptions_int",
-        "interceptions_yds","interceptions_avg","interceptions_td", 
+        "defensive_solo", "defensive_tot", "defensive_tfl", "interceptions_int",
+        "interceptions_yds", "interceptions_avg", "interceptions_td",
         "defensive_pd", "defensive_td"
     ],
     "DB": [
-        "defensive_solo","defensive_tot","defensive_tfl","interceptions_int",
-        "interceptions_yds","interceptions_avg","interceptions_td", 
+        "defensive_solo", "defensive_tot", "defensive_tfl", "interceptions_int",
+        "interceptions_yds", "interceptions_avg", "interceptions_td",
         "defensive_pd", "defensive_td"
     ],
     "S": [
-        "defensive_solo","defensive_tot","defensive_tfl","interceptions_int",
-        "interceptions_yds","interceptions_avg","interceptions_td", 
+        "defensive_solo", "defensive_tot", "defensive_tfl", "interceptions_int",
+        "interceptions_yds", "interceptions_avg", "interceptions_td",
         "defensive_pd", "defensive_td"
     ],
     "DE": [
-        "defensive_solo","defensive_tot","defensive_tfl","defensive_sacks","defensive_qb_hur","Height (in)"
+        "defensive_solo", "defensive_tot", "defensive_tfl", "defensive_sacks", "defensive_qb_hur", "Height (in)"
     ],
     "DT": [
-        "defensive_solo","defensive_tot","defensive_tfl","defensive_sacks","defensive_qb_hur"],
+        "defensive_solo", "defensive_tot", "defensive_tfl", "defensive_sacks", "defensive_qb_hur"
+    ],
     "DL": [
-        "defensive_solo","defensive_tot","defensive_tfl","defensive_sacks","defensive_qb_hur"],
+        "defensive_solo", "defensive_tot", "defensive_tfl", "defensive_sacks", "defensive_qb_hur"
+    ],
     "OLB": [
-        "defensive_solo","defensive_tot","defensive_tfl","defensive_sacks","defensive_qb_hur","interceptions_int",
-        "interceptions_yds","interceptions_avg","interceptions_td", 
+        "defensive_solo", "defensive_tot", "defensive_tfl", "defensive_sacks", "defensive_qb_hur", "interceptions_int",
+        "interceptions_yds", "interceptions_avg", "interceptions_td",
         "defensive_pd", "defensive_td"
     ]
 }
 
 COLUMN_RENAME_MAP = {
     "passing_att": "Attempts",
-    "passing_completions":"Completions",
+    "passing_completions": "Completions",
     "passing_pct": "Completion %",
     "passing_yds": "Passing Yards",
     "passing_td": "Passing TDs",
@@ -240,7 +237,7 @@ COLUMN_RENAME_MAP = {
     "receiving_yds": "Receiving Yards",
     "receiving_td": "Receiving TDs",
     "fumbles_fum": "Fumbles",
-    "receiving_rec" : "Receptions",
+    "receiving_rec": "Receptions",
     "defensive_solo": "Solo Tackles",
     "defensive_tot": "Total Tackles",
     "defensive_tfl": "Tackles for Loss",
@@ -250,12 +247,12 @@ COLUMN_RENAME_MAP = {
     "interceptions_td": "Pick Sixes",
     "defensive_pd": "Pass Deflections",
     "defensive_td": "Total Defensive TDs",
-    "defensive_sacks":"Sacks",
-    "defensive_qb_hur":"QB Hurries",
-    "receiving_ypc":"Yards Per Catch",
-    "receiving_ypr":"Yards Per Reception",
-    "40 Yard":"40-Yard Dash",
-    "3Cone":"3-Cone Drill"
+    "defensive_sacks": "Sacks",
+    "defensive_qb_hur": "QB Hurries",
+    "receiving_ypc": "Yards Per Catch",
+    "receiving_ypr": "Yards Per Reception",
+    "40 Yard": "40-Yard Dash",
+    "3Cone": "3-Cone Drill"
 }
 
 FILTERED_STATS_PATH = "filtered_player_stats_full.csv"
