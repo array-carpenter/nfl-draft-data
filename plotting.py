@@ -60,14 +60,14 @@ class DraftComparisonPlotter:
         title_text = f"{self.input_player} ({self.proc.player_position}) NFL Draft Comparison"
         fig.text(
             0.18, 0.82, title_text,
-            fontsize=40, fontweight="bold",
+            fontsize=60, fontweight="bold",
             ha="left", fontproperties=ROBOTO
         )
         fig.text(
             0.18, 0.78,
             "Ray Carpenter | TheSpade.substack.com | "
             "Player Stats Data: CFBFastR | Combine Data Since 2007 (Pro Day Adjusted): NFLCombineResults.com",
-            fontsize=18, fontweight="bold", ha="left", color="gray", fontproperties=ROBOTO
+            fontsize=20, ha="left", color="#474746", fontproperties=ROBOTO
         )
 
         divider_ax = fig.add_axes([0, 0.75, 1, 0.005])
@@ -305,7 +305,7 @@ class SinglePlayerPlotter:
 
         plt.suptitle(
             f"{self.input_player} NFL Draft Percentile Profile",
-            fontsize=22,
+            fontsize=24,
             fontweight='bold',
             fontproperties=ROBOTO,
             color=team_color,
