@@ -7562,7 +7562,7 @@ Year,player,College,POS_GP,POS,athlete_id,Height (in),Weight (lbs),Arm Length (i
 2025,Garrett Dellinger,lsu,OL,OG,4431252,76,325,,,,,,,,,
 2025,Miles Frazier,lsu,OL,OG,4608890,78,317,32.75,9,5.24,,31,108,,,27
 2025,Emery Jones Jr.,lsu,OL,OT,4685736,77,315,34.25,10.75,,,,,,,
-2025,Willie Lampkin,,OL,,4582836,,,,,,,,,,,
+2025,Willie Lampkin,connecticut,OL,OG,4582836,70,279,31.3,10.125,5.21,,23.5,104,,4.7,18
 2025,Marcus Mbow,purdue,OL,OG,4686362,76,303,32,10.5,,,,,,4.67,
 2025,Wyatt Milum,west virginia,OL,OT,4431463,78.5,313,32.125,10.25,5.27,,30,108,,4.69,
 2025,Jonah Monheim, usc,OL,C,4430481,76,302,30.125,9.25,,,,,,,
@@ -7574,7 +7574,7 @@ Year,player,College,POS_GP,POS,athlete_id,Height (in),Weight (lbs),Arm Length (i
 2025,Carson Vinson,alabama a&m,OL,OT,4769895,79,314,34.5,10.25,5.12,,28.5,111,7.51,,
 2025,Clay Webb,jacksonville state (al),OL,C,4426336,75,312,32,10,5.11,,31,107,,4.9,29
 2025,Aireontae Ersery,minnesota,OL,OT,4429693,78,331,33.125,9.5,5.01,,29.5,111,7.81,4.82,25
-2025,Charles Grant,William & Mary,OL,OG,4694505,77,311,34.75,10.25,19,,,,,,
+2025,Charles Grant,William & Mary,OL,OG,4694505,77,311,34.75,10.25,,,,,,,19
 2025,Cameron Williams,texas,OL,OT,4685590,78,317,34.5,11.375,,,,,,,
 2025,Jalen Rivers,miami,OL,OT,4429010,78,319,34.875,10,5.29,,,108,,,23
 2025,Joe Huber,wisconsin,OL,OG,4690210,77,310,32.25,9.75,5.2,,28,106,7.69,4.78,

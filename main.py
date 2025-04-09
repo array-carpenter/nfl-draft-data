@@ -6,7 +6,7 @@ from config import FILTERED_STATS_PATH, COMBINE_STATS_PATH
 def main(viz_type="comparison"):
     stats_df = load_data(FILTERED_STATS_PATH, COMBINE_STATS_PATH)
     
-    input_player = "Armand Membou"
+    input_player = "Jackson Slater"
     
     processor = DataProcessor(stats_df)
     processor.process(input_player)
