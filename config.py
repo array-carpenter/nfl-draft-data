@@ -1,7 +1,7 @@
 import matplotlib.font_manager as fm
 
-FONT_PATH = 'C:/Users/RaymondCarpenter/Documents/GitHub/nfl-draft-data/Roboto_Mono/RobotoMono-VariableFont_wght.ttf'
-ITALIC_FONT_PATH = 'C:/Users/RaymondCarpenter/Documents/GitHub/nfl-draft-data/Roboto_Mono/RobotoMono-Italic-VariableFont_wght.ttf'
+FONT_PATH = 'Roboto_Mono/RobotoMono-VariableFont_wght.ttf'
+ITALIC_FONT_PATH = 'Roboto_Mono/RobotoMono-Italic-VariableFont_wght.ttf'
 ROBOTO = fm.FontProperties(fname=FONT_PATH)
 ITALIC_ROBOTO = fm.FontProperties(fname=ITALIC_FONT_PATH)
 

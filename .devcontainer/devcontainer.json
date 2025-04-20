@@ -1,0 +1,18 @@
+{
+    "name": "NFL Draft Data Science",
+    "build": {
+      "dockerfile": "../Dockerfile"
+    },
+    "settings": {
+      "terminal.integrated.defaultProfile.linux": "bash"
+    },
+    "extensions": [
+      "ms-python.python",
+      "ms-toolsai.jupyter",
+      "REditorSupport.r",
+      "ikuyadeu.r",
+      "ms-vscode-remote.remote-containers"
+    ],
+    "remoteUser": "jovyan",
+    "postCreateCommand": "pip install --upgrade pip && R -e 'IRkernel::installspec()'"
+  }
