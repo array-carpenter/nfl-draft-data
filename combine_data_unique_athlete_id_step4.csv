@@ -7429,7 +7429,7 @@ Year,player,College,POS_GP,POS,athlete_id,Height (in),Weight (lbs),Arm Length (i
 2025,Cam Ward,Miami,QB,QB,4688380,74,219,30.675,9,,,,,,,
 2025,Cameron Skattebo,Arizona State,RB,RB,4696981,69.5,219,29.875,9.375,,,39.5,123,,,
 2025,Omarion Hampton,North Carolina,RB,RB,4685382,72,221,30.5,9.375,4.46,,38,130,,4.4,18
-2025,Travis Hunter,Colorado,WR,WR,4685415,72,188,31.375,9.125,,,,,,,
+2025,Travis Hunter,Colorado,DB,CB,4685415,72,188,31.375,9.125,,,,,,,
 2025,Jalon Walker,Georgia,DL,DE,4685597,73,243,32,10.25,,,,,,,
 2025,Shedeur Sanders,Colorado,QB,QB,4432762,73.5,212,31.5,9.375,,,,,,,
 2025,Ashton Jeanty,Boise State,RB,RB,4890973,68.5,211,29.25,9.25,,,,,,,
@@ -7585,7 +7585,7 @@ Year,player,College,POS_GP,POS,athlete_id,Height (in),Weight (lbs),Arm Length (i
 2025,Chase Lundt,connecticut,OL,OT,4427843,79.5,304,32.675,9.675,,,,,,,20
 2025,Dylan Fairchild,georgia,OL,OG,4646773,77,321,33,10,,,27.5,111,,,
 2025,Seth McLaughlin,ohio state,OL,C,4429187,76,304,31,9.5,,,,,,,
-2025,Jack Nelson,wisconsin,OL,OT,4693369,79,314,33.5,10,,,,,,,
+2025,Jack Nelson,wisconsin,OL,OT,4693369,79,314,33.5,10,5.1,,,,,,23
 2025,Myles Hinton,michigan,OL,OT,4429000,79,323,34.125,10.25,,,31.5,,,4.96,
 2025,Marcus Tate,clemson,OL,OG,4431576,77,321,32.75,9,,,,,,,
 2025,Xavier Truss,georgia,OL,OG,4427080,79,309,33,10.5,5.24,,26,103,,,
