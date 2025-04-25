@@ -215,7 +215,7 @@ POSITION_BASELINES = {
     "DL": [
         "defensive_solo", "defensive_tot", "defensive_tfl", "defensive_sacks", "defensive_qb_hur"
     ],
-    "OLB": [
+    "LB": [
         "defensive_solo", "defensive_tot", "defensive_tfl", "defensive_sacks", "defensive_qb_hur", "interceptions_int",
         "interceptions_yds", "interceptions_avg", "interceptions_td",
         "defensive_pd", "defensive_td"

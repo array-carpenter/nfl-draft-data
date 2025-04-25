@@ -16,11 +16,6 @@ from config import ROBOTO, TEAM_COLORS, COLUMN_RENAME_MAP, LOGO_PATH
 
 class DraftComparisonPlotter:
     def __init__(self, processed_data, original_stats_df, input_player: str):
-        """
-        processed_data: instance of DataProcessor that has been run with .process()
-        original_stats_df: the merged stats DataFrame (needed for additional info like team)
-        input_player: name of the input player
-        """
         self.proc = processed_data
         self.stats_df = original_stats_df
         self.input_player = input_player
@@ -44,7 +39,6 @@ class DraftComparisonPlotter:
         return latest_teams.set_index("player")["team"].to_dict()
 
     def create_plot(self, save=False):
-        # Increase figure size dramatically
         fig = plt.figure(figsize=(28, 18))
         fig.patch.set_facecolor("white")
 
@@ -107,7 +101,6 @@ class DraftComparisonPlotter:
         num_players = len(comparison_players)
         col_centers = np.linspace(0.3, 0.9, num_players)
 
-        # Plot the radar charts
         for i, player_name in enumerate(comparison_players):
             ax_pos = [
                 col_centers[i] - radar_width / 2,
@@ -117,20 +110,13 @@ class DraftComparisonPlotter:
             ]
             rax = fig.add_axes(ax_pos, polar=True)
 
-            # Input player's radar
             pvec_input = np.concatenate([data_for_radar[0], [data_for_radar[0][0]]])
-            rax.plot(
-                angles_closed, pvec_input,
-                color=player_colors[0], linewidth=2, label=self.input_player
-            )
+            rax.plot(angles_closed, pvec_input, color=player_colors[0], linewidth=2)
             rax.fill(angles_closed, pvec_input, color=player_colors[0], alpha=0.2)
 
             if i > 0:
                 pvec = np.concatenate([data_for_radar[i], [data_for_radar[i][0]]])
-                rax.plot(
-                    angles_closed, pvec,
-                    color=player_colors[i], linewidth=2, label=player_name
-                )
+                rax.plot(angles_closed, pvec, color=player_colors[i], linewidth=2)
                 rax.fill(angles_closed, pvec, color=player_colors[i], alpha=0.2)
 
             rax.set_yticklabels([])
@@ -141,10 +127,7 @@ class DraftComparisonPlotter:
         if save:
             folder = "2025_post_combine"
             os.makedirs(folder, exist_ok=True)
-            filename = os.path.join(
-                folder,
-                f"{self.input_player.replace(' ', '_')}_post_combine.png"
-            )
+            filename = os.path.join(folder, f"{self.input_player.replace(' ', '_')}_post_combine.png")
             plt.savefig(filename, bbox_inches="tight")
             plt.close(fig)
             print(f"Plot saved to {filename}")
@@ -152,76 +135,38 @@ class DraftComparisonPlotter:
             plt.show()
 
     def _add_comparison_table(self, fig, valid_metrics, comparison_players, latest_teams_dict):
-        """
-        Adds a table to the figure showing comparison metrics.
-        """
-
         table_ax = fig.add_axes([0, 0.05, 1, 0.5]) 
         table_ax.set_axis_off()
-
         table = Table(table_ax, bbox=[0, 0, 1, 1])
-
         table_fontsize = 22
 
-        comparison_data = self.proc.processed_df.set_index("player").loc[
-            comparison_players, valid_metrics
-        ]
+        comparison_data = self.proc.processed_df.set_index("player").loc[comparison_players, valid_metrics]
         comparison_data_t = comparison_data.transpose()
         comparison_data_t.rename(index=COLUMN_RENAME_MAP, inplace=True)
 
-
         num_rows = len(valid_metrics) + 2
-
         cell_width = 1.0 / (len(comparison_data_t.columns) + 1)
-        cell_height = 1.0 / (num_rows)  
+        cell_height = 1.0 / num_rows
 
         for col_idx, column in enumerate(comparison_data_t.columns):
-            cell = table.add_cell(
-                row=0, col=col_idx + 1,
-                width=cell_width, height=cell_height,
-                text=column,
-                loc="center",
-                facecolor="#cccccc"
-            )
+            cell = table.add_cell(row=0, col=col_idx + 1, width=cell_width, height=cell_height, text=column, loc="center", facecolor="#cccccc")
             cell.get_text().set_fontsize(table_fontsize)
             cell.visible_edges = ""
 
         for col_idx, player in enumerate(comparison_data_t.columns):
             team = latest_teams_dict.get(player, "N/A")
-            cell = table.add_cell(
-                row=1, col=col_idx + 1,
-                width=cell_width, height=cell_height,
-                text=team,
-                loc="center",
-                facecolor="#f0f0f0",
-                fontproperties=ROBOTO
-            )
+            cell = table.add_cell(row=1, col=col_idx + 1, width=cell_width, height=cell_height, text=team, loc="center", facecolor="#f0f0f0", fontproperties=ROBOTO)
             cell.get_text().set_fontsize(table_fontsize)
             cell.visible_edges = ""
 
         for row_idx, (row_name, row_vals) in enumerate(comparison_data_t.iterrows()):
-            row_num = row_idx + 2  
-
-            cell = table.add_cell(
-                row=row_num,
-                col=0,
-                width=cell_width,
-                height=cell_height,
-                text=row_name,
-                loc="center",
-                facecolor="#cccccc",
-                fontproperties=ROBOTO
-            )
+            row_num = row_idx + 2
+            cell = table.add_cell(row=row_num, col=0, width=cell_width, height=cell_height, text=row_name, loc="center", facecolor="#cccccc", fontproperties=ROBOTO)
             cell.get_text().set_fontsize(table_fontsize)
             cell.visible_edges = "horizontal"
 
             for col_idx, val in enumerate(row_vals):
-                if row_name in {
-                    "40-Yard Dash", "3-Cone Drill", "Height (in)",
-                    "Hand Size (in)", "Arm Length (in)", "Shuttle","Yards per Carry"
-                }:
-                    formatted_val = f"{val:.2f}"
-                elif row_name == "Yards per Attempt":
+                if row_name in {"40-Yard Dash", "3-Cone Drill", "Height (in)", "Hand Size (in)", "Arm Length (in)", "Shuttle", "Yards per Carry"}:
                     formatted_val = f"{val:.2f}"
                 elif row_name == "Yards per Attempt":
                     formatted_val = f"{val:.2f}"
@@ -232,21 +177,14 @@ class DraftComparisonPlotter:
                 else:
                     formatted_val = f"{int(val)}"
 
-                cell = table.add_cell(
-                    row=row_num,
-                    col=col_idx + 1,
-                    width=cell_width,
-                    height=cell_height,
-                    text=formatted_val,
-                    loc="center",
-                    fontproperties=ROBOTO
-                )
+                cell = table.add_cell(row=row_num, col=col_idx + 1, width=cell_width, height=cell_height, text=formatted_val, loc="center", fontproperties=ROBOTO)
                 cell.get_text().set_fontsize(table_fontsize)
                 cell.visible_edges = "horizontal"
 
         table_ax.add_table(table)
-
         table.scale(1.0, 1.3)
+
+
 class SinglePlayerPlotter:
     def __init__(self, processed_data, original_stats_df, input_player: str):
         self.proc = processed_data
@@ -261,7 +199,7 @@ class SinglePlayerPlotter:
         return player_df[player_df['year'] == latest_year]['team'].iloc[0]
 
     def create_plot(self, save=False):
-        fig, axes = plt.subplots(len(self.proc.valid_metrics), 1, figsize=(12, len(self.proc.valid_metrics) * 1.2), sharex=True)
+        fig, axes = plt.subplots(len(self.proc.valid_metrics), 1, figsize=(12, len(self.proc.valid_metrics) * 1.2 + 2), sharex=True)
         fig.patch.set_facecolor('white')
 
         player_team = self._get_player_team()
@@ -277,7 +215,7 @@ class SinglePlayerPlotter:
             player_percentile = percentiles_df.loc[percentiles_df['player'] == self.input_player, metric].values[0]
             player_raw_value = processed_df.loc[processed_df['player'] == self.input_player, metric].values[0]
 
-            kde = gaussian_kde(values,bw_method = 0.1)
+            kde = gaussian_kde(values, bw_method=0.1)
             x_vals = np.linspace(0, 100, 200)
             kde_vals = kde(x_vals)
 
@@ -285,11 +223,8 @@ class SinglePlayerPlotter:
             ax.fill_between(x_vals, kde_vals, where=(x_vals <= player_percentile), color=team_color, alpha=0.9)
 
             ax.text(-5, 0, COLUMN_RENAME_MAP.get(metric, metric), fontsize=12, fontproperties=ROBOTO, fontweight="bold", ha="right", va='center')
-
-            ax.text(.9, 0.5, f"{player_raw_value:.2f}", fontsize=11, ha="left", 
-                    va='center', fontproperties=ROBOTO, color='black', transform=ax.transAxes)
-            ax.text(.9, 0.35, f"{player_percentile:.0f}%tile", fontsize=11, ha="left", 
-                    va='center', fontproperties=ROBOTO, color=team_color, transform=ax.transAxes)
+            ax.text(.9, 0.5, f"{player_raw_value:.2f}", fontsize=11, ha="left", va='center', fontproperties=ROBOTO, color='black', transform=ax.transAxes)
+            ax.text(.9, 0.35, f"{player_percentile:.0f}%tile", fontsize=11, ha="left", va='center', fontproperties=ROBOTO, color=team_color, transform=ax.transAxes)
 
             ax.set_xlim(0, 120)
             ax.set_yticks([])
@@ -301,18 +236,28 @@ class SinglePlayerPlotter:
             if i < len(valid_metrics) - 1:
                 ax.set_xticks([])
 
-       # axes[-1].set_xlabel("Percentile Rank", fontsize=14, fontproperties=ROBOTO, fontweight='bold')
-
         plt.suptitle(
             f"{self.input_player} NFL Draft Percentile Profile",
             fontsize=24,
             fontweight='bold',
             fontproperties=ROBOTO,
             color=team_color,
-            y=0.95
+            y=0.97
         )
 
-        plt.tight_layout(rect=[0, 0, 1, 0.96])
+        img_ax = fig.add_axes([0.88, 0.90, 0.13, 0.13], frameon=False)
+        img = Image.open("1.png")
+        img_ax.imshow(img)
+        img_ax.axis("off")
+
+        fig.text(
+            0.01, 0.01,
+            "Ray Carpenter | TheSpade.substack.com",
+            ha="left", fontsize=12,
+            fontproperties=ROBOTO, color="#333333"
+        )
+
+        plt.tight_layout(rect=[0, 0.03, 1, 0.96])
 
         if save:
             filename = f"{self.input_player.replace(' ', '_')}_percentile_ridges.png"
