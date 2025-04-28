@@ -260,7 +260,9 @@ class SinglePlayerPlotter:
         plt.tight_layout(rect=[0, 0.03, 1, 0.96])
 
         if save:
-            filename = f"{self.input_player.replace(' ', '_')}_percentile_ridges.png"
+            folder = "percentile_ridges"
+            os.makedirs(folder, exist_ok=True)
+            filename = os.path.join(folder, f"{self.input_player.replace(' ', '_')}_percentile_ridges.png")
             plt.savefig(filename, bbox_inches='tight')
             plt.close()
             print(f"Plot saved to {filename}")
