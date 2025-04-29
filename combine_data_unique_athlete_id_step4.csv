@@ -7427,7 +7427,7 @@ Year,player,College,POS_GP,POS,athlete_id,Height (in),Weight (lbs),Arm Length (i
 2008,Jonathan Zenon,louisiana state,DB,CB,,71.8,191,32,8.75,4.64,,33,,,,
 2008,Jeremy Zuttah,rutgers,OL,OT,,75.38,303,33.5,9.5,5.07,,26.5,107,,4.54,35
 2025,Cam Ward,Miami,QB,QB,4688380,74,219,30.675,9,,,,,,,
-2025,Cameron Skattebo,Arizona State,RB,RB,4696981,69.5,219,29.875,9.375,,,39.5,123,,,
+2025,Cam Skattebo,Arizona State,RB,RB,4696981,69.5,219,29.875,9.375,,,39.5,123,,,
 2025,Omarion Hampton,North Carolina,RB,RB,4685382,72,221,30.5,9.375,4.46,,38,130,,4.4,18
 2025,Travis Hunter,Colorado,DB,CB,4685415,72,188,31.375,9.125,,,,,,,
 2025,Jalon Walker,Georgia,DL,DE,4685597,73,243,32,10.25,,,,,,,
@@ -8126,3 +8126,4 @@ Year,player,College,POS_GP,POS,athlete_id,Height (in),Weight (lbs),Arm Length (i
 2025,Kyren Lacy,LSU,WR,WR,4431219,74,215,33.75,10,4.60,,33.5,,,4.43,
 2025,Efton Chism III,Eastern Washington,WR,WR,4695193,70,193,,,4.71,,34.5,118,6.77,4.06,16
 2025,Ben Yurosek,Georgia,TE,TE,4433959,76,245,33.125,9.675,4.64,,31.5,115,7.16,4.39,
+2025,Ruben Hyppolite II,Maryland,LB,LB,4429970,71,236,,,4.39,,,,,,

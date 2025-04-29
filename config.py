@@ -25,6 +25,7 @@ TEAM_COLORS = {
     "BYU": "#002E5D",
     "Buffalo": "#005BBB",
     "California": "#003262",
+    "Central Arkansas":"#4F2D7F",
     "Central Michigan": "#6A0032",
     "Charlotte": "#154734",
     "Cincinnati": "#D50032",
