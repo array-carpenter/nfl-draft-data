@@ -7721,7 +7721,7 @@ Year,player,College,POS_GP,POS,athlete_id,Height (in),Weight (lbs),Arm Length (i
 2025,Dorian Strong,virginia tech,DB,CB,4568703,73,185,30.875,9.25,4.5,1.55,36,116,,,15
 2025,Azareye'h Thomas,florida state,DB,CB,4685596,73.5,197,32.375,10,,,,122,,,
 2025,Justin Barron,syracuse,DB,CB,4429249,,,,,,,,,,,
-2025,Dan Jackson,minnesota,WR,WR,4575115,71,193,30.75,9,,,,,,,
+2025,Dan Jackson,georgia,DB,CB,4575115,71,193,30.75,9,,,,,,,
 2025,Keondre Jackson,illinois state,DB,CB,4878287,,,,,,,,,,,
 2025,Caleb Ransaw,tulane,DB,CB,4683347,71,197,30.75,9.75,4.33,1.52,40,129,,,16
 2025,Trey Rucker,,,,4567046,,,,,,,,,,,
@@ -8127,3 +8127,20 @@ Year,player,College,POS_GP,POS,athlete_id,Height (in),Weight (lbs),Arm Length (i
 2025,Efton Chism III,Eastern Washington,WR,WR,4695193,70,193,,,4.71,,34.5,118,6.77,4.06,16
 2025,Ben Yurosek,Georgia,TE,TE,4433959,76,245,33.125,9.675,4.64,,31.5,115,7.16,4.39,
 2025,Ruben Hyppolite II,Maryland,LB,LB,4429970,71,236,,,4.39,,,,,,
+2025,Bryce Cabeldue,Kansas,OL,OT,4612077,76,306,,,,,,,,,
+2025,Luke Newman,Michigan State,OL,OG,4695895,75,312,,,,,,,,,
+2025,Tommy Mellott,Montana State,QB,QB,4775196,72,208,,,4.39,,41,124,6.93,4.20,19
+2025,Cam Miller,North Dakota State,QB,QB,4693331,73,212,30.125,9.675,,,32,111,,,
+2025,Marcus Bryant,Missouri,OL,OT,4565293,80,318,35.675,8.875,5.04,,31.5,108,,5.03,
+2025,Kyonte Hamilton,Rutgers,DL,DT,4677281,75,305,32.125,9.25,,,,,,,
+2025,Donte Kent,Central Michigan,DB,CB,4608004,70,187,31,8.5,,,,,,,
+2025,Mason Richman,Iowa,OL,OT,4432525,78,312,32.125,9.875,5.36,1.89,28,110,7.47,4.63,21
+2025,Micah Robinson,Tulane,DB,CB,4695280,70.6,184,,,,,,,,,
+2025,Caleb Lohner,Utah,TE,TE,4432208,78.1,250,,,,,,,,,
+2025,Jacory Croskey-Merritt,Arizona,RB,RB,4575131,71,208,31.75,9,4.47,1.50,41.5,124,7.28,4.44,17
+2025,Korie Black,Oklahoma State,DB,CB,4429281,73,190,,,,,,,,,
+2025,Tommy Akingbesote,Maryland,DL,DT,4683450,75,306,33.5,10,,,29.5,103,,4.76,
+2025,Julian Ashby,Vanderbilt,LB,LB,4695254,73,221,,,,,,,,,
+2025,Junior Bergen,Montana,WR,WR,4887918,71,184,30,9,4.56,1.59,36.5,120,6.97,4.22,1
+2025,Trikweze Bridges,Florida,DB,S,4426513,74.5,196,33.25,9,4.46,1.51,34.5,127,7.02,4.39,
+2025,Kobee Minor,Memphis,DB,CB,4566100,71,182,,,,,,,,,

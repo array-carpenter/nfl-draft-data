@@ -9,6 +9,7 @@ TEAM_COLORS = {
     "Air Force": "#0033A0",
     "Akron": "#041E42",
     "Alabama": "#9E1B32",
+    "Alabama A&M":"#660000",
     "App State": "#FFCC00",
     "Arizona": "#CC0033",
     "Arizona State": "#8C1D40",
@@ -89,6 +90,7 @@ TEAM_COLORS = {
     "Montana State":"#00205B",
     "Navy": "#00205B",
     "North Carolina State": "#CC0000",
+    "NC State": "#CC0000",
     "Nebraska": "#D00000",
     "Nevada": "#003366",
     "North Carolina": "#4B9CD3",
@@ -220,6 +222,12 @@ POSITION_BASELINES = {
         "defensive_solo", "defensive_tot", "defensive_tfl", "defensive_sacks", "defensive_qb_hur", "interceptions_int",
         "interceptions_yds", "interceptions_avg", "interceptions_td",
         "defensive_pd", "defensive_td"
+    ],
+        "K": [
+      "kicking_fgm","kicking_fga","kicking_pct","kicking_xpa","kicking_xpm","kicking_pts"
+    ],
+        "P": [
+      "punting_no","punting_yds","punting_in_20","punting_tb"
     ]
 }
 
@@ -253,7 +261,12 @@ COLUMN_RENAME_MAP = {
     "receiving_ypc": "Yards Per Catch",
     "receiving_ypr": "Yards Per Reception",
     "40 Yard": "40-Yard Dash",
-    "3Cone": "3-Cone Drill"
+    "3Cone": "3-Cone Drill",
+    "punting_tb":"Touchbacks",
+    "punting_no":"Punts",
+    "punting_yds":"Punting Yards",
+    "punting_ypp":"Yards per Punt",
+    "punting_in_20":"Punts inside the 20"
 }
 
 FILTERED_STATS_PATH = "filtered_player_stats_full.csv"

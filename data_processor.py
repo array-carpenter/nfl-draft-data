@@ -78,6 +78,21 @@ class DataProcessor:
             df_sum = df_sum.merge(passing_pct_avg, on="player", how="left", suffixes=("", "_mean"))
             df_sum["passing_pct"] = df_sum["passing_pct_mean"] * 100
             df_sum.drop(columns=["passing_pct_mean"], inplace=True)
+        if "kicking_pct" in df.columns:
+            kicking_pct_avg = df.groupby("player")["kicking_pct"].mean().reset_index()
+            df_sum = df_sum.merge(kicking_pct_avg, on="player", how="left", suffixes=("", "_mean"))
+            df_sum["kicking_pct"] = df_sum["kicking_pct_mean"] * 100
+            df_sum.drop(columns=["kicking_pct_mean"], inplace=True)
+        if "punting_ypp" in df.columns:
+            punting_ypp_avg = df.groupby("player")["punting_ypp"].mean().reset_index()
+            df_sum = df_sum.merge(punting_ypp_avg, on="player", how="left", suffixes=("", "_mean"))
+            df_sum["punting_ypp"] = df_sum["punting_ypp_mean"] * 100
+            df_sum.drop(columns=["punting_ypp_mean"], inplace=True)
+        if "kicking_long" in df.columns:
+            kicking_pct_avg = df.groupby("player")["kicking_long"].mean().reset_index()
+            df_sum = df_sum.merge(kicking_pct_avg, on="player", how="left", suffixes=("", "_mean"))
+            df_sum["kicking_lomg"] = df_sum["kicking_long_mean"] * 100
+            df_sum.drop(columns=["kicking_long_mean"], inplace=True)
         if "receiving_rec" in df_sum.columns and "receiving_yds" in df_sum.columns:
             df_sum["receiving_ypr"] = df_sum.apply(lambda row: row["receiving_yds"] / row["receiving_rec"] if row["receiving_rec"] > 0 else 0, axis=1)
         if all(col in df.columns for col in ["rushing_yds", "rushing_car", "rushing_ypc"]):
