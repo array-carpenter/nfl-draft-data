@@ -5,6 +5,11 @@ ITALIC_FONT_PATH = 'Roboto_Mono/RobotoMono-Italic-VariableFont_wght.ttf'
 ROBOTO = fm.FontProperties(fname=FONT_PATH)
 ITALIC_ROBOTO = fm.FontProperties(fname=ITALIC_FONT_PATH)
 
+INSTRUMENT_SERIF_PATH = 'Instrument_Serif/InstrumentSerif-Regular.ttf'
+INSTRUMENT_SERIF_ITALIC_PATH = 'Instrument_Serif/InstrumentSerif-Italic.ttf'
+INSTRUMENT_SERIF = fm.FontProperties(fname=INSTRUMENT_SERIF_PATH)
+INSTRUMENT_SERIF_ITALIC = fm.FontProperties(fname=INSTRUMENT_SERIF_ITALIC_PATH)
+
 TEAM_COLORS = {
     "Air Force": "#0033A0",
     "Akron": "#041E42",
@@ -173,12 +178,13 @@ TEAM_COLORS = {
 }
 
 EXCLUDE_FROM_KNN = {
+    "QB": ["comp_att"],
     "TE": ["Bench Press", "3Cone","Shuttle","fumbles_fum","Fumbles"]
 }
 
 POSITION_BASELINES = {
     "QB": [
-        "passing_att", "passing_completions", "passing_pct", "passing_yds", "passing_td",
+        "ppa_per_dropback", "comp_att", "passing_pct", "passing_yds", "passing_td",
         "passing_ypa", "passing_int", "rushing_car", "rushing_yds",
         "rushing_td", "fumbles_fum"
     ],
@@ -232,6 +238,8 @@ POSITION_BASELINES = {
 }
 
 COLUMN_RENAME_MAP = {
+    "ppa_per_dropback": "EPA/Dropback",
+    "comp_att": "Comp/Att",
     "passing_att": "Attempts",
     "passing_completions": "Completions",
     "passing_pct": "Completion %",
@@ -271,4 +279,4 @@ COLUMN_RENAME_MAP = {
 
 FILTERED_STATS_PATH = "filtered_player_stats_full.csv"
 COMBINE_STATS_PATH = "combine_data_unique_athlete_id_step4.csv"
-LOGO_PATH = "1.png"
+LOGO_PATH = "logo.png"

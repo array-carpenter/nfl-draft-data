@@ -12,7 +12,7 @@ import os
 import matplotlib.gridspec as gridspec
 import seaborn as sns
 
-from config import ROBOTO, TEAM_COLORS, COLUMN_RENAME_MAP, LOGO_PATH
+from config import ROBOTO, INSTRUMENT_SERIF, TEAM_COLORS, COLUMN_RENAME_MAP, LOGO_PATH
 
 class DraftComparisonPlotter:
     def __init__(self, processed_data, original_stats_df, input_player: str):
@@ -40,7 +40,7 @@ class DraftComparisonPlotter:
 
     def create_plot(self, save=False):
         fig = plt.figure(figsize=(28, 18))
-        fig.patch.set_facecolor("white")
+        fig.patch.set_facecolor("#DDEBEC")
 
         headshot_url = self._get_headshot_url(self.input_player)
         with urllib.request.urlopen(headshot_url) as url:
@@ -55,7 +55,7 @@ class DraftComparisonPlotter:
         fig.text(
             0.18, 0.82, title_text,
             fontsize=60, fontweight="bold",
-            ha="left", fontproperties=ROBOTO
+            ha="left", fontproperties=INSTRUMENT_SERIF
         )
         fig.text(
             0.18, 0.78,
@@ -125,9 +125,9 @@ class DraftComparisonPlotter:
         self._add_comparison_table(fig, valid_metrics, comparison_players, latest_teams_dict)
 
         if save:
-            folder = "2025_post_combine"
+            folder = "2026_pre_combine"
             os.makedirs(folder, exist_ok=True)
-            filename = os.path.join(folder, f"{self.input_player.replace(' ', '_')}_post_combine.png")
+            filename = os.path.join(folder, f"{self.input_player.replace(' ', '_')}_pre_combine.png")
             plt.savefig(filename, bbox_inches="tight")
             plt.close(fig)
             print(f"Plot saved to {filename}")
@@ -135,7 +135,7 @@ class DraftComparisonPlotter:
             plt.show()
 
     def _add_comparison_table(self, fig, valid_metrics, comparison_players, latest_teams_dict):
-        table_ax = fig.add_axes([0, 0.05, 1, 0.5]) 
+        table_ax = fig.add_axes([0, 0.05, 1, 0.5])
         table_ax.set_axis_off()
         table = Table(table_ax, bbox=[0, 0, 1, 1])
         table_fontsize = 22
@@ -143,6 +143,9 @@ class DraftComparisonPlotter:
         comparison_data = self.proc.processed_df.set_index("player").loc[comparison_players, valid_metrics]
         comparison_data_t = comparison_data.transpose()
         comparison_data_t.rename(index=COLUMN_RENAME_MAP, inplace=True)
+
+        percentile_data = self.proc.percentile_df.set_index("player").loc[comparison_players, valid_metrics]
+        percentile_data_t = percentile_data.transpose()
 
         num_rows = len(valid_metrics) + 2
         cell_width = 1.0 / (len(comparison_data_t.columns) + 1)
@@ -163,13 +166,20 @@ class DraftComparisonPlotter:
             row_num = row_idx + 2
             cell = table.add_cell(row=row_num, col=0, width=cell_width, height=cell_height, text=row_name, loc="center", facecolor="#cccccc", fontproperties=ROBOTO)
             cell.get_text().set_fontsize(table_fontsize)
-            cell.visible_edges = "horizontal"
+            cell.set_edgecolor("#DDEBEC")
+
+            pctile_row = percentile_data_t.iloc[row_idx]
+            leader_idx = pctile_row.argmax()
 
             for col_idx, val in enumerate(row_vals):
                 if row_name in {"40-Yard Dash", "3-Cone Drill", "Height (in)", "Hand Size (in)", "Arm Length (in)", "Shuttle", "Yards per Carry"}:
                     formatted_val = f"{val:.2f}"
                 elif row_name == "Yards per Attempt":
                     formatted_val = f"{val:.2f}"
+                elif row_name == "EPA/Dropback":
+                    formatted_val = f"{val:.3f}"
+                elif row_name == "Comp/Att":
+                    formatted_val = str(val)
                 elif row_name == "Completion %":
                     formatted_val = f"{val:.1f}%"
                 elif row_name == "Defensive Sacks":
@@ -177,12 +187,35 @@ class DraftComparisonPlotter:
                 else:
                     formatted_val = f"{int(val)}"
 
-                cell = table.add_cell(row=row_num, col=col_idx + 1, width=cell_width, height=cell_height, text=formatted_val, loc="center", fontproperties=ROBOTO)
+                if col_idx == leader_idx:
+                    bg, fg = "#FFFF99", "black"
+                else:
+                    bg, fg = "#DDEBEC", "black"
+
+                cell = table.add_cell(row=row_num, col=col_idx + 1, width=cell_width, height=cell_height, text=formatted_val, loc="center", fontproperties=ROBOTO, facecolor=bg)
                 cell.get_text().set_fontsize(table_fontsize)
-                cell.visible_edges = "horizontal"
+                cell.get_text().set_color(fg)
+                cell.set_edgecolor("#DDEBEC")
 
         table_ax.add_table(table)
         table.scale(1.0, 1.3)
+
+        fig.canvas.draw()
+        renderer = fig.canvas.get_renderer()
+        inv = table_ax.transData.inverted()
+        cells = table.get_celld()
+        drawn_y = set()
+        for row in range(2, num_rows):
+            cell = cells.get((row, 0))
+            if cell:
+                bbox = cell.get_window_extent(renderer)
+                y_bottom = inv.transform(bbox)[0][1]
+                y_top = inv.transform(bbox)[1][1]
+                for y in (y_bottom, y_top):
+                    yr = round(y, 4)
+                    if yr not in drawn_y:
+                        table_ax.axhline(y=y, xmin=0, xmax=1, color="black", linewidth=0.5)
+                        drawn_y.add(yr)
 
 
 class SinglePlayerPlotter:
@@ -223,7 +256,11 @@ class SinglePlayerPlotter:
             ax.fill_between(x_vals, kde_vals, where=(x_vals <= player_percentile), color=team_color, alpha=0.9)
 
             ax.text(-5, 0, COLUMN_RENAME_MAP.get(metric, metric), fontsize=12, fontproperties=ROBOTO, fontweight="bold", ha="right", va='center')
-            ax.text(.9, 0.5, f"{player_raw_value:.2f}", fontsize=11, ha="left", va='center', fontproperties=ROBOTO, color='black', transform=ax.transAxes)
+            if isinstance(player_raw_value, str):
+                raw_text = player_raw_value
+            else:
+                raw_text = f"{player_raw_value:.2f}"
+            ax.text(.9, 0.5, raw_text, fontsize=11, ha="left", va='center', fontproperties=ROBOTO, color='black', transform=ax.transAxes)
             ax.text(.9, 0.35, f"{player_percentile:.0f}%tile", fontsize=11, ha="left", va='center', fontproperties=ROBOTO, color=team_color, transform=ax.transAxes)
 
             ax.set_xlim(0, 120)

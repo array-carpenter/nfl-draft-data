@@ -2,6 +2,8 @@ import numpy as np
 import pandas as pd
 from scipy.stats import rankdata
 from config import POSITION_BASELINES, COMBINE_STATS_PATH, EXCLUDE_FROM_KNN
+
+PPA_DATA_PATH = "qb_ppa_data.csv"
 from sklearn.neighbors import NearestNeighbors
 
 class DataProcessor:
@@ -32,6 +34,17 @@ class DataProcessor:
             df = pd.merge(self.stats_df, combine_df, on="athlete_id", how="left")
         else:
             df = self.stats_df.copy()
+
+        # Merge PPA data for QBs
+        try:
+            ppa_df = pd.read_csv(PPA_DATA_PATH)
+            ppa_df["year"] = ppa_df["year"].astype(str)
+            df["year"] = df["year"].astype(str)
+            df = pd.merge(df, ppa_df[["athlete_id", "year", "ppa_per_dropback"]],
+                         on=["athlete_id", "year"], how="left")
+        except Exception as e:
+            print("Error reading PPA data:", e)
+
         df = df.drop_duplicates(subset=["player", "year", "team", "athlete_id"])
         if input_player not in df["player"].unique():
             raise ValueError(f"Input player {input_player} not found in data.")
@@ -69,6 +82,8 @@ class DataProcessor:
             agg_funcs["interceptions_avg"] = "mean"
         if "passing_ypa" in agg_funcs:
             agg_funcs["passing_ypa"] = "mean"
+        if "ppa_per_dropback" in agg_funcs:
+            agg_funcs["ppa_per_dropback"] = "mean"
         for stat in combine_columns:
             if stat in df.columns:
                 agg_funcs[stat] = "first"
@@ -95,12 +110,19 @@ class DataProcessor:
             df_sum.drop(columns=["kicking_long_mean"], inplace=True)
         if "receiving_rec" in df_sum.columns and "receiving_yds" in df_sum.columns:
             df_sum["receiving_ypr"] = df_sum.apply(lambda row: row["receiving_yds"] / row["receiving_rec"] if row["receiving_rec"] > 0 else 0, axis=1)
+        if "passing_completions" in df_sum.columns and "passing_att" in df_sum.columns:
+            df_sum["comp_att"] = df_sum["passing_completions"].astype(int).astype(str) + "/" + df_sum["passing_att"].astype(int).astype(str)
+            if "comp_att" in baseline_metrics and "comp_att" not in valid_metrics:
+                valid_metrics.insert(baseline_metrics.index("comp_att"), "comp_att")
         if all(col in df.columns for col in ["rushing_yds", "rushing_car", "rushing_ypc"]):
-            rushing_ypc_avg = df.groupby("player").apply(lambda x: x["rushing_yds"].sum() / x["rushing_car"].sum() if x["rushing_car"].sum() > 0 else 0).reset_index(name="rushing_ypc")
+            rushing_agg = df.groupby("player")[["rushing_yds", "rushing_car"]].sum()
+            rushing_ypc_avg = (rushing_agg["rushing_yds"] / rushing_agg["rushing_car"].replace(0, float("nan"))).fillna(0).reset_index()
+            rushing_ypc_avg.columns = ["player", "rushing_ypc"]
             df_sum.drop(columns=["rushing_ypc"], errors="ignore", inplace=True)
             df_sum = df_sum.merge(rushing_ypc_avg, on="player", how="left")
-            df_sum[valid_metrics] = df_sum[valid_metrics].apply(pd.to_numeric, errors="coerce")
-            df_sum[valid_metrics] = df_sum[valid_metrics].fillna(df_sum[valid_metrics].mean())
+            numeric_metrics = [m for m in valid_metrics if m != "comp_att"]
+            df_sum[numeric_metrics] = df_sum[numeric_metrics].apply(pd.to_numeric, errors="coerce")
+            df_sum[numeric_metrics] = df_sum[numeric_metrics].fillna(df_sum[numeric_metrics].mean())
         self.display_metrics = valid_metrics.copy()
         self.valid_metrics = valid_metrics.copy()
         exclusions = EXCLUDE_FROM_KNN.get(player_position, [])
@@ -111,11 +133,16 @@ class DataProcessor:
         reverse_metrics = {"passing_int", "40 Yard", "3Cone", "Shuttle", "Fumbles"}
         self.percentile_df = df_sum.copy()
         for metric in valid_metrics:
-            percentile_values = rankdata(df_sum[metric], method="average") / len(df_sum) * 100
-            if metric in reverse_metrics:
-                self.percentile_df[metric] = 100 - percentile_values
-            else:
+            if metric == "comp_att":
+                # Use passing_att for percentile ranking of comp/att display
+                percentile_values = rankdata(df_sum["passing_att"], method="average") / len(df_sum) * 100
                 self.percentile_df[metric] = percentile_values
+            else:
+                percentile_values = rankdata(df_sum[metric], method="average") / len(df_sum) * 100
+                if metric in reverse_metrics:
+                    self.percentile_df[metric] = 100 - percentile_values
+                else:
+                    self.percentile_df[metric] = percentile_values
         knn = NearestNeighbors(n_neighbors=4, metric='euclidean')
         knn.fit(self.percentile_df[self.knn_metrics].values)
         input_index = self.percentile_df[self.percentile_df["player"] == input_player].index
