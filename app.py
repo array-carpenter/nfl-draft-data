@@ -54,6 +54,7 @@ def render_card(player_name, year):
 
 
 st.title("NFL Draft Comparison Cards")
+st.markdown("These are NFL Draft comparisons built using a k-nearest neighbor (KNN) algorithm that takes raw combine and production stats, calculates percentiles, then uses those percentiles to find each prospect's 3 most similar players. Volume stats are normalized per season to account for the different number of years each college player played.")
 
 options = load_combine_options()
 labels = [o["label"] for o in options]
