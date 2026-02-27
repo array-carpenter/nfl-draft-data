@@ -11,6 +11,9 @@ from config import FILTERED_STATS_PATH, COMBINE_STATS_PATH
 
 st.set_page_config(page_title="NFL Draft Comparison Cards", layout="wide")
 
+# Bump this any time data_processor / config / plotting logic changes to bust the cache.
+_CACHE_VERSION = 2
+
 
 @st.cache_data
 def load_combine_options():
@@ -33,7 +36,7 @@ def get_stats_df():
 
 
 @st.cache_data
-def run_processor(player_name, year):
+def run_processor(player_name, year, _v=_CACHE_VERSION):
     stats_df = get_stats_df()
     processor = DataProcessor(stats_df)
     processor.process(player_name, player_year=year)
@@ -41,7 +44,7 @@ def run_processor(player_name, year):
 
 
 @st.cache_data
-def render_card(player_name, year):
+def render_card(player_name, year, _v=_CACHE_VERSION):
     """Render the comparison card to a high-res PNG buffer."""
     processor, stats_df = run_processor(player_name, year)
     plotter = DraftComparisonPlotter(processor, stats_df, player_name)

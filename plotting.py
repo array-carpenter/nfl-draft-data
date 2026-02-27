@@ -222,7 +222,7 @@ class DraftComparisonPlotter:
             for col_idx, val in enumerate(row_vals):
                 if pd.isna(val):
                     formatted_val = "—"
-                elif row_name in {"40-Yard Dash", "3-Cone Drill", "Height (in)", "Hand Size (in)", "Arm Length (in)", "Shuttle", "Yards per Carry"}:
+                elif row_name in {"40-Yard Dash", "10-Yard Split", "3-Cone Drill", "Height (in)", "Hand Size (in)", "Arm Length (in)", "Shuttle", "Yards per Carry"}:
                     formatted_val = f"{val:.2f}"
                 elif row_name == "Yards per Attempt":
                     formatted_val = f"{val:.2f}"
