@@ -179,7 +179,9 @@ TEAM_COLORS = {
 
 EXCLUDE_FROM_KNN = {
     "QB": ["comp_att"],
-    "TE": ["Bench Press", "3Cone","Shuttle","fumbles_fum","Fumbles"]
+    "TE": ["Bench Press", "3Cone","Shuttle","fumbles_fum","Fumbles"],
+    "LB": ["defensive_td", "interceptions_td", "interceptions_yds", "interceptions_avg"],
+    "DE/LB": ["defensive_td", "interceptions_td", "interceptions_yds", "interceptions_avg"]
 }
 
 POSITION_BASELINES = {
@@ -194,7 +196,7 @@ POSITION_BASELINES = {
     ],
     "WR": [
         "receiving_rec", "receiving_yds", "receiving_td",
-        "receiving_ypr", "fumbles_fum", "receiving_ypc"
+        "epa_per_rec", "receiving_ypr", "fumbles_fum"
     ],
     "TE": [
         "receiving_rec", "receiving_yds", "receiving_td",
@@ -223,6 +225,12 @@ POSITION_BASELINES = {
     ],
     "DL": [
         "defensive_solo", "defensive_tot", "defensive_tfl", "defensive_sacks", "defensive_qb_hur"
+    ],
+    "DE/LB": [
+        "defensive_solo", "defensive_tot", "defensive_tfl", "defensive_sacks",
+        "defensive_qb_hur", "Height (in)", "interceptions_int",
+        "interceptions_yds", "interceptions_avg", "interceptions_td",
+        "defensive_pd", "defensive_td"
     ],
     "LB": [
         "defensive_solo", "defensive_tot", "defensive_tfl", "defensive_sacks", "defensive_qb_hur", "interceptions_int",
@@ -267,7 +275,11 @@ COLUMN_RENAME_MAP = {
     "defensive_sacks": "Sacks",
     "defensive_qb_hur": "QB Hurries",
     "receiving_ypc": "Yards Per Catch",
-    "receiving_ypr": "Yards Per Reception",
+    "epa_per_rec": "EPA/Reception",
+    "targets": "Targets",
+    "catch_rate": "Catch Rate",
+    "rec_targets": "Rec/Targets",
+    "receiving_ypr": "YPC",
     "40 Yard": "40-Yard Dash",
     "3Cone": "3-Cone Drill",
     "punting_tb":"Touchbacks",

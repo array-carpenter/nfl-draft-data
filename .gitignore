@@ -1,2 +1,10 @@
 data/*
 .env
+__pycache__/
+venv/
+.python-version
+uv.lock
+pyproject.toml
+pff_data/
+cfb_pbp_*.csv
+cfb_pbp_raw_*.csv

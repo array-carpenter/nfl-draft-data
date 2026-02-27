@@ -1,4 +1,5 @@
 import io
+import json
 import urllib.request
 import numpy as np
 import matplotlib.pyplot as plt
@@ -13,6 +14,41 @@ import matplotlib.gridspec as gridspec
 import seaborn as sns
 
 from config import ROBOTO, INSTRUMENT_SERIF, TEAM_COLORS, COLUMN_RENAME_MAP, LOGO_PATH
+
+DRAFT_PICKS_PATH = "draft_picks.csv"
+
+def get_draft_position(athlete_id, stats_df=None):
+    """Look up a player's NFL draft position from draft_picks.csv."""
+    try:
+        picks = pd.read_csv(DRAFT_PICKS_PATH)
+        match = picks[picks["college_athlete_id"] == athlete_id]
+        if not match.empty:
+            row = match.iloc[0]
+            return f"Round {int(row['round'])} Pick {int(row['pick'])}"
+    except Exception:
+        pass
+    if stats_df is not None:
+        player_rows = stats_df[stats_df["athlete_id"] == athlete_id]
+        if not player_rows.empty and str(player_rows["year"].max()) == "2025":
+            return "?"
+    return "Undrafted"
+
+TEAM_LOGO_MAP_PATH = "team_logo_map.json"
+LOGOS_DIR = "logos"
+
+def get_team_logo_path(team_name):
+    """Map a team name to its logo file path."""
+    try:
+        with open(TEAM_LOGO_MAP_PATH, "r") as f:
+            logo_map = json.load(f)
+        logo_file = logo_map.get(team_name)
+        if logo_file:
+            path = os.path.join(LOGOS_DIR, logo_file)
+            if os.path.exists(path):
+                return path
+    except Exception:
+        pass
+    return None
 
 class DraftComparisonPlotter:
     def __init__(self, processed_data, original_stats_df, input_player: str):
@@ -34,9 +70,9 @@ class DraftComparisonPlotter:
 
     def _get_latest_teams(self):
         latest_teams = self.stats_df.loc[
-            self.stats_df.groupby("player")["year"].idxmax(), ["player", "team"]
+            self.stats_df.groupby("athlete_id")["year"].idxmax(), ["athlete_id", "team"]
         ]
-        return latest_teams.set_index("player")["team"].to_dict()
+        return latest_teams.set_index("athlete_id")["team"].to_dict()
 
     def create_plot(self, save=False):
         fig = plt.figure(figsize=(28, 18))
@@ -54,15 +90,26 @@ class DraftComparisonPlotter:
         title_text = f"{self.input_player} ({self.proc.player_position}) NFL Draft Comparison"
         fig.text(
             0.18, 0.82, title_text,
-            fontsize=60, fontweight="bold",
+            fontsize=72, fontweight="bold",
             ha="left", fontproperties=INSTRUMENT_SERIF
         )
         fig.text(
             0.18, 0.78,
-            "Ray Carpenter | TheSpade.substack.com | "
-            "Player Stats Data: CFBFastR | Combine Data Since 2007 (Pro Day Adjusted): NFLCombineResults.com",
-            fontsize=20, ha="left", color="#474746", fontproperties=ROBOTO
+            "Ray Carpenter | TheSpade.substack.com | Stats: CFBD | Combine Data: Various Sources",
+            fontsize=26, ha="left", color="#474746", fontproperties=ROBOTO
         )
+
+        # Add team logo to top right
+        latest_teams_dict = self._get_latest_teams()
+        comparison_athlete_ids = self.proc.comparison_athlete_ids
+        player_team = latest_teams_dict.get(comparison_athlete_ids[0], "")
+        team_logo_path = get_team_logo_path(player_team)
+        if team_logo_path:
+            team_logo_ax = fig.add_axes([0.85, 0.76, 0.15, 0.15], frameon=False)
+            team_logo_img = Image.open(team_logo_path)
+            team_logo_ax.imshow(team_logo_img)
+            team_logo_ax.set_xticks([])
+            team_logo_ax.set_yticks([])
 
         divider_ax = fig.add_axes([0, 0.75, 1, 0.005])
         divider_ax.set_facecolor("black")
@@ -80,8 +127,7 @@ class DraftComparisonPlotter:
         comparison_players = self.proc.comparison_players
 
         print(f"\nPercentile Rankings for {self.input_player}:\n")
-        input_player_idx = comparison_players.index(self.input_player)
-        for metric, percentile in zip(valid_metrics, data_for_radar[input_player_idx]):
+        for metric, percentile in zip(valid_metrics, data_for_radar[0]):
             display_name = COLUMN_RENAME_MAP.get(metric, metric)
             print(f"{display_name}: {percentile:.1f}")
 
@@ -89,10 +135,9 @@ class DraftComparisonPlotter:
         angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False)
         angles_closed = np.concatenate([angles, [angles[0]]])
 
-        latest_teams_dict = self._get_latest_teams()
         player_colors = [
-            TEAM_COLORS.get(latest_teams_dict.get(player, ""), "gray")
-            for player in comparison_players
+            TEAM_COLORS.get(latest_teams_dict.get(aid, ""), "gray")
+            for aid in comparison_athlete_ids
         ]
 
         radar_height = 0.15
@@ -122,7 +167,7 @@ class DraftComparisonPlotter:
             rax.set_yticklabels([])
             rax.set_xticks([])
 
-        self._add_comparison_table(fig, valid_metrics, comparison_players, latest_teams_dict)
+        self._add_comparison_table(fig, valid_metrics, comparison_players, comparison_athlete_ids, latest_teams_dict)
 
         if save:
             folder = "2026_pre_combine"
@@ -131,55 +176,66 @@ class DraftComparisonPlotter:
             plt.savefig(filename, bbox_inches="tight")
             plt.close(fig)
             print(f"Plot saved to {filename}")
-        else:
-            plt.show()
+        return fig
 
-    def _add_comparison_table(self, fig, valid_metrics, comparison_players, latest_teams_dict):
+    def _add_comparison_table(self, fig, valid_metrics, comparison_players, comparison_athlete_ids, latest_teams_dict):
         table_ax = fig.add_axes([0, 0.05, 1, 0.5])
         table_ax.set_axis_off()
         table = Table(table_ax, bbox=[0, 0, 1, 1])
-        table_fontsize = 22
+        table_fontsize = 30
 
-        comparison_data = self.proc.processed_df.set_index("player").loc[comparison_players, valid_metrics]
-        comparison_data_t = comparison_data.transpose()
-        comparison_data_t.rename(index=COLUMN_RENAME_MAP, inplace=True)
+        proc_df = self.proc.processed_df
+        pctl_df = self.proc.percentile_df
+        comp_rows = [proc_df[proc_df["athlete_id"] == aid].iloc[0] for aid in comparison_athlete_ids]
+        comparison_data = pd.DataFrame(comp_rows)[valid_metrics].T
+        comparison_data.columns = comparison_players
+        comparison_data.rename(index=COLUMN_RENAME_MAP, inplace=True)
 
-        percentile_data = self.proc.percentile_df.set_index("player").loc[comparison_players, valid_metrics]
-        percentile_data_t = percentile_data.transpose()
+        pctl_rows = [pctl_df[pctl_df["athlete_id"] == aid].iloc[0] for aid in comparison_athlete_ids]
+        percentile_data = pd.DataFrame(pctl_rows)[valid_metrics].T
+        percentile_data.columns = comparison_players
 
-        num_rows = len(valid_metrics) + 2
-        cell_width = 1.0 / (len(comparison_data_t.columns) + 1)
+        num_rows = len(valid_metrics) + 3
+        cell_width = 1.0 / (len(comparison_players) + 1)
         cell_height = 1.0 / num_rows
 
-        for col_idx, column in enumerate(comparison_data_t.columns):
-            cell = table.add_cell(row=0, col=col_idx + 1, width=cell_width, height=cell_height, text=column, loc="center", facecolor="#cccccc")
+        for col_idx, name in enumerate(comparison_players):
+            cell = table.add_cell(row=0, col=col_idx + 1, width=cell_width, height=cell_height, text=name, loc="center", facecolor="#cccccc")
             cell.get_text().set_fontsize(table_fontsize)
             cell.visible_edges = ""
 
-        for col_idx, player in enumerate(comparison_data_t.columns):
-            team = latest_teams_dict.get(player, "N/A")
+        for col_idx, aid in enumerate(comparison_athlete_ids):
+            team = latest_teams_dict.get(aid, "N/A")
             cell = table.add_cell(row=1, col=col_idx + 1, width=cell_width, height=cell_height, text=team, loc="center", facecolor="#f0f0f0", fontproperties=ROBOTO)
             cell.get_text().set_fontsize(table_fontsize)
             cell.visible_edges = ""
 
-        for row_idx, (row_name, row_vals) in enumerate(comparison_data_t.iterrows()):
+        for row_idx, (row_name, row_vals) in enumerate(comparison_data.iterrows()):
             row_num = row_idx + 2
             cell = table.add_cell(row=row_num, col=0, width=cell_width, height=cell_height, text=row_name, loc="center", facecolor="#cccccc", fontproperties=ROBOTO)
             cell.get_text().set_fontsize(table_fontsize)
             cell.set_edgecolor("#DDEBEC")
 
-            pctile_row = percentile_data_t.iloc[row_idx]
+            pctile_row = percentile_data.iloc[row_idx]
             leader_idx = pctile_row.argmax()
 
             for col_idx, val in enumerate(row_vals):
-                if row_name in {"40-Yard Dash", "3-Cone Drill", "Height (in)", "Hand Size (in)", "Arm Length (in)", "Shuttle", "Yards per Carry"}:
+                if pd.isna(val):
+                    formatted_val = "—"
+                elif row_name in {"40-Yard Dash", "3-Cone Drill", "Height (in)", "Hand Size (in)", "Arm Length (in)", "Shuttle", "Yards per Carry"}:
                     formatted_val = f"{val:.2f}"
                 elif row_name == "Yards per Attempt":
                     formatted_val = f"{val:.2f}"
                 elif row_name == "EPA/Dropback":
                     formatted_val = f"{val:.3f}"
-                elif row_name == "Comp/Att":
+                elif row_name == "EPA/Reception":
+                    formatted_val = f"{val:.1f}"
+                elif row_name == "Catch Rate":
+                    formatted_val = f"{val:.1%}"
+                elif row_name in {"Comp/Att", "Rec/Targets"}:
                     formatted_val = str(val)
+                elif row_name == "YPC":
+                    formatted_val = f"{val:.1f}"
                 elif row_name == "Completion %":
                     formatted_val = f"{val:.1f}%"
                 elif row_name == "Defensive Sacks":
@@ -196,6 +252,17 @@ class DraftComparisonPlotter:
                 cell.get_text().set_fontsize(table_fontsize)
                 cell.get_text().set_color(fg)
                 cell.set_edgecolor("#DDEBEC")
+
+        # Draft position row at the bottom
+        draft_row_num = len(valid_metrics) + 2
+        cell = table.add_cell(row=draft_row_num, col=0, width=cell_width, height=cell_height, text="Draft Position", loc="center", facecolor="#cccccc", fontproperties=ROBOTO)
+        cell.get_text().set_fontsize(table_fontsize)
+        cell.set_edgecolor("#DDEBEC")
+        for col_idx, aid in enumerate(comparison_athlete_ids):
+            draft_text = get_draft_position(aid, stats_df=self.stats_df)
+            cell = table.add_cell(row=draft_row_num, col=col_idx + 1, width=cell_width, height=cell_height, text=draft_text, loc="center", fontproperties=ROBOTO, facecolor="#DDEBEC")
+            cell.get_text().set_fontsize(table_fontsize)
+            cell.set_edgecolor("#DDEBEC")
 
         table_ax.add_table(table)
         table.scale(1.0, 1.3)
@@ -303,5 +370,4 @@ class SinglePlayerPlotter:
             plt.savefig(filename, bbox_inches='tight')
             plt.close()
             print(f"Plot saved to {filename}")
-        else:
-            plt.show()
+        return fig

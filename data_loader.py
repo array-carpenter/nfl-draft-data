@@ -13,17 +13,21 @@ def load_data(filtered_stats_path: str, combine_stats_path: str) -> pd.DataFrame
     if "athlete_id" not in combine_stats.columns:
         raise ValueError("Column 'athlete_id' not found in the combine stats file.")
     
-    # Rename columns in combine_stats so that 'POS' becomes 'position'
-    combine_stats.rename(columns={"Name": "player", "POS": "position"}, inplace=True)
-    
+    # Rename columns in combine_stats so that 'POS' becomes 'combine_position'
+    combine_stats.rename(columns={"Name": "player", "POS": "combine_position"}, inplace=True)
+
     # Merge only the position column from combine_stats into filtered_stats.
     # (We do not merge athlete_id since filtered_stats already has it.)
     merged_stats = filtered_stats.merge(
-        combine_stats[["player", "position"]],
+        combine_stats[["player", "combine_position"]],
         on="player",
         how="left"
     )
-    
+
+    # Use combine position where available, fall back to stats position
+    merged_stats["position"] = merged_stats["combine_position"].fillna(merged_stats["position"])
+    merged_stats.drop(columns=["combine_position"], inplace=True)
+
     # Optionally handle missing positions (example below)
     merged_stats.loc[merged_stats["player"] == "Ashton Jeanty", "position"] = "RB"
     
