@@ -181,7 +181,10 @@ EXCLUDE_FROM_KNN = {
     "QB": ["comp_att"],
     "TE": ["Bench Press", "3Cone","Shuttle","fumbles_fum","Fumbles"],
     "LB": ["defensive_td", "interceptions_td", "interceptions_yds", "interceptions_avg"],
-    "DE/LB": ["defensive_td", "interceptions_td", "interceptions_yds", "interceptions_avg"]
+    "DE/LB": ["defensive_td", "interceptions_td", "interceptions_yds", "interceptions_avg"],
+    "DB": ["interceptions_td", "interceptions_avg", "defensive_td"],
+    "DL": ["defensive_td", "interceptions_td", "interceptions_yds", "interceptions_avg"],
+    "DT": ["defensive_td", "interceptions_td", "interceptions_yds", "interceptions_avg"]
 }
 
 POSITION_BASELINES = {
@@ -208,11 +211,6 @@ POSITION_BASELINES = {
         "defensive_pd", "defensive_td"
     ],
     "DB": [
-        "defensive_solo", "defensive_tot", "defensive_tfl", "interceptions_int",
-        "interceptions_yds", "interceptions_avg", "interceptions_td",
-        "defensive_pd", "defensive_td"
-    ],
-    "S": [
         "defensive_solo", "defensive_tot", "defensive_tfl", "interceptions_int",
         "interceptions_yds", "interceptions_avg", "interceptions_td",
         "defensive_pd", "defensive_td"
@@ -281,6 +279,7 @@ COLUMN_RENAME_MAP = {
     "rec_targets": "Rec/Targets",
     "receiving_ypr": "YPC",
     "40 Yard": "40-Yard Dash",
+    "10-Yard Split": "10-Yard Split",
     "3Cone": "3-Cone Drill",
     "punting_tb":"Touchbacks",
     "punting_no":"Punts",

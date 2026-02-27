@@ -24,7 +24,7 @@ class DataProcessor:
     def process(self, input_player: str, player_year="2025"):
         combine_columns = [
             "Height (in)", "Weight (lbs)", "Hand Size (in)", "Arm Length (in)",
-            "40 Yard", "Bench Press", "Vert Leap (in)",
+            "40 Yard", "10-Yard Split", "Bench Press", "Vert Leap (in)",
             "Broad Jump (in)", "Shuttle", "3Cone", "POS_GP", "POS"
         ]
         try:
@@ -92,9 +92,9 @@ class DataProcessor:
         if pd.isna(player_pos) if player_pos is not None else True:
             player_pos = None
 
-        if player_position in ["FS", "SS"]:
-            position_key = "S"
-            df = df[is_input_player | df["POS_GP"].isin(["FS", "SS"]) | df["position"].isin(["FS", "SS"])]
+        if player_position in ["FS", "SS", "DB", "CB", "S"]:
+            position_key = "DB"
+            df = df[is_input_player | df["POS_GP"].isin(["FS", "SS", "DB", "CB", "S"]) | df["position"].isin(["FS", "SS", "DB", "CB", "S"])]
         elif player_position == "DL":
             # Split DL into DE/LB (edge) vs DT based on specific POS
             if player_pos in ["DT", "NT", "DL"]:
@@ -203,7 +203,7 @@ class DataProcessor:
         rate_metrics = {"passing_ypa", "passing_pct", "ppa_per_dropback", "epa_per_rec",
                         "rushing_ypc", "receiving_ypr", "interceptions_avg",
                         "kicking_pct", "punting_ypp"} | set(combine_columns)
-        reverse_metrics = {"passing_int", "40 Yard", "3Cone", "Shuttle", "Fumbles"}
+        reverse_metrics = {"passing_int", "40 Yard", "10-Yard Split", "3Cone", "Shuttle", "Fumbles"}
         self.percentile_df = df_sum.copy()
         for metric in valid_metrics:
             if metric == "comp_att":
