@@ -56,22 +56,16 @@ class DraftComparisonPlotter:
         self.stats_df = original_stats_df
         self.input_player = input_player
 
-    def _get_headshot_url(self, player: str) -> str:
+    def _get_athlete_id(self, player: str):
         df_player = self.stats_df[self.stats_df["player"] == player]
         if df_player.empty:
-            # Fall back to processor data for combine-only players
             df_player = self.proc.processed_df[self.proc.processed_df["player"] == player]
-        if df_player.empty:
-            return None
-        if "athlete_id" not in df_player.columns:
+        if df_player.empty or "athlete_id" not in df_player.columns:
             return None
         athlete_id = df_player["athlete_id"].iloc[0]
         if pd.isna(athlete_id) or athlete_id < 0:
             return None
-        return (
-            f"https://a.espncdn.com/combiner/i?img=/i/headshots/college-football/players/full/{int(athlete_id)}.png?"
-            "w=350&h=254"
-        )
+        return int(athlete_id)
 
     def _get_latest_teams(self):
         latest_teams = self.stats_df.loc[
@@ -83,17 +77,22 @@ class DraftComparisonPlotter:
         fig = plt.figure(figsize=(28, 18))
         fig.patch.set_facecolor("#DDEBEC")
 
-        headshot_url = self._get_headshot_url(self.input_player)
-        if headshot_url:
-            try:
-                with urllib.request.urlopen(headshot_url) as url:
-                    player_image = Image.open(io.BytesIO(url.read()))
-                player_img_ax = fig.add_axes([0.01, 0.76, 0.15, 0.15], frameon=False)
-                player_img_ax.imshow(player_image)
-                player_img_ax.set_xticks([])
-                player_img_ax.set_yticks([])
-            except Exception:
-                pass
+        athlete_id = self._get_athlete_id(self.input_player)
+        player_image = None
+        if athlete_id:
+            for path in ("college-football", "nfl"):
+                try:
+                    url = f"https://a.espncdn.com/combiner/i?img=/i/headshots/{path}/players/full/{athlete_id}.png?w=350&h=254"
+                    with urllib.request.urlopen(url) as resp:
+                        player_image = Image.open(io.BytesIO(resp.read()))
+                    break
+                except Exception:
+                    continue
+        if player_image:
+            player_img_ax = fig.add_axes([0.01, 0.76, 0.15, 0.15], frameon=False)
+            player_img_ax.imshow(player_image)
+            player_img_ax.set_xticks([])
+            player_img_ax.set_yticks([])
 
         title_text = f"{self.input_player} ({self.proc.player_position}) NFL Draft Comparison"
         fig.text(
