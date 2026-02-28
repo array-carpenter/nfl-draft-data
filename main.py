@@ -8,7 +8,7 @@ from config import FILTERED_STATS_PATH, COMBINE_STATS_PATH
 def main():
     stats_df = load_data(FILTERED_STATS_PATH, COMBINE_STATS_PATH)
     
-    input_player = "Mansoor Delane"
+    input_player = "Jeremiyah Love"
     processor = DataProcessor(stats_df)
     processor.process(input_player)
 

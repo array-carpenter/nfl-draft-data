@@ -15,7 +15,7 @@ import seaborn as sns
 
 from config import ROBOTO, INSTRUMENT_SERIF, TEAM_COLORS, COLUMN_RENAME_MAP, LOGO_PATH
 
-DRAFT_PICKS_PATH = "draft_picks.csv"
+DRAFT_PICKS_PATH = "data/draft_picks.csv"
 
 def get_draft_position(athlete_id, stats_df=None):
     """Look up a player's NFL draft position from draft_picks.csv."""
@@ -67,6 +67,32 @@ class DraftComparisonPlotter:
             return None
         return int(athlete_id)
 
+    def _fetch_headshot(self, player: str):
+        """Try college headshot, then NFL with same ID, then ESPN search API fallback."""
+        athlete_id = self._get_athlete_id(player)
+        if athlete_id:
+            for path in ("college-football", "nfl"):
+                try:
+                    url = f"https://a.espncdn.com/combiner/i?img=/i/headshots/{path}/players/full/{athlete_id}.png?w=350&h=254"
+                    with urllib.request.urlopen(url) as resp:
+                        return Image.open(io.BytesIO(resp.read()))
+                except Exception:
+                    continue
+        # Fallback: search ESPN NFL API for the player's NFL headshot ID
+        try:
+            query = urllib.request.quote(player)
+            api_url = f"https://site.api.espn.com/apis/common/v3/search?query={query}&type=player&sport=football&league=nfl"
+            with urllib.request.urlopen(api_url) as resp:
+                data = json.loads(resp.read())
+            if data.get("items"):
+                nfl_id = data["items"][0]["id"]
+                url = f"https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/{nfl_id}.png?w=350&h=254"
+                with urllib.request.urlopen(url) as resp:
+                    return Image.open(io.BytesIO(resp.read()))
+        except Exception:
+            pass
+        return None
+
     def _get_latest_teams(self):
         latest_teams = self.stats_df.loc[
             self.stats_df.groupby("athlete_id")["year"].idxmax(), ["athlete_id", "team"]
@@ -77,17 +103,7 @@ class DraftComparisonPlotter:
         fig = plt.figure(figsize=(28, 18))
         fig.patch.set_facecolor("#DDEBEC")
 
-        athlete_id = self._get_athlete_id(self.input_player)
-        player_image = None
-        if athlete_id:
-            for path in ("college-football", "nfl"):
-                try:
-                    url = f"https://a.espncdn.com/combiner/i?img=/i/headshots/{path}/players/full/{athlete_id}.png?w=350&h=254"
-                    with urllib.request.urlopen(url) as resp:
-                        player_image = Image.open(io.BytesIO(resp.read()))
-                    break
-                except Exception:
-                    continue
+        player_image = self._fetch_headshot(self.input_player)
         if player_image:
             player_img_ax = fig.add_axes([0.01, 0.76, 0.15, 0.15], frameon=False)
             player_img_ax.imshow(player_image)

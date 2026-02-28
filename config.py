@@ -1,12 +1,12 @@
 import matplotlib.font_manager as fm
 
-FONT_PATH = 'Roboto_Mono/RobotoMono-VariableFont_wght.ttf'
-ITALIC_FONT_PATH = 'Roboto_Mono/RobotoMono-Italic-VariableFont_wght.ttf'
+FONT_PATH = 'assets/fonts/Roboto_Mono/RobotoMono-VariableFont_wght.ttf'
+ITALIC_FONT_PATH = 'assets/fonts/Roboto_Mono/RobotoMono-Italic-VariableFont_wght.ttf'
 ROBOTO = fm.FontProperties(fname=FONT_PATH)
 ITALIC_ROBOTO = fm.FontProperties(fname=ITALIC_FONT_PATH)
 
-INSTRUMENT_SERIF_PATH = 'Instrument_Serif/InstrumentSerif-Regular.ttf'
-INSTRUMENT_SERIF_ITALIC_PATH = 'Instrument_Serif/InstrumentSerif-Italic.ttf'
+INSTRUMENT_SERIF_PATH = 'assets/fonts/Instrument_Serif/InstrumentSerif-Regular.ttf'
+INSTRUMENT_SERIF_ITALIC_PATH = 'assets/fonts/Instrument_Serif/InstrumentSerif-Italic.ttf'
 INSTRUMENT_SERIF = fm.FontProperties(fname=INSTRUMENT_SERIF_PATH)
 INSTRUMENT_SERIF_ITALIC = fm.FontProperties(fname=INSTRUMENT_SERIF_ITALIC_PATH)
 
@@ -289,6 +289,6 @@ COLUMN_RENAME_MAP = {
     "punting_in_20":"Punts inside the 20"
 }
 
-FILTERED_STATS_PATH = "filtered_player_stats_full.csv"
+FILTERED_STATS_PATH = "data/filtered_player_stats_full.csv"
 COMBINE_STATS_PATH = "combine_data_unique_athlete_id_step4.csv"
 LOGO_PATH = "logo.png"

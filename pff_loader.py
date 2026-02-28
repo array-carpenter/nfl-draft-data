@@ -6,7 +6,7 @@ import os
 import glob
 import pandas as pd
 
-PFF_DATA_DIR = "pff_data"
+PFF_DATA_DIR = "data"
 
 # PFF team_name -> CFBD team name
 PFF_TEAM_MAP = {

@@ -1,10 +1,14 @@
-data/*
 .env
 __pycache__/
 venv/
+.venv/
 .python-version
 uv.lock
 pyproject.toml
-pff_data/
-cfb_pbp_*.csv
-cfb_pbp_raw_*.csv
+
+# Untracked data files (raw scrapes, PBP, PFF)
+data/nfl_com_combine_*.csv
+data/cfb_pbp_*.csv
+data/cfb_pbp_raw_*.csv
+data/*_passing_summary.csv
+data/*_receiving_summary.csv

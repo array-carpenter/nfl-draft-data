@@ -4,8 +4,8 @@ from scipy.stats import rankdata
 from config import POSITION_BASELINES, COMBINE_STATS_PATH, EXCLUDE_FROM_KNN
 from pff_loader import merge_pff_passing
 
-PPA_DATA_PATH = "qb_ppa_data.csv"
-WR_EPA_PATH = "wr_epa_per_rec.csv"
+PPA_DATA_PATH = "data/qb_ppa_data.csv"
+WR_EPA_PATH = "data/wr_epa_per_rec.csv"
 from sklearn.neighbors import NearestNeighbors
 
 class DataProcessor:
