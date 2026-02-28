@@ -6,11 +6,11 @@
   
   <!-- Text Block -->
   <p>
-Welcome to this repo where I use cosine similarity to compare current NFL Draft Prospects to current ones. This was last updated for the 2024 NFL Draft, but I hope to pick this back up in 2025 and make it even better for next draft. Things I will take care of in 2025 include consolidating all of the positional csvs and positional notebooks into one script, and updating the layout. Hope you enjoy it, please reach out if you have any questions, comments, or concerns. Below is an example output of the code.  
+NFL Draft prospect comparison cards built with a k-nearest neighbor (KNN) algorithm. Takes raw combine measurements and college production stats, calculates per-season percentiles, then uses Manhattan distance to find each prospect's 3 most similar historical players.
   </p>
   <br />
   
-  <img src="https://github.com/array-carpenter/nfl-draft-data/blob/master/images/mikepenix.png" />
+  <img src="2026_pre_combine/Sonny_Styles_pre_combine.png" />
   <br />
   <br />
 </div>
