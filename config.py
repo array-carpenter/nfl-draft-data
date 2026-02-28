@@ -240,7 +240,8 @@ POSITION_BASELINES = {
     ],
         "P": [
       "punting_no","punting_yds","punting_in_20","punting_tb"
-    ]
+    ],
+        "OL": []
 }
 
 COLUMN_RENAME_MAP = {

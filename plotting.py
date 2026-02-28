@@ -59,12 +59,17 @@ class DraftComparisonPlotter:
     def _get_headshot_url(self, player: str) -> str:
         df_player = self.stats_df[self.stats_df["player"] == player]
         if df_player.empty:
-            raise ValueError(f"No data found for player: {player}")
+            # Fall back to processor data for combine-only players
+            df_player = self.proc.processed_df[self.proc.processed_df["player"] == player]
+        if df_player.empty:
+            return None
         if "athlete_id" not in df_player.columns:
-            raise ValueError("The column 'athlete_id' is not present in the data. Please check your combine file.")
+            return None
         athlete_id = df_player["athlete_id"].iloc[0]
+        if pd.isna(athlete_id) or athlete_id < 0:
+            return None
         return (
-            f"https://a.espncdn.com/combiner/i?img=/i/headshots/college-football/players/full/{athlete_id}.png?"
+            f"https://a.espncdn.com/combiner/i?img=/i/headshots/college-football/players/full/{int(athlete_id)}.png?"
             "w=350&h=254"
         )
 
@@ -79,13 +84,16 @@ class DraftComparisonPlotter:
         fig.patch.set_facecolor("#DDEBEC")
 
         headshot_url = self._get_headshot_url(self.input_player)
-        with urllib.request.urlopen(headshot_url) as url:
-            player_image = Image.open(io.BytesIO(url.read()))
-
-        player_img_ax = fig.add_axes([0.01, 0.76, 0.15, 0.15], frameon=False)
-        player_img_ax.imshow(player_image)
-        player_img_ax.set_xticks([])
-        player_img_ax.set_yticks([])
+        if headshot_url:
+            try:
+                with urllib.request.urlopen(headshot_url) as url:
+                    player_image = Image.open(io.BytesIO(url.read()))
+                player_img_ax = fig.add_axes([0.01, 0.76, 0.15, 0.15], frameon=False)
+                player_img_ax.imshow(player_image)
+                player_img_ax.set_xticks([])
+                player_img_ax.set_yticks([])
+            except Exception:
+                pass
 
         title_text = f"{self.input_player} ({self.proc.player_position}) NFL Draft Comparison"
         fig.text(

@@ -69,7 +69,25 @@ class DataProcessor:
 
         df = df.drop_duplicates(subset=["player", "year", "team", "athlete_id"])
         if input_player not in df["player"].unique():
-            raise ValueError(f"Input player {input_player} not found in data.")
+            # Player may only exist in combine data (e.g., OL with no production stats)
+            full_combine = pd.read_csv(COMBINE_STATS_PATH)
+            player_combine = full_combine[full_combine["player"] == input_player]
+            if player_combine.empty:
+                raise ValueError(f"Input player {input_player} not found in data.")
+            pos_gp = player_combine["POS_GP"].iloc[0]
+            peers = full_combine[full_combine["POS_GP"] == pos_gp].copy()
+            peers = peers.rename(columns={"Year": "year"})
+            peers["year"] = peers["year"].astype(str)
+            if "position" not in peers.columns:
+                peers["position"] = peers["POS_GP"]
+            if "team" not in peers.columns:
+                peers["team"] = peers["College"]
+            # Fill missing athlete_ids with synthetic negative values so groupby works
+            missing_id = peers["athlete_id"].isna()
+            if missing_id.any():
+                peers.loc[missing_id, "athlete_id"] = [-1 * (i + 1) for i in range(missing_id.sum())]
+            df = pd.concat([df, peers], ignore_index=True)
+            df = df.drop_duplicates(subset=["player", "year", "athlete_id"], keep="first")
         df_player_year = df[(df["player"] == input_player) & (df["year"] == player_year)]
         if df_player_year.empty:
             fallback_year = df.loc[df["player"] == input_player, "year"].max()
