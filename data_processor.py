@@ -28,7 +28,9 @@ class DataProcessor:
             "Broad Jump (in)", "Shuttle", "3Cone", "POS_GP", "POS"
         ]
         try:
-            combine_df = pd.read_csv(COMBINE_STATS_PATH, usecols=["athlete_id"] + combine_columns)
+            combine_df = pd.read_csv(COMBINE_STATS_PATH, usecols=["athlete_id", "Year"] + combine_columns)
+            combine_df = combine_df.rename(columns={"Year": "combine_year"})
+            combine_df["combine_year"] = combine_df["combine_year"].astype(str)
         except Exception as e:
             print("Error reading combine data:", e)
             combine_df = pd.DataFrame()
@@ -160,7 +162,9 @@ class DataProcessor:
             if stat in df.columns:
                 df[stat] = pd.to_numeric(df[stat], errors="coerce")
         numeric_cols = df.select_dtypes(include="number").columns.tolist()
-        agg_funcs = {col: "sum" for col in numeric_cols if col not in combine_columns and col != "athlete_id"}
+        def _sum_min1(x):
+            return x.sum(min_count=1)
+        agg_funcs = {col: _sum_min1 for col in numeric_cols if col not in combine_columns and col != "athlete_id"}
         if "interceptions_avg" in agg_funcs:
             agg_funcs["interceptions_avg"] = "mean"
         if "passing_ypa" in agg_funcs:
@@ -172,6 +176,8 @@ class DataProcessor:
         for stat in combine_columns:
             if stat in df.columns:
                 agg_funcs[stat] = "first"
+        if "combine_year" in df.columns:
+            agg_funcs["combine_year"] = "first"
         df_sum = df.groupby(["player", "athlete_id"]).agg(agg_funcs).reset_index()
         if "passing_pct" in df.columns:
             passing_pct_avg = df.groupby(["player", "athlete_id"])["passing_pct"].mean().reset_index()
@@ -196,7 +202,7 @@ class DataProcessor:
         if "receiving_rec" in df_sum.columns and "receiving_yds" in df_sum.columns:
             df_sum["receiving_ypr"] = df_sum.apply(lambda row: row["receiving_yds"] / row["receiving_rec"] if row["receiving_rec"] > 0 else 0, axis=1)
         if "passing_completions" in df_sum.columns and "passing_att" in df_sum.columns:
-            df_sum["comp_att"] = df_sum["passing_completions"].astype(int).astype(str) + "/" + df_sum["passing_att"].astype(int).astype(str)
+            df_sum["comp_att"] = df_sum["passing_completions"].fillna(0).astype(int).astype(str) + "/" + df_sum["passing_att"].fillna(0).astype(int).astype(str)
             if "comp_att" in baseline_metrics and "comp_att" not in valid_metrics:
                 valid_metrics.insert(baseline_metrics.index("comp_att"), "comp_att")
         if all(col in df.columns for col in ["rushing_yds", "rushing_car", "rushing_ypc"]):
@@ -251,16 +257,28 @@ class DataProcessor:
             raise ValueError("No aggregated row found for the input player.")
         input_index = input_index[0]
         self.knn_metrics = [m for m in self.knn_metrics if pd.notna(self.percentile_df.loc[input_index, m])]
-        knn_data = self.percentile_df[self.knn_metrics].fillna(50)
+        # Exclude same-year prospects and players without combine data from KNN comp pool
+        input_combine_year = self.percentile_df.loc[input_index, "combine_year"] if "combine_year" in self.percentile_df.columns else None
+        if pd.notna(input_combine_year):
+            is_input = self.percentile_df["player"] == input_player
+            same_year = self.percentile_df.get("combine_year") == input_combine_year
+            no_combine = self.percentile_df.get("combine_year").isna()
+            knn_pool_mask = is_input | (~same_year & ~no_combine)
+        else:
+            knn_pool_mask = pd.Series(True, index=self.percentile_df.index)
+        knn_pool = self.percentile_df[knn_pool_mask].reset_index(drop=True)
+        knn_input_index = knn_pool[knn_pool["player"] == input_player].index[0]
+        knn_data = knn_pool[self.knn_metrics]
+        knn_data = knn_data.fillna(knn_data.mean())
         knn = NearestNeighbors(n_neighbors=4, metric='manhattan')
         knn.fit(knn_data.values)
-        distances, indices = knn.kneighbors(knn_data.loc[input_index].values.reshape(1, -1))
+        distances, indices = knn.kneighbors(knn_data.loc[knn_input_index].values.reshape(1, -1))
         neighbor_indices = list(indices[0])
-        if input_index in neighbor_indices:
-            neighbor_indices.remove(input_index)
-        top3_players = self.percentile_df.loc[neighbor_indices, "player"].tolist()
-        top3_ids = self.percentile_df.loc[neighbor_indices, "athlete_id"].tolist()
-        input_id = self.percentile_df.loc[input_index, "athlete_id"]
+        if knn_input_index in neighbor_indices:
+            neighbor_indices.remove(knn_input_index)
+        top3_players = knn_pool.loc[neighbor_indices, "player"].tolist()
+        top3_ids = knn_pool.loc[neighbor_indices, "athlete_id"].tolist()
+        input_id = knn_pool.loc[knn_input_index, "athlete_id"]
         self.comparison_players = [input_player] + top3_players
         self.comparison_athlete_ids = [input_id] + top3_ids
         self.radar_data = []

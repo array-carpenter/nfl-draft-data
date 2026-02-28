@@ -17,7 +17,7 @@ from config import ROBOTO, INSTRUMENT_SERIF, TEAM_COLORS, COLUMN_RENAME_MAP, LOG
 
 DRAFT_PICKS_PATH = "data/draft_picks.csv"
 
-def get_draft_position(athlete_id, stats_df=None):
+def get_draft_position(athlete_id, stats_df=None, player_name=None):
     """Look up a player's NFL draft position from draft_picks.csv."""
     try:
         picks = pd.read_csv(DRAFT_PICKS_PATH)
@@ -25,6 +25,12 @@ def get_draft_position(athlete_id, stats_df=None):
         if not match.empty:
             row = match.iloc[0]
             return f"Round {int(row['round'])} Pick {int(row['pick'])}"
+        # Fallback: match by name (IDs differ between data sources for some players)
+        if player_name:
+            name_match = picks[picks["name"].str.lower().str.strip() == player_name.lower().strip()]
+            if len(name_match) == 1:
+                row = name_match.iloc[0]
+                return f"Round {int(row['round'])} Pick {int(row['pick'])}"
     except Exception:
         pass
     if stats_df is not None:
@@ -118,8 +124,8 @@ class DraftComparisonPlotter:
         )
         fig.text(
             0.18, 0.78,
-            "Ray Carpenter | TheSpade.substack.com | Stats: CFBD | Combine Data: Various Sources",
-            fontsize=26, ha="left", color="#474746", fontproperties=ROBOTO
+            "Ray Carpenter | TheSpade.substack.com | Stats: CFBD | Combine Data: Various Sources | Go Watch Film",
+            fontsize=24, ha="left", color="#474746", fontproperties=ROBOTO
         )
 
         # Add team logo to top right
@@ -239,12 +245,19 @@ class DraftComparisonPlotter:
             cell.get_text().set_fontsize(table_fontsize)
             cell.set_edgecolor("#DDEBEC")
 
-            pctile_row = percentile_data.iloc[row_idx]
-            leader_idx = pctile_row.argmax()
+            lower_is_better = {"Fumbles", "Interceptions", "40-Yard Dash", "10-Yard Split", "3-Cone Drill", "Shuttle"}
+            numeric_vals = pd.to_numeric(row_vals, errors="coerce")
+            if numeric_vals.notna().any():
+                if row_name in lower_is_better:
+                    leader_idx = numeric_vals.fillna(np.inf).argmin()
+                else:
+                    leader_idx = numeric_vals.fillna(-np.inf).argmax()
+            else:
+                leader_idx = -1
 
             for col_idx, val in enumerate(row_vals):
                 if pd.isna(val):
-                    formatted_val = "—"
+                    formatted_val = "N/A"
                 elif row_name in {"40-Yard Dash", "10-Yard Split", "3-Cone Drill", "Height (in)", "Hand Size (in)", "Arm Length (in)", "Shuttle", "Yards per Carry"}:
                     formatted_val = f"{val:.2f}"
                 elif row_name == "Yards per Attempt":
@@ -282,7 +295,8 @@ class DraftComparisonPlotter:
         cell.get_text().set_fontsize(table_fontsize)
         cell.set_edgecolor("#DDEBEC")
         for col_idx, aid in enumerate(comparison_athlete_ids):
-            draft_text = get_draft_position(aid, stats_df=self.stats_df)
+            pname = comparison_players[col_idx] if col_idx < len(comparison_players) else None
+            draft_text = get_draft_position(aid, stats_df=self.stats_df, player_name=pname)
             cell = table.add_cell(row=draft_row_num, col=col_idx + 1, width=cell_width, height=cell_height, text=draft_text, loc="center", fontproperties=ROBOTO, facecolor="#DDEBEC")
             cell.get_text().set_fontsize(table_fontsize)
             cell.set_edgecolor("#DDEBEC")
