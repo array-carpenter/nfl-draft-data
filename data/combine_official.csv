@@ -26,7 +26,7 @@ year,player,first_name,last_name,college,position,position_group,height,weight,a
 2026,Mason Reiger,Mason,Reiger,Wisconsin,EDGE,DL,76.625,251.0,32.625,10.375,4.78,,,40.0,125.0,,,32005245-4940-8593-54c3-c06da91ee616,6.14,66.67,,Kyler Fackrell
 2026,Marvin Jones Jr.,Marvin,Jones Jr.,Oklahoma,EDGE,DL,77.0,245.0,33.125,9.25,4.69,,,,,,,32004a4f-4e82-6255-27ff-898a9096b167,5.68,56.39,,
 2026,Marlin Klein,Marlin,Klein,Michigan,TE,TE,78.0,248.0,32.375,9.25,4.61,,,36.0,117.0,7.42,,32004b4c-4525-8860-6aa5-a9adcf755793,5.97,65.46,,
-2026,Markel Bell,Markel,Bell,Miami,OT,OL,80.0,358.0,,,,,,,,,,32004245-4c50-6870-7576-40ee83a92982,5.89,68.72,,
+2026,Markel Bell,Markel,Bell,Miami (OH),OT,OL,81.25,346.0,36.375,9.0,,,,,,,,32004245-4c50-6870-7576-40ee83a92982,5.89,68.72,,
 2026,Marcus Allen,Marcus,Allen,North Carolina,CB,DB,73.625,187.0,32.125,8.5,4.5,,,39.0,123.0,,,3200414c-4c59-5143-7b4e-17c3fa1331ff,5.89,64.36,,
 2026,Malik Muhammad,Malik,Muhammad,Texas,CB,DB,72.0,182.0,32.375,9.875,4.42,,,39.0,130.0,,,32004d55-4842-4065-4269-a77ca95368fb,6.25,73.19,,Andru Phillips
 2026,Logan Taylor,Logan,Taylor,Boston College,G,OL,78.0,305.0,,,,,,,,,,32005441-5954-6637-15da-226426807cf4,5.87,56.24,,
@@ -66,7 +66,7 @@ year,player,first_name,last_name,college,position,position_group,height,weight,a
 2026,Kaleb Proctor,Kaleb,Proctor,Southeastern Louisiana,DT,DL,73.875,291.0,33.0,9.5,4.79,,,33.0,113.0,,4.71,32005052-4f11-5871-6774-900b7aa2aee7,5.83,69.65,,
 2026,Kaleb Elarms-Orr,Kaleb,Elarms-Orr,TCU,LB,LB,74.0,234.0,31.5,9.0,4.47,,,40.0,124.0,,4.41,3200454c-4157-7722-b084-9fdec37e6edd,5.93,73.75,,
 2026,Kage Casey,Kage,Casey,Boise State,OT,OL,77.0,309.0,,,,,,,,,,32004341-5323-0016-ece2-351d72d0b630,6.25,68.67,,Sam Cosmi
-2026,Kadyn Proctor,Kadyn,Proctor,Alabama,OT,OL,79.0,366.0,,,,,,,,,,32005052-4f11-4835-541d-2c6046e88c55,6.45,76.32,,
+2026,Kadyn Proctor,Kadyn,Proctor,Alabama,OT,OL,78.625,352.0,33.375,9.75,,,,,,,,32005052-4f11-4835-541d-2c6046e88c55,6.45,76.32,,
 2026,Kaden Wetjen,Kaden,Wetjen,Iowa,WR,WR,68.0,195.0,,,,,,,,,,32005745-5405-5619-dc8c-041c289be4c2,6.0,61.85,,
 2026,Justin Joly,Justin,Joly,N.C. State,TE,TE,75.5,241.0,32.25,10.5,,,,,,,,32004a4f-4c73-5174-2e1e-903378207106,6.16,74.38,,Brevin Jordan
 2026,Josh Cameron,Josh,Cameron,Baylor,WR,WR,73.0,223.0,,,,,,,,,,32004341-4d10-8646-75f3-768d0dbaba55,6.14,69.87,,
@@ -94,7 +94,7 @@ year,player,first_name,last_name,college,position,position_group,height,weight,a
 2026,Tacario Davis,Tacario,Davis,Washington,CB,DB,75.875,194.0,33.375,9.25,4.41,,,37.0,123.0,,,32004441-5676-3631-f32a-29d3f08901fe,6.0,72.74,,Nahshon Wright
 2026,TJ Hall,TJ,Hall,Iowa,CB,DB,72.75,189.0,30.0,9.5,4.59,,,36.0,,7.19,4.19,32004841-4c54-5789-c455-128bc2a1f9e2,6.22,64.66,,Jourdan Lewis
 2026,T.J. Parker,Tomarrion,Parker,Clemson,EDGE,DL,75.625,263.0,33.125,9.5,4.68,,,34.0,120.0,,,32005041-5242-9755-38a8-f013e41a52f2,6.29,77.98,,
-2026,Spencer Fano,Spencer,Fano,Utah,OT,OL,78.0,308.0,,,,,,,,,,32004641-4e28-8396-3438-4c254432f51e,6.44,82.1,,Brian O’Neill
+2026,Spencer Fano,Spencer,Fano,Utah,OT,OL,77.5,311.0,32.125,,,,,,,,,32004641-4e28-8396-3438-4c254432f51e,6.44,82.1,,Brian O’Neill
 2026,Sonny Styles,Alex,Styles,Ohio State,LB,LB,77.0,244.0,32.875,10.0,4.46,,,43.5,134.0,7.09,4.26,32005354-5952-6035-2123-fe49ff747b1d,6.42,94.31,,Fred Warner
 2026,Skyler Gill-Howard,Skyler,Gill-Howard,Texas Tech,DT,DL,72.625,280.0,30.75,9.25,,,27.0,,,,,32004749-4c49-8895-7eba-077f0e858762,5.81,66.58,,
 2026,Trey Smack,James,Smack,Florida,K,SPEC,73.25,188.0,30.0,8.75,,,,,,,,3200534d-4103-7753-40a4-02e3a672a90f,5.92,,,
@@ -248,7 +248,7 @@ year,player,first_name,last_name,college,position,position_group,height,weight,a
 2026,Gary Smith III,Gary,Smith,UCLA,DT,DL,73.0,319.0,32.5,9.75,,,,28.0,,,,3200534d-4982-9495-3811-455e62015d83,5.86,60.31,,
 2026,Garrett Nussmeier,Garrett,Nussmeier,LSU,QB,QB,73.0,202.0,,,,,,,,,,32004e55-5344-0041-7bb0-5fb7ef8e51e5,6.0,70.02,,Drew Lock
 2026,Garrett DiGiorgio,Garrett,DiGiorgio,UCLA,G,OL,78.0,321.0,,,,,,,,,,32004449-4742-2040-3d6d-b3916c89a564,5.68,60.15,,
-2026,Francis Mauigoa,Francis,Mauigoa,Miami,OT,OL,78.0,335.0,,,,,,,,,,32004d41-5529-0246-8acf-c015bb4b4780,6.48,76.87,,Taliese Fuaga
+2026,Francis Mauigoa,Francis,Mauigoa,Miami,OT,OL,77.5,329.0,33.25,10.625,,,,,,,,32004d41-5529-0246-8acf-c015bb4b4780,6.48,76.87,,Taliese Fuaga
 2026,Harold Perkins Jr.,Harold,Perkins Jr.,LSU,LB,LB,72.875,223.0,31.375,8.125,,,,,,,,32005045-5229-6437-5fdf-c214e3fe14e0,6.18,66.67,,
 2026,Fernando Mendoza,Fernando,Mendoza,Indiana,QB,QB,77.0,225.0,,,,,,,,,,32004d45-4e51-6487-98a2-f3a9ce2f5835,6.73,85.95,,Joe Burrow
 2026,Fernando Carmona,Fernando,Carmona,Arkansas,G,OL,76.0,318.0,,,,,,,,,,32004341-5222-7183-53ce-c1b010acfe11,5.85,69.35,,
@@ -341,7 +341,7 @@ year,player,first_name,last_name,college,position,position_group,height,weight,a
 2026,Logan Jones,Logan,Jones,Iowa,C,OL,75.0,302.0,,,,,,,,,,32004a4f-4e58-6541-7133-b900cc32b04c,6.2,70.24,,
 2026,Logan Taylor,Logan,Taylor,Boston College,G,OL,78.0,305.0,,,,,,,,,,32005441-5954-6637-15da-226426807cf4,5.87,56.24,,
 2026,Lorenzo Styles Jr.,Lorenzo,Styles Jr.,Ohio State,SAF,DB,72.5,194.0,31.625,9.5,4.27,,,39.0,,,,32005354-5952-6036-9e7f-8e7cf45228f6,5.67,65.02,,
-2026,Markel Bell,Markel,Bell,Miami,OT,OL,80.0,358.0,,,,,,,,,,32004245-4c50-6870-7576-40ee83a92982,5.89,68.72,,
+2026,Markel Bell,Markel,Bell,Miami (OH),OT,OL,81.25,346.0,36.375,9.0,,,,,,,,32004245-4c50-6870-7576-40ee83a92982,5.89,68.72,,
 2026,Max Iheanachor,Maxwell,Iheanachor,Arizona State,OT,OL,77.0,325.0,,,,,,,,,,32004948-4507-4158-69c6-9023feca6811,6.3,72.39,,Taylor Moton
 2026,Max Bredeson,Max,Bredeson,Michigan,FB,RB,74.0,252.0,30.125,10.0,,,,,,,,32004252-4506-0106-e9c0-99700da8edba,5.67,66.44,,
 2026,Matthew Hibner,Matthew,Hibner,SMU,TE,TE,76.25,251.0,32.375,9.375,4.57,,28.0,37.0,116.0,,,32004849-4256-4972-3223-6dadfee608dd,5.95,72.27,,
@@ -388,7 +388,7 @@ year,player,first_name,last_name,college,position,position_group,height,weight,a
 2026,Kaleb Proctor,Kaleb,Proctor,Southeastern Louisiana,DT,DL,73.875,291.0,33.0,9.5,4.79,,,33.0,113.0,,4.71,32005052-4f11-5871-6774-900b7aa2aee7,5.83,69.65,,
 2026,Kaleb Elarms-Orr,Kaleb,Elarms-Orr,TCU,LB,LB,74.0,234.0,31.5,9.0,4.47,,,40.0,124.0,,4.41,3200454c-4157-7722-b084-9fdec37e6edd,5.93,73.75,,
 2026,Kage Casey,Kage,Casey,Boise State,OT,OL,77.0,309.0,,,,,,,,,,32004341-5323-0016-ece2-351d72d0b630,6.25,68.67,,Sam Cosmi
-2026,Kadyn Proctor,Kadyn,Proctor,Alabama,OT,OL,79.0,366.0,,,,,,,,,,32005052-4f11-4835-541d-2c6046e88c55,6.45,76.32,,
+2026,Kadyn Proctor,Kadyn,Proctor,Alabama,OT,OL,78.625,352.0,33.375,9.75,,,,,,,,32005052-4f11-4835-541d-2c6046e88c55,6.45,76.32,,
 2026,KC Concepcion,KC,Concepcion,Texas A&M,WR,WR,71.625,196.0,30.25,9.25,,,,,,,,3200434f-4e04-6719-61ea-f84c4a062c16,6.4,77.24,,Doug Baldwin
 2026,Josh Cuevas,Josh,Cuevas,Alabama,TE,TE,75.375,245.0,30.625,9.625,4.65,,,34.0,118.0,7.37,4.38,32004355-4504-0912-5592-ad2683a4f2aa,6.12,70.22,,Ian Thomas
 2026,Justin Joly,Justin,Joly,N.C. State,TE,TE,75.5,241.0,32.25,10.5,,,,,,,,32004a4f-4c73-5174-2e1e-903378207106,6.16,74.38,,Brevin Jordan
@@ -416,7 +416,7 @@ year,player,first_name,last_name,college,position,position_group,height,weight,a
 2026,Tacario Davis,Tacario,Davis,Washington,CB,DB,75.875,194.0,33.375,9.25,4.41,,,37.0,123.0,,,32004441-5676-3631-f32a-29d3f08901fe,6.0,72.74,,Nahshon Wright
 2026,TJ Hall,TJ,Hall,Iowa,CB,DB,72.75,189.0,30.0,9.5,4.59,,,36.0,,7.19,4.19,32004841-4c54-5789-c455-128bc2a1f9e2,6.22,64.66,,Jourdan Lewis
 2026,T.J. Parker,Tomarrion,Parker,Clemson,EDGE,DL,75.625,263.0,33.125,9.5,4.68,,,34.0,120.0,,,32005041-5242-9755-38a8-f013e41a52f2,6.29,77.98,,
-2026,Spencer Fano,Spencer,Fano,Utah,OT,OL,78.0,308.0,,,,,,,,,,32004641-4e28-8396-3438-4c254432f51e,6.44,82.1,,Brian O’Neill
+2026,Spencer Fano,Spencer,Fano,Utah,OT,OL,77.5,311.0,32.125,,,,,,,,,32004641-4e28-8396-3438-4c254432f51e,6.44,82.1,,Brian O’Neill
 2026,Sonny Styles,Alex,Styles,Ohio State,LB,LB,77.0,244.0,32.875,10.0,4.46,,,43.5,134.0,7.09,4.26,32005354-5952-6035-2123-fe49ff747b1d,6.42,94.31,,Fred Warner
 2026,Trey Zuhn III,Trey,Zuhn III,Texas A&M,C,OL,78.0,309.0,,,,,,,,,,32005a55-4841-5291-be26-642c7eb471d6,6.23,67.02,,Joe Tippmann
 2026,Ty Simpson,Ty,Simpson,Alabama,QB,QB,73.125,211.0,30.875,9.375,,,,,,,,32005349-4d63-9376-c6de-c1666dcadc47,6.28,74.78,,Mac Jones
@@ -569,7 +569,7 @@ year,player,first_name,last_name,college,position,position_group,height,weight,a
 2026,Gary Smith III,Gary,Smith,UCLA,DT,DL,73.0,319.0,32.5,9.75,,,,28.0,,,,3200534d-4982-9495-3811-455e62015d83,5.86,60.31,,
 2026,Garrett Nussmeier,Garrett,Nussmeier,LSU,QB,QB,73.625,203.0,30.375,9.125,,,,,,,,32004e55-5344-0041-7bb0-5fb7ef8e51e5,6.0,70.47,,Drew Lock
 2026,Garrett DiGiorgio,Garrett,DiGiorgio,UCLA,G,OL,78.0,321.0,,,,,,,,,,32004449-4742-2040-3d6d-b3916c89a564,5.68,60.15,,
-2026,Francis Mauigoa,Francis,Mauigoa,Miami,OT,OL,78.0,335.0,,,,,,,,,,32004d41-5529-0246-8acf-c015bb4b4780,6.48,76.87,,Taliese Fuaga
+2026,Francis Mauigoa,Francis,Mauigoa,Miami,OT,OL,77.5,329.0,33.25,10.625,,,,,,,,32004d41-5529-0246-8acf-c015bb4b4780,6.48,76.87,,Taliese Fuaga
 2026,Harrison Wallace III,Harrison,Wallace,Mississippi,WR,WR,71.875,192.0,32.125,8.375,4.54,,,,,,,32005741-4c50-5425-d6a3-7e2a4b9d8ae4,5.88,59.08,,
 2026,Fernando Mendoza,Fernando,Mendoza,Indiana,QB,QB,76.75,236.0,31.875,9.5,,,,,,,,32004d45-4e51-6487-98a2-f3a9ce2f5835,6.73,86.71,,Joe Burrow
 2026,Fernando Carmona,Fernando,Carmona,Arkansas,G,OL,76.0,318.0,,,,,,,,,,32004341-5222-7183-53ce-c1b010acfe11,5.85,69.35,,
