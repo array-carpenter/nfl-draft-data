@@ -8142,7 +8142,7 @@ Year,player,College,POS_GP,POS,athlete_id,Height (in),Weight (lbs),Arm Length (i
 2026,Anthony Hill Jr.,Texas,LB,LB,4870805.0,74.0,238.0,32.375,9.625,4.51,1.58,37.0,125.0,,,21.0,,443bdf59-be7f-4a85-a130-a6ef771b3e2b
 2026,Anthony Lucas,USC,DL,EDGE,4685442.0,77.5,256.0,33.5,10.25,,,,,,,,,3b4557f0-cb5f-41f1-ba58-bdab5a88f49e
 2026,Antonio Williams,Clemson,WR,WR,5081432.0,71.5,187.0,30.75,9.25,4.41,1.55,39.5,124.0,7.0,,10.0,,8cedfd6c-366a-4bba-9dc2-761b4dddb035
-2026,Ar'maj Reed-Adams,Texas A&M,OL,G,4606712.0,77.75,314.0,34.375,10.0,5.28,1.85,29.5,110.0,,,,,ff2ba671-9e54-4678-a2d2-4bb61f4f74e9
+2026,Ar'maj Reed-Adams,Texas A&M,OL,G,4606712.0,77.75,314.0,34.375,10.0,5.28,1.85,29.5,110.0,7.88,,,,ff2ba671-9e54-4678-a2d2-4bb61f4f74e9
 2026,Arvell Reese,Ohio State,DL,EDGE,4950400.0,76.125,241.0,32.5,9.5,4.46,1.58,,,,,,,75dc100a-b9dc-4607-9698-6b88887ddca6
 2026,Austin Barber,Florida,OL,OT,4597310.0,78.875,318.0,33.125,9.625,5.12,1.77,32.0,111.0,,,,,e0d82a58-ae6b-45d5-98b2-93abc1e51c26
 2026,Avery Smith,Toledo,DB,CB,5082331.0,70.5,196.0,29.375,8.375,4.54,1.61,38.5,125.0,7.03,4.46,,,a6881023-a8d2-467e-9c9b-3028379cee1a
@@ -8159,7 +8159,7 @@ Year,player,College,POS_GP,POS,athlete_id,Height (in),Weight (lbs),Arm Length (i
 2026,Brandon Cleveland,N.C. State,DL,DT,4685305.0,75.0,307.0,32.375,9.25,5.12,1.78,,,,,,,0a41eb5a-e93d-4d1f-8615-f88daaf69957
 2026,Brenen Thompson,Mississippi State,WR,WR,4685553.0,69.375,164.0,29.375,9.0,4.26,1.54,,,,,,,e1f9e653-e1b3-4886-80c9-03c873be0784
 2026,Brett Thorson,Georgia,SPEC,P,4799994.0,73.25,237.0,30.375,9.25,,,,,,,,,94832134-d876-47b6-bcad-2f199ea0a940
-2026,Brian Parker II,Duke,OL,C,4689117.0,77.25,309.0,32.875,10.0,5.14,1.78,,109.0,,,,,b36e0836-38f2-4cf9-bfe0-f9a9e9724795
+2026,Brian Parker II,Duke,OL,C,4689117.0,77.25,309.0,32.875,10.0,5.14,1.78,,109.0,7.66,4.8,,,b36e0836-38f2-4cf9-bfe0-f9a9e9724795
 2026,Bryce Boettcher,Oregon,LB,LB,5088571.0,73.25,233.0,30.75,9.0,,,,,,,,,7d45f3cc-7af0-4295-9719-8bc38535a865
 2026,Bryce Lance,North Dakota State,WR,WR,4879276.0,75.375,204.0,32.125,9.25,4.34,1.49,41.5,133.0,7.0,4.15,,,80193600-a580-4d67-9a30-2eebec2ec10c
 2026,Bryson Eason,Tennessee,DL,DT,4692563.0,74.125,323.0,33.125,10.0,5.09,1.8,30.5,112.0,,5.0,,,bf646753-ed47-4cd3-8a6e-0eda5ba91d6a
@@ -8222,7 +8222,7 @@ Year,player,College,POS_GP,POS,athlete_id,Height (in),Weight (lbs),Arm Length (i
 2026,Deven Eastern,Minnesota,DL,DT,4609203.0,77.25,315.0,34.0,10.0,,,27.5,112.0,8.07,,,,818c233c-8366-4179-9413-d255834f79e0
 2026,Devin Moore,Florida,DB,CB,4702577.0,75.25,198.0,31.625,8.625,4.5,1.56,,,,,,,ff6e5f0e-73d7-49e8-bbec-3673640b9067
 2026,Diego Pavia,Vanderbilt,QB,QB,5084180.0,70.125,207.0,28.625,9.625,,,,,,,,,42ed090f-b233-4071-90ca-35ba52deace9
-2026,Diego Pounds,Mississippi,OL,OT,4602984.0,78.0,325.0,33.75,9.75,5.15,1.77,30.0,112.0,,,,,6bb49c3b-c953-4dd8-8ba0-d2ec1a0b288c
+2026,Diego Pounds,Mississippi,OL,OT,4602984.0,78.0,325.0,33.75,9.75,5.15,1.77,30.0,112.0,7.9,,,,6bb49c3b-c953-4dd8-8ba0-d2ec1a0b288c
 2026,Dillon Bell,Georgia,WR,WR,4712579.0,72.75,209.0,30.25,9.5,4.5,1.58,39.0,126.0,,,,,8cd3eef7-68d6-46e9-a8a0-202e7b94d797
 2026,Dillon Thieneman,Oregon,DB,SAF,4954445.0,72.125,201.0,31.375,9.0,4.35,1.52,41.0,125.0,,,18.0,,53fcdd12-a09e-479d-addd-08f06be57a14
 2026,Dillon Wade,Auburn,OL,G,4581189.0,75.375,316.0,31.875,10.0,5.02,1.75,28.5,104.0,,,,,5d42ed5b-a04a-49af-b145-59b596936952
@@ -8249,7 +8249,7 @@ Year,player,College,POS_GP,POS,athlete_id,Height (in),Weight (lbs),Arm Length (i
 2026,Eric Rivers,Georgia Tech,WR,WR,4713277.0,70.125,176.0,30.5,9.0,4.35,1.52,37.0,127.0,,,,,225babdf-354e-4a59-b325-046d223d9d7a
 2026,Evan Beerntsen,Northwestern,OL,G,4572675.0,75.5,301.0,32.125,9.375,5.25,1.82,32.5,105.0,,,,,0a1e2fe1-5192-44c0-8279-e9c4d633fac3
 2026,Fa'alili Fa'amoe,Wake Forest,OL,OT,4697624.0,77.375,311.0,33.875,10.625,,,28.5,104.0,,,,,b202fa6d-fce0-4e3c-a836-e114e65581bf
-2026,Febechi Nwaiwu,Oklahoma,OL,G,4880873.0,76.25,319.0,34.5,9.625,,,24.5,105.0,,,,,50644161-6802-4904-8403-303f54d2daa7
+2026,Febechi Nwaiwu,Oklahoma,OL,G,4880873.0,76.25,319.0,34.5,9.625,,,24.5,105.0,7.8,4.73,,,50644161-6802-4904-8403-303f54d2daa7
 2026,Fernando Carmona,Arkansas,OL,G,4710000.0,76.625,316.0,32.125,9.5,5.22,1.85,29.0,103.0,7.5,4.75,,,63851dbd-a5e6-4bd9-8654-e5cdff69c461
 2026,Fernando Mendoza,Indiana,QB,QB,4837248.0,76.75,236.0,31.875,9.5,,,,,,,,76.75,065c9999-c256-42ec-a098-516a2296b387
 2026,Francis Mauigoa,Miami,OL,OT,4870914.0,77.5,329.0,33.25,10.625,,,,,,,,80.75,d47f2d0d-ed39-44d5-8766-ba0a834d8a76
@@ -8334,7 +8334,7 @@ Year,player,College,POS_GP,POS,athlete_id,Height (in),Weight (lbs),Arm Length (i
 2026,Kendrick Law,Kentucky,WR,WR,4685441.0,71.375,203.0,31.125,9.625,4.45,1.56,42.0,128.0,,,21.0,,fced2332-c8a0-4c78-b13d-26ac9b30d20e
 2026,Kenyon Sadiq,Oregon,TE,TE,5083315.0,75.125,241.0,31.5,10.0,4.39,1.54,43.5,133.0,,,26.0,,61566c3f-d554-4085-9ee1-221b360c38b9
 2026,Kevin Coleman Jr.,Missouri,WR,WR,4685307.0,70.25,179.0,30.0,9.5,4.49,1.62,38.5,126.0,,,,,7ec76fd0-f17b-4a5e-9375-dc0daf5e8a08
-2026,Keylan Rutledge,Georgia Tech,OL,G,4839498.0,75.625,316.0,33.25,10.0,5.05,1.81,32.5,104.0,,,,,51b0c6dc-ce8b-46a7-9643-025c44309966
+2026,Keylan Rutledge,Georgia Tech,OL,G,4839498.0,75.625,316.0,33.25,10.0,5.05,1.81,32.5,104.0,7.54,4.54,,,51b0c6dc-ce8b-46a7-9643-025c44309966
 2026,Keyron Crawford,Auburn,DL,EDGE,4911904.0,76.375,253.0,32.0,9.0,,,,,,,,,254b2028-ba0f-4554-bdda-f0372a4575d3
 2026,Keyshaun Elliott,Arizona State,LB,LB,4911952.0,73.75,231.0,31.25,9.25,,,38.0,125.0,,,21.0,,35e1eef4-837b-47a5-9ff2-39a74b783be3
 2026,Khalil Dinkins,Penn State,TE,TE,4699678.0,76.25,251.0,33.25,9.5,4.72,1.7,32.5,119.0,7.28,4.33,25.0,,e27d048d-773c-472c-b3e7-a19a316830a5
@@ -8346,8 +8346,8 @@ Year,player,College,POS_GP,POS,athlete_id,Height (in),Weight (lbs),Arm Length (i
 2026,Le'Veon Moss,Texas A&M,RB,RB,4685470.0,71.0,203.0,31.0,9.5,,,,,,,,,19cdd1cd-48d1-449a-a266-2520f3101689
 2026,Lee Hunter,Texas Tech,DL,DT,4431551.0,75.5,318.0,33.25,9.25,5.18,1.79,21.5,100.0,,,,,94be8b69-ce5c-4984-b005-c925c1eba899
 2026,Logan Fano,Utah,DL,EDGE,5080699.0,76.875,257.0,31.375,9.375,,,,,,,,,36fbd3c8-8aaf-4a89-a454-62aee36e0e7a
-2026,Logan Jones,Iowa,OL,C,4686907.0,74.875,299.0,30.75,9.5,4.9,1.75,32.0,110.0,,,,,f1abbbdd-2173-47e6-bbca-16318f36dbb5
-2026,Logan Taylor,Boston College,OL,G,4682789.0,78.75,314.0,33.875,10.5,5.19,1.82,31.0,108.0,,,,,b7a1e8ed-33d6-4346-ad9c-c7f825fba8cd
+2026,Logan Jones,Iowa,OL,C,4686907.0,74.875,299.0,30.75,9.5,4.9,1.75,32.0,110.0,7.46,4.59,,,f1abbbdd-2173-47e6-bbca-16318f36dbb5
+2026,Logan Taylor,Boston College,OL,G,4682789.0,78.75,314.0,33.875,10.5,5.19,1.82,31.0,108.0,7.75,4.84,,,b7a1e8ed-33d6-4346-ad9c-c7f825fba8cd
 2026,Lorenzo Styles Jr.,Ohio State,DB,SAF,4432768.0,72.5,194.0,31.625,9.5,4.27,1.49,39.0,,,,,,ece22d0c-62c8-475a-a334-eaefecbf9523
 2026,Louis Moore,Indiana,DB,SAF,5081323.0,70.75,191.0,29.5,9.875,,,,,,,,,a4eabbbf-929c-495e-8aeb-cfa0b3ba8bab
 2026,Luke Altmyer,Illinois,QB,QB,4597679.0,73.75,210.0,29.875,9.0,4.72,1.66,32.0,114.0,,,,,6deab4a8-0e19-4214-8691-4e029119d26c
