@@ -1,14 +1,24 @@
-.env
-__pycache__/
-venv/
-.venv/
-.python-version
-uv.lock
-pyproject.toml
+# Ignore everything by default — this is a data repo.
+# Only core datasets, docs, and EDA notebooks are tracked.
+# App code, assets, and outputs live locally for the Streamlit app.
+*
 
-# Untracked data files (raw scrapes, PBP, PFF)
-data/nfl_com_combine_*.csv
-data/cfb_pbp_*.csv
-data/cfb_pbp_raw_*.csv
-data/*_passing_summary.csv
-data/*_receiving_summary.csv
+# Allow directory traversal
+!*/
+
+# ---- Core datasets (combine + pro day coalesced, combine-only) ----
+!data/combine_pro_day.csv
+!data/combine_pro_day.parquet
+!data/combine_official.csv
+!data/combine_official.parquet
+
+# ---- Documentation ----
+!README.md
+!docs/SCHEMAS.md
+
+# ---- EDA notebooks ----
+!notebooks/beeswarms.ipynb
+
+# ---- Repo config ----
+!.gitignore
+!.gitattributes
