@@ -3,6 +3,7 @@ library(ggbeeswarm)
 library(dplyr)
 library(showtext)
 library(magick)
+library(paletteer)
 
 font_add_google("Karla", "karla")
 showtext_auto()
@@ -27,16 +28,17 @@ theme_spade <- function(base_size = 12) {
     )
 }
 
-# Okabe-Ito extended (colorblind-safe, high saturation)
+# Okabe-Ito from paletteer (colorblind-safe) + 3 extensions
+oi <- paletteer_d("colorblindr::OkabeIto")
 pos_colors <- c(
-  "DB"  = "#0072B2",
-  "WR"  = "#E69F00",
-  "RB"  = "#009E73",
-  "LB"  = "#D55E00",
-  "TE"  = "#CC79A7",
-  "FB"  = "#F0E442",
-  "QB"  = "#56B4E9",
-  "P"   = "#000000",
+  "DB"  = oi[6],   # blue
+  "WR"  = oi[2],   # orange
+  "RB"  = oi[3],   # green
+  "LB"  = oi[5],   # vermillion
+  "TE"  = oi[7],   # pink
+  "FB"  = oi[4],   # yellow
+  "QB"  = oi[8],   # sky blue
+  "P"   = oi[1],   # black
   "DL"  = "#E83562",
   "LS"  = "#7A5195",
   "OL"  = "#1AFF1A"
@@ -48,6 +50,8 @@ df <- read.csv("combine_data_unique_athlete_id_step4.csv") |>
   filter(POS_GP %in% names(pos_colors)) |>
   mutate(POS_GP = factor(POS_GP, levels = names(pos_colors)))
 
+n_obs <- nrow(df)
+
 p <- ggplot(df, aes(x = X40.Yard, y = 0, color = POS_GP)) +
   geom_quasirandom(
     groupOnX = TRUE, width = 0.4,
@@ -56,7 +60,7 @@ p <- ggplot(df, aes(x = X40.Yard, y = 0, color = POS_GP)) +
   scale_color_manual(values = pos_colors, name = NULL) +
   labs(
     title = "NFL Combine & Pro Day 40-Yard Dash Times by Position",
-    subtitle = "Every recorded 40-yard dash from 2007-2026 (n = 7,354)",
+    subtitle = paste0("Every recorded 40-yard dash from 2007-2026 (n = ", format(n_obs, big.mark = ","), ")"),
     x = "40-Yard Dash (seconds)",
     y = NULL,
     caption = "Ray Carpenter | TheSpade.Substack.com | @csv_enjoyer | data: Various sources"
