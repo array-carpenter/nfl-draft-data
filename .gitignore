@@ -16,9 +16,6 @@
 !README.md
 !docs/SCHEMAS.md
 
-# ---- EDA notebooks ----
-!notebooks/beeswarms.ipynb
-
 # ---- Repo config ----
 !.gitignore
 !.gitattributes
