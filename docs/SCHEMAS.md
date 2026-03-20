@@ -25,7 +25,7 @@ The main coalesced dataset — every combine and pro day measurement from 2007 t
 | `3Cone` | float | 3-cone drill in seconds |
 | `Shuttle` | float | 20-yard shuttle in seconds |
 | `Bench Press` | float | Bench press reps at 225 lbs |
-| `Wingspan (in)` | float | Wingspan in inches (very sparse — only 12 non-null) |
+| `Wingspan (in)` | float | Wingspan in inches. Full coverage for 2025–2026 combine invitees; sparse for earlier years. |
 | `nfl_person_id` | string | NFL.com person UUID |
 
 ## `data/combine_official.csv` / `.parquet`
@@ -59,6 +59,7 @@ Official NFL Combine measurements only — no pro day data mixed in. Sourced dir
 | `draft_grade` | float | NGS draft grade (0–100) |
 | `draft_projection` | string | Projected draft round (e.g. "Round 2") |
 | `nfl_comparison` | string | NFL player comparison from scouts |
+| `wingspan` | float | Wingspan in inches. Full coverage for 2025–2026 combine invitees; sparse for earlier years. |
 
 ## Notes
 
